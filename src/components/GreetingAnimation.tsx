@@ -5,7 +5,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ShaderAnimation } from "@/components/ui/shader-animation";
 
 const words = [
-  "வணக்கம்",      // 1. Tamil (First: 150ms)
+  "வணக்கம்",      // 1. Tamil (First: 188ms)
   "Bonjour",      // 2. French
   "Ciao",         // 3. Italian
   "Olá",          // 4. Portuguese
@@ -18,8 +18,8 @@ const words = [
   "안녕하세요",    // 11. Korean
   "你好",         // 12. Chinese
   "Hallå",        // 13. Swedish
-  "Guten tag",    // 14. German (Intermediate 13 words: 1200ms total, ~92.3ms each)
-  "Hello",        // 15. English (Final ending greeting: 200ms hold)
+  "Guten tag",    // 14. German (Intermediate 13 words: 1500ms total, ~115.4ms each)
+  "Hello",        // 15. English (Final ending greeting: 250ms hold)
 ];
 
 const opacityVariant: Variants = {
@@ -30,7 +30,7 @@ const opacityVariant: Variants = {
   enter: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.08, ease: "easeOut" },
+    transition: { duration: 0.1, ease: "easeOut" },
   },
 };
 
@@ -40,7 +40,7 @@ const slideUpVariant: Variants = {
   },
   exit: {
     top: "-100vh",
-    transition: { duration: 0.45, ease: [0.76, 0, 0.24, 1] }, // SVG curtain lift: 450ms
+    transition: { duration: 0.56, ease: [0.76, 0, 0.24, 1] }, // SVG curtain lift: 560ms (slowed by 0.25x)
   },
 };
 
@@ -70,18 +70,18 @@ export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
   }, []);
 
   useEffect(() => {
-    // 1. Final word hold: exactly 200ms before curtain triggers
+    // 1. Final word hold: 250ms before curtain triggers (slowed by 0.25x from 200ms)
     if (index === words.length - 1) {
       const exitTimer = setTimeout(() => {
         setIsLoading(false);
         if (onComplete) onComplete();
-      }, 200);
+      }, 250);
       return () => clearTimeout(exitTimer);
     }
 
-    // 2. First word hold: 150ms
-    // 3. Intermediate words (13 words): 1200ms total (1200 / 13 = 92.3ms)
-    const stepDuration = index === 0 ? 150 : 1200 / 13;
+    // 2. First word hold: 188ms (slowed by 0.25x from 150ms)
+    // 3. Intermediate words (13 words): 1500ms total (1500 / 13 = 115.4ms, slowed by 0.25x from 1200ms)
+    const stepDuration = index === 0 ? 188 : 1500 / 13;
 
     const timer = setTimeout(() => {
       setIndex((prev) => prev + 1);
@@ -103,11 +103,11 @@ export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
   const curveVariant: Variants = {
     initial: {
       d: initialPath,
-      transition: { duration: 0.45, ease: [0.76, 0, 0.24, 1] }, // SVG curtain lift: 450ms
+      transition: { duration: 0.56, ease: [0.76, 0, 0.24, 1] }, // SVG curtain lift: 560ms (slowed by 0.25x)
     },
     exit: {
       d: targetPath,
-      transition: { duration: 0.45, ease: [0.76, 0, 0.24, 1] }, // SVG curtain lift: 450ms
+      transition: { duration: 0.56, ease: [0.76, 0, 0.24, 1] }, // SVG curtain lift: 560ms (slowed by 0.25x)
     },
   };
 
@@ -154,9 +154,9 @@ export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
             </motion.div>
           )}
 
-          {/* ───────────────── 2. SHADER ANIMATION: INCREASED DURATION TO EXACTLY 2500ms (2.5s) ───────────────── */}
+          {/* ───────────────── 2. SHADER ANIMATION: SLOWED BY 0.25x (DURATION 3125ms / 3.125s) ───────────────── */}
           <div className="absolute inset-0 z-30 pointer-events-none opacity-100 mix-blend-screen">
-            <ShaderAnimation className="w-full h-full" duration={2.5} active={true} />
+            <ShaderAnimation className="w-full h-full" duration={3.125} active={true} />
           </div>
 
           {/* ───────────────── 3. SVG CURVED MASK CURTAIN ───────────────── */}
