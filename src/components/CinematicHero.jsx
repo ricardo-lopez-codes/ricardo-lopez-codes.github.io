@@ -31,16 +31,16 @@ export default function CinematicHero() {
 
   return (
     <>
-      {/* ───────────────── SIGNATURE GREETING PRELOADER (TIMED TO 2.0s) ───────────────── */}
+      {/* ───────────────── 1. GREETING PRELOADER CURTAIN (2.0s) ───────────────── */}
       <GreetingAnimation onComplete={() => setGreetingDone(true)} />
 
       <header 
         id="hero"
         className="relative w-full h-[100dvh] min-h-[680px] flex flex-col justify-between items-center overflow-hidden bg-black select-none text-white"
       >
-        {/* ───────────────── THREE.JS SHADER ANIMATION: FRONT LAYER (TIMED TO 2.0s) ───────────────── */}
+        {/* ───────────────── 2. SHADER ANIMATION: ACTIVE UPON ENTRY & PLAYED FOR EXACTLY 2.0s ───────────────── */}
         <div className="absolute inset-0 z-30 pointer-events-none opacity-100 mix-blend-screen">
-          <ShaderAnimation className="w-full h-full" duration={2.0} active={true} />
+          <ShaderAnimation className="w-full h-full" duration={2.0} active={greetingDone} />
         </div>
 
         {/* ───────────────── TOP HUD / STATUS META BAR (z-20) ───────────────── */}
