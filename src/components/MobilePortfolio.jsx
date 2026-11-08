@@ -4,7 +4,7 @@ import {
   Terminal, X, Star, FileText, Wifi, BookOpen, ChevronDown, Download
 } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
-import GreetingAnimation from "./GreetingAnimation";
+import CinematicHero from "./CinematicHero";
 
 // Self-contained custom SVG components for brand icons missing in local lucide-react
 const Github = (props) => (
@@ -786,7 +786,7 @@ export default function MobilePortfolio() {
       <GlobalStyles />
       
       {/* FULL-SCREEN 100VH CINEMATIC INTRO / HERO SECTION */}
-      <GreetingAnimation />
+      <CinematicHero />
 
       {/* NAVBAR: MOBILE HAMBURGER MENU SYSTEM */}
       <nav className="sticky top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-white/10 px-6 py-4" style={{ position: "sticky", top: 0, left: 0, width: "100%", zIndex: 50, background: "rgba(0, 0, 0, 0.9)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(255, 255, 255, 0.1)", padding: "16px 24px" }}>

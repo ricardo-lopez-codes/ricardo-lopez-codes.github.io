@@ -4,7 +4,7 @@ import {
   Terminal, X, Star, FileText, Wifi, BookOpen, ChevronDown, Download
 } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
-import GreetingAnimation from "./GreetingAnimation";
+import CinematicHero from "./CinematicHero";
 
 // Self-contained custom SVG components for brand icons missing in local lucide-react
 const Github = (props) => (
@@ -810,7 +810,7 @@ export default function DesktopPortfolio() {
       <GlobalStyles />
       
       {/* FULL-SCREEN 100VH CINEMATIC INTRO / HERO SECTION */}
-      <GreetingAnimation />
+      <CinematicHero />
 
       {/* NAVBAR: Ricardo_Lopez // BRANDING + SEMI-TRANSPARENT HUD */}
       <nav className="sticky top-0 z-50 w-full bg-black/80 backdrop-blur-md border-b border-white/10">
