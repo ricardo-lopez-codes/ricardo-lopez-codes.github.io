@@ -154,9 +154,9 @@ export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
             </motion.div>
           )}
 
-          {/* ───────────────── 2. SHADER ANIMATION: INCREASED DURATION TO EXACTLY 2000ms (2.0s) ───────────────── */}
+          {/* ───────────────── 2. SHADER ANIMATION: INCREASED DURATION TO EXACTLY 2500ms (2.5s) ───────────────── */}
           <div className="absolute inset-0 z-30 pointer-events-none opacity-100 mix-blend-screen">
-            <ShaderAnimation className="w-full h-full" duration={2.0} active={true} />
+            <ShaderAnimation className="w-full h-full" duration={2.5} active={true} />
           </div>
 
           {/* ───────────────── 3. SVG CURVED MASK CURTAIN ───────────────── */}
