@@ -14,9 +14,13 @@ const words = [
   "مرحبا",        // 6. Arabic
   "¿Qué onda?",   // 7. Mexican Spanish
   "안녕하세요",    // 8. Korean
-  "Guten tag",    // 9. German (Intermediate 8 words: 1500ms total, ~187.5ms each)
+  "Guten tag",    // 9. German (Intermediate 8 words: 1500ms total, 187.5ms each)
   "Hello",        // 10. English (Final ending greeting: 250ms hold)
 ];
+
+// Exact total duration: 188ms + 1500ms + 250ms + 450ms fade = 2388ms (2.388s)
+const FADE_DURATION = 0.45;
+const TOTAL_DURATION_SEC = 2.388;
 
 const opacityVariant: Variants = {
   initial: {
@@ -36,7 +40,7 @@ const fadeOutVariant: Variants = {
   },
   exit: {
     opacity: 0,
-    transition: { duration: 0.45, ease: "easeInOut" },
+    transition: { duration: FADE_DURATION, ease: "easeInOut" },
   },
 };
 
@@ -49,7 +53,7 @@ export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // 1. Final word hold: 250ms then smoothly fade out
+    // 1. Final word hold: 250ms then trigger the 450ms fade-out
     if (index === words.length - 1) {
       const exitTimer = setTimeout(() => {
         setIsLoading(false);
@@ -59,7 +63,7 @@ export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
     }
 
     // 2. First word hold: 188ms
-    // 3. Intermediate words (8 words): 1500ms total (1500 / 8 = 187.5ms each)
+    // 3. Intermediate 8 words: 1500ms total (187.5ms each)
     const stepDuration = index === 0 ? 188 : 1500 / (words.length - 2);
 
     const timer = setTimeout(() => {
@@ -110,9 +114,9 @@ export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
             <span>{words[index]}</span>
           </motion.div>
 
-          {/* ───────────────── 2. SHADER ANIMATION: 3125ms / 3.125s ───────────────── */}
+          {/* ───────────────── 2. SHADER ANIMATION: PERFECTLY SYNCHRONIZED TO END AT THE EXACT SAME INSTANT ───────────────── */}
           <div className="absolute inset-0 z-30 pointer-events-none opacity-100 mix-blend-screen">
-            <ShaderAnimation className="w-full h-full" duration={3.125} active={true} />
+            <ShaderAnimation className="w-full h-full" duration={TOTAL_DURATION_SEC} active={true} />
           </div>
         </motion.div>
       )}
