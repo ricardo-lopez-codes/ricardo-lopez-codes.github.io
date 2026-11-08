@@ -6,9 +6,11 @@ import * as THREE from "three"
 interface ShaderAnimationProps {
   className?: string
   style?: React.CSSProperties
+  active?: boolean
+  duration?: number // duration in seconds (default 2.0s)
 }
 
-export function ShaderAnimation({ className, style }: ShaderAnimationProps = {}) {
+export function ShaderAnimation({ className, style, active = true, duration = 2.0 }: ShaderAnimationProps = {}) {
   const containerRef = useRef<HTMLDivElement>(null)
   const sceneRef = useRef<{
     camera: THREE.Camera
@@ -16,6 +18,7 @@ export function ShaderAnimation({ className, style }: ShaderAnimationProps = {})
     renderer: THREE.WebGLRenderer
     uniforms: any
     animationId: number
+    startTime: number | null
   } | null>(null)
 
   useEffect(() => {
@@ -30,29 +33,29 @@ export function ShaderAnimation({ className, style }: ShaderAnimationProps = {})
       }
     `
 
-    // Fragment shader with one-shot fadeout transition once cycle completes
+    // Fragment shader with smooth fadeout in sync with total duration
     const fragmentShader = `
       #define TWO_PI 6.2831853072
       #define PI 3.14159265359
 
       precision highp float;
       uniform vec2 resolution;
-      uniform float time;
+      uniform float progress; // 0.0 to 1.0
 
       void main(void) {
         vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
-        float t = time * 0.05;
+        float t = progress;
         float lineWidth = 0.002;
 
         vec3 color = vec3(0.0);
         for(int j = 0; j < 3; j++){
-          for(int i=0; i < 5; i++){
-            color[j] += lineWidth*float(i*i) / abs(fract(t - 0.01*float(j)+float(i)*0.01)*5.0 - length(uv) + mod(uv.x+uv.y, 0.2));
+          for(int i = 0; i < 5; i++){
+            color[j] += lineWidth * float(i * i) / abs(fract(t - 0.01 * float(j) + float(i) * 0.01) * 5.0 - length(uv) + mod(uv.x + uv.y, 0.2));
           }
         }
 
-        // Smoothly fade out at the end of the one single cycle (t reaches 1.0, or time reaches 20.0)
-        float fade = 1.0 - smoothstep(16.0, 20.0, time);
+        // Smooth fade out towards the 2.0s mark (between 80% and 100% of duration)
+        float fade = 1.0 - smoothstep(0.8, 1.0, progress);
         color *= clamp(fade, 0.0, 1.0);
         
         gl_FragColor = vec4(color[0], color[1], color[2], 1.0);
@@ -67,7 +70,7 @@ export function ShaderAnimation({ className, style }: ShaderAnimationProps = {})
     const geometry = new THREE.PlaneGeometry(2, 2)
 
     const uniforms = {
-      time: { type: "f", value: 0.0 },
+      progress: { type: "f", value: 0.0 },
       resolution: { type: "v2", value: new THREE.Vector2() },
     }
 
@@ -98,25 +101,24 @@ export function ShaderAnimation({ className, style }: ShaderAnimationProps = {})
     onWindowResize()
     window.addEventListener("resize", onWindowResize, false)
 
-    // Single run duration threshold: one complete cycle of fract(t) is 1.0/0.05 = 20.0 time units.
-    // Speed: 0.05 / 3 = ~0.01667 (3x slower)
-    const MAX_TIME = 20.0
-    const SPEED = 0.05 / 3.0
+    const durationMs = duration * 1000
 
-    // Animation loop (runs exactly once through the full cycle, then terminates cleanly)
-    const animate = () => {
-      if (uniforms.time.value >= MAX_TIME) {
-        uniforms.time.value = MAX_TIME
-        renderer.render(scene, camera)
-        return // End loop: runs only 1 time
+    // Animation loop timed precisely to duration (2.0s)
+    const animate = (timestamp: number) => {
+      if (!sceneRef.current) return
+
+      if (sceneRef.current.startTime === null) {
+        sceneRef.current.startTime = timestamp
       }
 
-      const animationId = requestAnimationFrame(animate)
-      uniforms.time.value = Math.min(uniforms.time.value + SPEED, MAX_TIME)
+      const elapsed = timestamp - sceneRef.current.startTime
+      const currentProgress = Math.min(elapsed / durationMs, 1.0)
+
+      uniforms.progress.value = currentProgress
       renderer.render(scene, camera)
 
-      if (sceneRef.current) {
-        sceneRef.current.animationId = animationId
+      if (currentProgress < 1.0) {
+        sceneRef.current.animationId = requestAnimationFrame(animate)
       }
     }
 
@@ -127,10 +129,12 @@ export function ShaderAnimation({ className, style }: ShaderAnimationProps = {})
       renderer,
       uniforms,
       animationId: 0,
+      startTime: null,
     }
 
-    // Start animation
-    animate()
+    if (active) {
+      sceneRef.current.animationId = requestAnimationFrame(animate)
+    }
 
     // Cleanup function
     return () => {
@@ -148,7 +152,7 @@ export function ShaderAnimation({ className, style }: ShaderAnimationProps = {})
         material.dispose()
       }
     }
-  }, [])
+  }, [active, duration])
 
   return (
     <div
