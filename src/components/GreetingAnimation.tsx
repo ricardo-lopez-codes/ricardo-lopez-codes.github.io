@@ -30,13 +30,13 @@ const opacityVariant: Variants = {
   },
 };
 
-const slideUpVariant: Variants = {
+const fadeOutVariant: Variants = {
   initial: {
-    top: 0,
+    opacity: 1,
   },
   exit: {
-    top: "-100vh",
-    transition: { duration: 0.56, ease: [0.76, 0, 0.24, 1] }, // SVG curtain lift: 560ms
+    opacity: 0,
+    transition: { duration: 0.45, ease: "easeInOut" },
   },
 };
 
@@ -46,27 +46,10 @@ interface GreetingAnimationProps {
 
 export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
   const [index, setIndex] = useState(0);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setDimensions({
-      width: window.innerWidth,
-      height: window.innerHeight,
-    });
-
-    const handleResize = () => {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    // 1. Final word hold: 250ms before curtain triggers
+    // 1. Final word hold: 250ms then smoothly fade out
     if (index === words.length - 1) {
       const exitTimer = setTimeout(() => {
         setIsLoading(false);
@@ -86,89 +69,51 @@ export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
     return () => clearTimeout(timer);
   }, [index, onComplete]);
 
-  const initialPath = `M0 0 L${dimensions.width} 0 L${dimensions.width} ${
-    dimensions.height
-  } Q${dimensions.width / 2} ${dimensions.height + 300} 0 ${
-    dimensions.height
-  } L0 0`;
-
-  const targetPath = `M0 0 L${dimensions.width} 0 L${dimensions.width} ${
-    dimensions.height
-  } Q${dimensions.width / 2} ${dimensions.height} 0 ${dimensions.height} L0 0`;
-
-  const curveVariant: Variants = {
-    initial: {
-      d: initialPath,
-      transition: { duration: 0.56, ease: [0.76, 0, 0.24, 1] },
-    },
-    exit: {
-      d: targetPath,
-      transition: { duration: 0.56, ease: [0.76, 0, 0.24, 1] },
-    },
-  };
-
   return (
     <AnimatePresence mode="wait">
       {isLoading && (
         <motion.div
-          variants={slideUpVariant}
+          variants={fadeOutVariant}
           initial="initial"
           exit="exit"
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-black text-white overflow-hidden px-4 pointer-events-auto"
           style={{ height: "100vh" }}
         >
           {/* ───────────────── 1. GREETING WORDS & DOT (PROMINENT FOREGROUND LAYER) ───────────────── */}
-          {dimensions.width > 0 && (
-            <motion.div
-              key={index}
-              variants={opacityVariant}
-              initial="initial"
-              animate="enter"
-              className="relative inline-flex items-center justify-center font-normal select-none z-40 whitespace-nowrap text-center"
+          <motion.div
+            key={index}
+            variants={opacityVariant}
+            initial="initial"
+            animate="enter"
+            className="relative inline-flex items-center justify-center font-normal select-none z-40 whitespace-nowrap text-center"
+            style={{
+              fontFamily: "'Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+              fontSize: "clamp(2rem, 5vw, 4.5rem)",
+              lineHeight: 1,
+              letterSpacing: "-0.03em",
+              color: "#ffffff",
+              textShadow:
+                "0 0 20px rgba(255,255,255,0.9), 0 0 40px rgba(255,255,255,0.5), 0 0 80px rgba(34,211,238,0.4)",
+            }}
+          >
+            {/* Glowing indicator dot */}
+            <span
+              className="inline-block rounded-full bg-white flex-shrink-0"
               style={{
-                fontFamily: "'Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-                fontSize: "clamp(2rem, 5vw, 4.5rem)",
-                lineHeight: 1,
-                letterSpacing: "-0.03em",
-                color: "#ffffff",
-                textShadow:
-                  "0 0 20px rgba(255,255,255,0.9), 0 0 40px rgba(255,255,255,0.5), 0 0 80px rgba(34,211,238,0.4)",
+                width: "clamp(12px, 1.2vw, 18px)",
+                height: "clamp(12px, 1.2vw, 18px)",
+                marginRight: "clamp(16px, 1.6vw, 24px)",
+                boxShadow:
+                  "0 0 12px #ffffff, 0 0 24px rgba(255,255,255,0.9), 0 0 40px rgba(34,211,238,0.8)",
               }}
-            >
-              {/* Glowing indicator dot */}
-              <span
-                className="inline-block rounded-full bg-white flex-shrink-0"
-                style={{
-                  width: "clamp(12px, 1.2vw, 18px)",
-                  height: "clamp(12px, 1.2vw, 18px)",
-                  marginRight: "clamp(16px, 1.6vw, 24px)",
-                  boxShadow:
-                    "0 0 12px #ffffff, 0 0 24px rgba(255,255,255,0.9), 0 0 40px rgba(34,211,238,0.8)",
-                }}
-              />
-              <span>{words[index]}</span>
-            </motion.div>
-          )}
+            />
+            <span>{words[index]}</span>
+          </motion.div>
 
           {/* ───────────────── 2. SHADER ANIMATION: 3125ms / 3.125s ───────────────── */}
           <div className="absolute inset-0 z-30 pointer-events-none opacity-100 mix-blend-screen">
             <ShaderAnimation className="w-full h-full" duration={3.125} active={true} />
           </div>
-
-          {/* ───────────────── 3. SVG CURVED MASK CURTAIN ───────────────── */}
-          {dimensions.width > 0 && (
-            <svg
-              className="absolute top-0 left-0 w-full pointer-events-none z-20"
-              style={{ height: "calc(100% + 300px)" }}
-            >
-              <motion.path
-                variants={curveVariant}
-                initial="initial"
-                exit="exit"
-                fill="#000000"
-              />
-            </svg>
-          )}
         </motion.div>
       )}
     </AnimatePresence>
