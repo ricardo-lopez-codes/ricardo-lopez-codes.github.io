@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ricardo Lopez | Digital Engineering Workspace</title>
+  
+  <!-- Premium Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Space+Mono&family=Syne:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom Sleek Styling System -->
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Syne', sans-serif;
+    }
+    
+    html {
+      background: #070a12;
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      color: #f1f5f9;
+      background: #070a12;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070a12;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(34, 211, 238, 0.25);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(34, 211, 238, 0.55);
+    }
+    
+    /* Glassmorphism System */
+    .glass {
+      background: rgba(10, 15, 32, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      transition: transform 0.3s ease, border-color 0.3s;
+    }
+    .glass:hover {
+      border-color: rgba(34, 211, 238, 0.4);
+    }
+    
+    /* Navigation Highlights */
+    .nav-link {
+      position: relative;
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
+      padding-bottom: 6px;
+    }
+    .nav-link:hover {
+      color: #22d3ee;
+    }
+    .nav-link.nav-active {
+      color: #22d3ee !important;
+      font-weight: 700;
+    }
+    .nav-link.nav-active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #22d3ee;
+      border-radius: 2px;
+      animation: slideIn 0.3s ease forwards;
+    }
+    
+    /* Layout Configurations */
+    .hero-flex-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      width: 100%;
+    }
+    .hero-col-left {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-col-mid {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .hero-col-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .contact-flex-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 50px;
+      width: 100%;
+      text-align: left;
+    }
+    .contact-col-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+    .contact-col-right {
+      flex: 1.2;
+    }
+    
+    /* Dropdowns */
+    .dropdown-container {
+      position: relative;
+      width: 100%;
+    }
+    .dropdown-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 14px 22px;
+      color: #fff;
+      background: rgba(10, 15, 32, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 600;
+      fontSize: 13px;
+      letter-spacing: 1px;
+      font-family: "'Space Mono', monospace";
+      transition: all 0.3s ease;
+    }
+    .dropdown-trigger:hover {
+      border-color: rgba(34, 211, 238, 0.4);
+    }
+    .dropdown-card {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 280px;
+      padding: 18px;
+      z-index: 50;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      background: rgba(7, 10, 18, 0.96);
+      border-radius: 12px;
+      text-align: left;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      animation: fadeIn 0.2s ease forwards;
+    }
+    .action-link {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: rgba(34, 211, 238, 0.08);
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      color: #22d3ee;
+      padding: 10px 14px;
+      borderRadius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: "'Space Mono', monospace";
+      transition: all 0.2s ease;
+      margin-top: 10px;
+    }
+    .action-link:hover {
+      background: rgba(34, 211, 238, 0.18);
+      border-color: rgba(34, 211, 238, 0.6);
+    }
+    
+    /* Grid adjustments */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 40px;
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+      gap: 40px;
+    }
+    
+    /* Responsive Media Queries */
+    @media (max-width: 1024px) {
+      .hero-flex-container {
+        flex-direction: column !important;
+        gap: 40px !important;
+      }
+      .hero-col-left, .hero-col-mid, .hero-col-right {
+        width: 100% !important;
+        flex: none !important;
+      }
+      .hero-col-right {
+        max-width: 280px !important;
+        margin: 0 auto !important;
+      }
+    }
+    
+    @media (max-width: 968px) {
+      .contact-flex-container {
+        flex-direction: column !important;
+        gap: 40px !important;
+      }
+      .contact-col-left, .contact-col-right {
+        width: 100% !important;
+        flex: none !important;
+      }
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Keyframe Animations */
+    @keyframes slideIn {
+      from { width: 0; left: 50%; }
+      to { width: 100%; left: 0; }
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, 10px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+    @keyframes modalFade {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    
+    .animate-blink {
+      animation: blink 1s step-end infinite;
+    }
+    
+    /* Video background styling */
+    .bg-video-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .bg-video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(7, 10, 18, 0.88), rgba(7, 10, 18, 0.96));
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ENTRANCE TIMERS MODAL (BOOTLOADER Screen) -->
+  <div id="entrance-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #070a12; zIndex: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);">
+    <div class="glass" style="width: 100%; max-width: 650px; padding: 40px; background: rgba(10, 15, 32, 0.9); border-color: rgba(52, 211, 153, 0.2); box-shadow: 0 0 40px rgba(52, 211, 153, 0.1);">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid rgba(52, 211, 153, 0.2); padding-bottom: 15px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+        <span style="font-size: 14px; font-weight: 700; color: #34d399; letter-spacing: 1.5px; font-family: 'Space Mono', monospace;">BOOT_LOADER // TERMINAL_ENTRANCE</span>
+      </div>
+
+      <div id="boot-logs" style="min-height: 180px; display: flex; flex-direction: column; gap: 10px; font-size: 14px; line-height: 1.6; font-family: 'Space Mono', monospace; color: #34d399; text-align: left;">
+        <!-- Loaded by script -->
+      </div>
+      
+      <div id="enter-btn-container" style="margin-top: 35px; text-align: center; display: none;">
+        <button id="enter-btn" style="background: none; border: 1px solid #22d3ee; color: #22d3ee; padding: 14px 35px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Orbitron', sans-serif; letter-spacing: 2px; transition: all 0.3s ease; box-shadow: 0 0 15px rgba(34, 211, 238, 0.2);">
+          ENTER SYSTEM
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Laser Light Video Layer -->
+  <div class="bg-video-container">
+    <video autoplay loop muted playsinline>
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-laser-lights-background-glow-42125-large.mp4" type="video/mp4">
+    </video>
+    <div class="bg-overlay"></div>
+  </div>
+
+  <!-- Sticky FLOAT HUD CAPSULE NAVBAR -->
+  <nav class="glass" style="position: sticky; top: 24px; max-width: 1240px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 20px 45px; z-index: 10; width: 92%; background: rgba(10, 15, 32, 0.45); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
+    <div style="font-family: 'Orbitron', sans-serif; font-weight: 700; color: #22d3ee; letter-spacing: 2px; font-size: 16px;">Ricardo_Lopez //</div>
+    <div style="display: flex; gap: 35px;">
+      <a href="#about" class="nav-link nav-active" data-section="about">ABOUT</a>
+      <a href="#projects" class="nav-link" data-section="projects">PROJECTS</a>
+      <a href="#achievements" class="nav-link" data-section="achievements">ACHIEVEMENTS</a>
+      <a href="#skills" class="nav-link" data-section="skills">SKILLS</a>
+      <a href="#contact" class="nav-link" data-section="contact">CONTACT</a>
+    </div>
+  </nav>
+
+  <!-- Content Container -->
+  <main style="max-width: 1240px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2;">
+    
+    <!-- 1. HERO/ABOUT SECTION -->
+    <section id="about" style="padding: 40px 0 100px 0;">
+      <div class="hero-flex-container">
+        
+        <!-- Column 1 (Left 1/3): Profile Image Center -->
+        <div class="hero-col-left">
+          <div class="glass" style="width: 250px; height: 250px; border-radius: 24px; overflow: hidden; border: 2px solid rgba(34,211,238,0.35); box-shadow: 0 0 30px rgba(34, 211, 238, 0.15); display: flex; align-items: center; justify-content: center; background: rgba(10, 15, 32, 0.7); backdrop-filter: blur(10px);">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=400&auto=format&fit=crop" alt="Ricardo Lopez" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" onmouseenter="this.style.transform='scale(1.08)'" onmouseleave="this.style.transform='scale(1)'">
+          </div>
+        </div>
+
+        <!-- Column 2 (Middle 1/3): Centered Identity Header -->
+        <div class="hero-col-mid">
+          <div style="font-family: 'Space Mono', monospace; color: #22d3ee; font-size: 14px; letter-spacing: 4px; margin-bottom: 15px;">// ARRAYS LOADED SUCCESSFULLY</div>
+          <h1 style="font-size: 3.2rem; font-family: 'Orbitron', sans-serif; font-weight: 700; color: #fff; letter-spacing: -1px; line-height: 1.1; margin: 0 0 10px 0;">STUDENT AT SRMIST</h1>
+          <div style="min-height: 40px; margin-bottom: 15px;">
+            <p id="typewriter" style="font-size: 1.5rem; color: #34d399; font-family: 'Space Mono', monospace; font-weight: 600;"></p>
+          </div>
+          <p style="color: #94a3b8; line-height: 1.7; font-size: 16px; max-width: 500px;">
+            Specializing in embedded ecosystems, automation robotics, and custom hardware engineering layout models at SRMIST Ramapuram. Aspiring to channel operational control knowledge into merchant navy routes as a certified Electro-Technical Officer (ETO) by engineering precision firmware systems and robust IoT arrays.
+          </p>
+        </div>
+
+        <!-- Column 3 (Right 1/3): Vertical Centered Dropdown Capsules -->
+        <div class="hero-col-right" style="overflow: visible;">
+          <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 280px; align-items: stretch; overflow: visible;">
+            
+            <!-- LinkedIn Dropbox -->
+            <div class="dropdown-container">
+              <button class="glass dropdown-trigger" data-brand="#0A66C2" onclick="toggleDropdown('hero-linkedin')">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A66C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                  <span>LINKEDIN</span>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div id="hero-linkedin" class="dropdown-card" style="border-color: rgba(10, 102, 194, 0.4);">
+                <div style="font-size: 11px; font-family: 'Space Mono', monospace; color: #94a3b8; margin-bottom: 8px;">// UPLINK: LINKEDIN</div>
+                <div style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">SRMIST Candidate</div>
+                <a href="https://linkedin.com" target="_blank" class="action-link">Establish Connection</a>
+              </div>
+            </div>
+
+            <!-- GitHub Dropbox -->
+            <div class="dropdown-container">
+              <button class="glass dropdown-trigger" data-brand="#7c6bc9" onclick="toggleDropdown('hero-github')">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c6bc9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                  <span>GITHUB</span>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div id="hero-github" class="dropdown-card" style="border-color: rgba(124, 107, 201, 0.4);">
+                <div style="font-size: 11px; font-family: 'Space Mono', monospace; color: #94a3b8; margin-bottom: 8px;">// UPLINK: GITHUB</div>
+                <div style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">@srmist-firmware</div>
+                <a href="https://github.com" target="_blank" class="action-link">Access Source Repositories</a>
+              </div>
+            </div>
+
+            <!-- LeetCode Dropbox -->
+            <div class="dropdown-container">
+              <button class="glass dropdown-trigger" data-brand="#FFA116" onclick="toggleDropdown('hero-leetcode')">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFA116" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span>LEETCODE</span>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div id="hero-leetcode" class="dropdown-card" style="border-color: rgba(255, 161, 22, 0.4);">
+                <div style="font-size: 11px; font-family: 'Space Mono', monospace; color: #94a3b8; margin-bottom: 8px;">// UPLINK: LEETCODE</div>
+                <div style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">@leetcode-eto</div>
+                <a href="https://leetcode.com" target="_blank" class="action-link">Review Algorithmic Scripts</a>
+              </div>
+            </div>
+
+            <!-- GeeksforGeeks Dropbox -->
+            <div class="dropdown-container">
+              <button class="glass dropdown-trigger" data-brand="#2F8D46" onclick="toggleDropdown('hero-gfg')">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2F8D46" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                  <span>GEEKSFORGEEKS</span>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div id="hero-gfg" class="dropdown-card" style="border-color: rgba(47, 141, 70, 0.4);">
+                <div style="font-size: 11px; font-family: 'Space Mono', monospace; color: #94a3b8; margin-bottom: 8px;">// UPLINK: GEEKSFORGEEKS</div>
+                <div style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">Alpha Systems Array</div>
+                <a href="https://geeksforgeeks.org" target="_blank" class="action-link">Inspect Academic Notes</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. PROJECTS GRID SECTION -->
+    <section id="projects" style="padding: 110px 0;">
+      <h2 style="font-size: 2.2rem; font-family: 'Orbitron', sans-serif; margin-bottom: 40px; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">// ACTIVE SYSTEMS</h2>
+      <div id="projects-container" class="projects-grid">
+        <!-- Loaded by script -->
+      </div>
+    </section>
+
+    <!-- 3. ACHIEVEMENTS TIMELINE SECTION -->
+    <section id="achievements" style="padding: 110px 0;">
+      <h2 style="font-size: 2.2rem; font-family: 'Orbitron', sans-serif; margin-bottom: 40px; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">// RECOGNIZED MILESTONES</h2>
+      <div id="achievements-container" style="display: flex; flex-direction: column; gap: 30px;">
+        <!-- Loaded by script -->
+      </div>
+    </section>
+
+    <!-- 4. SKILLS CATEGORY MATRIX SECTION -->
+    <section id="skills" style="padding: 110px 0;">
+      <h2 style="font-size: 2.2rem; font-family: 'Orbitron', sans-serif; margin-bottom: 40px; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">// HARDWARE CONTROL ARCHITECTURE</h2>
+      <div id="skills-container" class="skills-grid">
+        <!-- Loaded by script -->
+      </div>
+    </section>
+
+    <!-- 5. SPLIT 2-COLUMN CONTACT AREA -->
+    <section id="contact" style="padding: 110px 0 40px 0;">
+      <div class="contact-flex-container">
+        
+        <!-- Left Side: Header & dropdowns -->
+        <div class="contact-col-left" style="overflow: visible;">
+          <h2 style="font-size: 2.2rem; font-family: 'Orbitron', sans-serif; color: #fff;">// INITIALIZE UPLINK</h2>
+          <p style="color: #94a3b8; font-size: 16px; line-height: 1.6;">
+            Access direct node connections or expand independent terminal dropdown profiles below:
+          </p>
+          
+          <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 280px; align-items: stretch; overflow: visible;">
+            
+            <!-- LinkedIn Dropbox (Contact) -->
+            <div class="dropdown-container">
+              <button class="glass dropdown-trigger" data-brand="#0A66C2" onclick="toggleDropdown('contact-linkedin')">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A66C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                  <span>LINKEDIN</span>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div id="contact-linkedin" class="dropdown-card" style="border-color: rgba(10, 102, 194, 0.4);">
+                <div style="font-size: 11px; font-family: 'Space Mono', monospace; color: #94a3b8; margin-bottom: 8px;">// UPLINK: LINKEDIN</div>
+                <div style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">SRMIST Candidate</div>
+                <a href="https://linkedin.com" target="_blank" class="action-link">Establish Connection</a>
+              </div>
+            </div>
+
+            <!-- GitHub Dropbox (Contact) -->
+            <div class="dropdown-container">
+              <button class="glass dropdown-trigger" data-brand="#7c6bc9" onclick="toggleDropdown('contact-github')">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c6bc9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                  <span>GITHUB</span>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div id="contact-github" class="dropdown-card" style="border-color: rgba(124, 107, 201, 0.4);">
+                <div style="font-size: 11px; font-family: 'Space Mono', monospace; color: #94a3b8; margin-bottom: 8px;">// UPLINK: GITHUB</div>
+                <div style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">@srmist-firmware</div>
+                <a href="https://github.com" target="_blank" class="action-link">Access Source Repositories</a>
+              </div>
+            </div>
+
+            <!-- LeetCode Dropbox (Contact) -->
+            <div class="dropdown-container">
+              <button class="glass dropdown-trigger" data-brand="#FFA116" onclick="toggleDropdown('contact-leetcode')">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFA116" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span>LEETCODE</span>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div id="contact-leetcode" class="dropdown-card" style="border-color: rgba(255, 161, 22, 0.4);">
+                <div style="font-size: 11px; font-family: 'Space Mono', monospace; color: #94a3b8; margin-bottom: 8px;">// UPLINK: LEETCODE</div>
+                <div style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">@leetcode-eto</div>
+                <a href="https://leetcode.com" target="_blank" class="action-link">Review Algorithmic Scripts</a>
+              </div>
+            </div>
+
+            <!-- GeeksforGeeks Dropbox (Contact) -->
+            <div class="dropdown-container">
+              <button class="glass dropdown-trigger" data-brand="#2F8D46" onclick="toggleDropdown('contact-gfg')">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2F8D46" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                  <span>GEEKSFORGEEKS</span>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div id="contact-gfg" class="dropdown-card" style="border-color: rgba(47, 141, 70, 0.4);">
+                <div style="font-size: 11px; font-family: 'Space Mono', monospace; color: #94a3b8; margin-bottom: 8px;">// UPLINK: GEEKSFORGEEKS</div>
+                <div style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">Alpha Systems Array</div>
+                <a href="https://geeksforgeeks.org" target="_blank" class="action-link">Inspect Academic Notes</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right Side: Glass Input Card -->
+        <div class="contact-col-right">
+          <form onsubmit="handleContactSubmit(event)" class="glass" style="padding: 35px; background: rgba(7, 10, 18, 0.4); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; gap: 20px;">
+            <div style="display: flex; flex-direction: column; gap: 8px; text-align: left;">
+              <label style="font-size: 12px; font-family: 'Space Mono', monospace; color: #22d3ee; letter-spacing: 1px;">// TRANSLATOR_SOURCE</label>
+              <input type="email" required placeholder="Enter your transmission email..." style="width: 100%; background: rgba(7, 10, 18, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px; color: #fff; border-radius: 6px; outline: none; font-family: 'Space Mono', monospace; transition: border-color 0.2s;" onfocus="this.style.borderColor='#22d3ee'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 8px; text-align: left;">
+              <label style="font-size: 12px; font-family: 'Space Mono', monospace; color: #22d3ee; letter-spacing: 1px;">// TRANS_DATA_PAYLOAD</label>
+              <textarea required placeholder="Compile message payload specifications..." style="width: 100%; height: 120px; background: rgba(7, 10, 18, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px; color: #fff; border-radius: 6px; outline: none; resize: none; font-family: 'Space Mono', monospace; transition: border-color 0.2s;" onfocus="this.style.borderColor='#22d3ee'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
+            </div>
+
+            <button type="submit" style="width: 100%; background: #22d3ee; color: #070a12; padding: 14px; border-radius: 6px; font-weight: bold; cursor: pointer; border: none; font-family: 'Orbitron', sans-serif; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(34, 211, 238, 0.2);" onmouseenter="this.style.boxShadow='0 0 20px rgba(34, 211, 238, 0.6)'" onmouseleave="this.style.boxShadow='0 0 10px rgba(34, 211, 238, 0.2)'">
+              SEND MESSAGE PAYLOAD
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- DYNAMIC PROJECT TECHNICAL SPECS OVERLAY MODAL -->
+  <div id="project-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4,6,12,0.9); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 24px;">
+    <div class="glass" style="max-width: 920px; width: 95%; padding: 50px; position: relative; background: #0b0f19; margin: auto; border: 1px solid #22d3ee; animation: modalFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
+      <button onclick="closeSpecsModal()" style="position: absolute; top: 25px; right: 25px; background: none; border: none; color: #94a3b8; cursor: pointer;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      
+      <h3 id="modal-title" style="font-size: 2.2rem; color: #22d3ee; margin-bottom: 25px; font-family: 'Orbitron', sans-serif; font-weight: 700;"></h3>
+      <p id="modal-desc" style="color: #cbd5e1; font-size: 16px; line-height: 1.8; margin-bottom: 30px; text-align: left;"></p>
+      
+      <!-- Stacked Transmission Buttons (Under Description) -->
+      <div style="display: flex; flex-direction: column; gap: 14px; width: 100%; margin: 30px 0;">
+        <a id="modal-linkedin-anchor" href="#" target="_blank" style="text-decoration: none; width: 100%;">
+          <button style="width: 100%; background: #0A66C2; color: #fff; padding: 14px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; border: none; font-family: 'Space Mono', monospace;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            VIEW PROJECT TRANSMISSION (LINKEDIN)
+          </button>
+        </a>
+
+        <a id="modal-github-anchor" href="#" target="_blank" style="text-decoration: none; width: 100%;">
+          <button style="width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 14px; border-radius: 8px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; font-family: 'Space Mono', monospace;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            ACCESS SOURCE REPOSITORY (GITHUB)
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer style="padding: 60px 0 100px 0; font-family: 'Space Mono', monospace; font-size: 13px; color: #64748b; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 80px; position: relative; z-index: 2;">
+    <p>© 2026 Ricardo Lopez. All node vectors calibrated.</p>
+  </footer>
+
+  <!-- ─────────────────────────── COMPREHENSIVE SCRIPTING ─────────────────────────── -->
+  <script>
+    // 1. PROJECTS DATABASE
+    const PROJECTS = [
+      {
+        title: "PestRover SemiAuto",
+        desc: "Agricultural precision autonomous rover utilizing an integrated firmware-driven sensor matrix.",
+        fullDesc: "An advanced semi-autonomous agricultural tracking rover built natively on a 4-wheel differential drive vehicle architecture. Side motors are interconnected via isolated high-current motor drivers to execute precision edge navigation. Integrates environmental sensor modules for macro data logging and automated deep field monitoring.",
+        tags: ["Embedded C", "Hardware Design", "4-Wheel Drive", "Motor Drivers"],
+        accent: "#22d3ee",
+        linkedinUrl: "https://linkedin.com",
+        githubUrl: "https://github.com"
+      },
+      {
+        title: "CarbonKlick",
+        desc: "Real-time macro carbon emissions tracking footprint firmware stack and network matrix layer.",
+        fullDesc: "An Internet-of-Things (IoT) remote data monitoring network focused on indexing local environmental carbon output parameters. Features deep localized calibration nodes utilizing custom microcontrollers, pushing processed emissions arrays to a low-overhead real-time cloud data pipeline over encrypted communication layers.",
+        tags: ["IoT Arrays", "Carbon Logs", "Firmware", "Sensors"],
+        accent: "#34d399",
+        linkedinUrl: "https://linkedin.com",
+        githubUrl: "https://github.com"
+      },
+      {
+        title: "Eye-Pulse",
+        desc: "Intraocular pressure monitoring system using advanced ultrasound pulse echo technologies.",
+        fullDesc: "A medical hardware integration system designed to compute fine intraocular pressure milestones non-invasively. Utilizes high-frequency ultrasound parsing echo metrics based on low-latency logic flowcharts rather than traditional optical or mechanical transduction, lowering mechanical component overhead and improving system accuracy thresholds.",
+        tags: ["Ultrasound UI", "Logic Flow", "Signal Parsing", "Biomedical"],
+        accent: "#a78bfa",
+        linkedinUrl: "https://linkedin.com",
+        githubUrl: "https://github.com"
+      },
+      {
+        title: "Mann-Nanban",
+        desc: "AI-integrated agroforestry planning system optimized with smart sensory arrays.",
+        fullDesc: "An AI-assisted planning tool designed to maximize soil yield optimization parameters in complex agroforestry plots. Combines deep hardware sensory probes logging macro chemical values with predictive software modeling, providing agricultural administrators with automated deployment layouts and dynamic resource scheduling metrics.",
+        tags: ["Agroforestry", "Predictive AI", "Microcontrollers", "Sensors"],
+        accent: "#f43f5e",
+        linkedinUrl: "https://linkedin.com",
+        githubUrl: "https://github.com"
+      },
+      {
+        title: "Cryptera",
+        desc: "Decentralized Web3 Ethereum-based network protocol for cross-border remittance tasks.",
+        fullDesc: "A secure blockchain-based international payment system layer built on the Ethereum virtual machinery framework. Features low-gas optimization schemes to carry out wealth processing and asset migration rules, enabling cross-border value balancing without intermediate processing gatekeepers.",
+        tags: ["Solidity", "Web3 Core", "Ethereum Network", "Remittance"],
+        accent: "#fbbf24",
+        linkedinUrl: "https://linkedin.com",
+        githubUrl: "https://github.com"
+      }
+    ];
+
+    // 2. ACHIEVEMENTS DATABASE
+    const ACHIEVEMENTS = [
+      { year: "2024", title: "Smart India Hackathon (SIH) Winner", desc: "Emerged as Grand Finale track champion with Team Alpha Century for producing the Intelligent Bio-Monitoring Assistance System.", color: "#34d399" },
+      { year: "2025", title: "Technoathon National Champion", desc: "Secured 1st Place overall at the national competitive hackathon event hosted by St. Joseph College of Engineering.", color: "#22d3ee" },
+      { year: "2025", title: "Shadow Project Internship Selection", desc: "Selected for and cleared the highly competitive industry training track at Beau Roi.", color: "#a78bfa" }
+    ];
+
+    // 3. SKILLS DATABASE
+    const SKILL_CATS = [
+      { name: "Embedded Systems", color: "#22d3ee", skills: ["ESP32", "ESP8266", "STM32", "Arduino", "RISC-V", "Circuit Design", "PCB Layout", "4-Wheel Differential Drive"] },
+      { name: "Firmware & Protocols", color: "#34d399", skills: ["FreeRTOS", "Zephyr", "Bare-Metal C", "Device Drivers", "JTAG Debugging", "MQTT", "BLE 5.0", "LoRaWAN", "Zigbee", "CAN Bus", "ModBus"] },
+      { name: "Sensor Matrix Calibration", color: "#a78bfa", skills: ["NPK Sensors", "MQ-Series Gas Probes", "Ultrasonic Transducers", "Pulse Echo Logic"] },
+      { name: "Core Languages", color: "#22d3ee", skills: ["C / C++", "Python", "Solidity", "Rust", "JavaScript", "Assembly"] }
+    ];
+
+    // 4. SEQUENTIAL ENTRANCE MODAL DIAGNOSTICS LOGIC
+    const diagnosticLines = [
+      "// SYSTEM BOOT CHANNELS LOADED",
+      "// RUNNING CORE SYSTEM DIAGNOSTICS...",
+      "// EMBEDDED ECOSYSTEM ARRAYS: RESOLVED",
+      "// AUTOMATION CONTROL FLOWCHART: CALIBRATED",
+      "// COMS UPLINK TRANSMISSION STATUS: ACTIVE",
+      "// STATUS: SYSTEMS STACK FULLY OPERATIONAL //"
+    ];
+
+    let logIdx = 0;
+    const bootLogsEl = document.getElementById("boot-logs");
+    
+    function loadLogs() {
+      if (logIdx < diagnosticLines.length) {
+        const line = document.createElement("div");
+        line.textContent = diagnosticLines[logIdx];
+        if (logIdx === diagnosticLines.length - 1) {
+          line.style.color = "#22d3ee";
+        }
+        bootLogsEl.appendChild(line);
+        logIdx++;
+        setTimeout(loadLogs, 300);
+      } else {
+        const cursor = document.createElement("div");
+        cursor.className = "animate-blink";
+        cursor.style.width = "8px";
+        cursor.style.height = "15px";
+        cursor.style.backgroundColor = "#34d399";
+        cursor.style.display = "inline-block";
+        bootLogsEl.appendChild(cursor);
+        
+        document.getElementById("enter-btn-container").style.display = "block";
+      }
+    }
+
+    // Initialize Boot logs on mount
+    document.addEventListener("DOMContentLoaded", loadLogs);
+
+    // Fadeout Entrance modal
+    const entranceModal = document.getElementById("entrance-modal");
+    document.getElementById("enter-btn").addEventListener("click", () => {
+      entranceModal.style.opacity = "0";
+      entranceModal.style.transform = "scale(1.05)";
+      setTimeout(() => {
+        entranceModal.style.display = "none";
+        // Start Typewriter effect when entered
+        startTypewriter();
+      }, 600);
+    });
+
+    // 5. TYPEWRITER EFFECT
+    const typewriterText = "Electronics & Communication Engineer";
+    const typewriterEl = document.getElementById("typewriter");
+    let typewriterIdx = 0;
+    
+    function startTypewriter() {
+      if (typewriterIdx < typewriterText.length) {
+        typewriterEl.textContent += typewriterText.charAt(typewriterIdx);
+        typewriterIdx++;
+        setTimeout(startTypewriter, 50);
+      }
+    }
+
+    // 6. TOGGLE INDEPENDENT DROPBOXES
+    function toggleDropdown(id) {
+      const activeCard = document.getElementById(id);
+      const isOpen = activeCard.style.display === "block";
+      
+      // Close all dropdowns
+      document.querySelectorAll(".dropdown-card").forEach(card => {
+        card.style.display = "none";
+      });
+      document.querySelectorAll(".dropdown-trigger").forEach(btn => {
+        btn.style.borderColor = "rgba(255, 255, 255, 0.08)";
+        const arrow = btn.querySelector("svg:last-child");
+        if (arrow) arrow.style.transform = "rotate(0deg)";
+      });
+      
+      // Toggle the target dropdown
+      if (!isOpen) {
+        activeCard.style.display = "block";
+        const triggerBtn = activeCard.parentElement.querySelector(".dropdown-trigger");
+        const brandColor = triggerBtn.getAttribute("data-brand");
+        triggerBtn.style.borderColor = brandColor;
+        const arrow = triggerBtn.querySelector("svg:last-child");
+        if (arrow) arrow.style.transform = "rotate(180deg)";
+      }
+    }
+
+    // Close dropdowns on outside click
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".dropdown-container")) {
+        document.querySelectorAll(".dropdown-card").forEach(card => {
+          card.style.display = "none";
+        });
+        document.querySelectorAll(".dropdown-trigger").forEach(btn => {
+          btn.style.borderColor = "rgba(255, 255, 255, 0.08)";
+          const arrow = btn.querySelector("svg:last-child");
+          if (arrow) arrow.style.transform = "rotate(0deg)";
+        });
+      }
+    });
+
+    // 7. RENDER PROJECTS
+    const projectsContainer = document.getElementById("projects-container");
+    PROJECTS.forEach((proj, idx) => {
+      const card = document.createElement("div");
+      card.className = "glass";
+      card.style.padding = "35px";
+      card.style.display = "flex";
+      card.style.flexDirection = "column";
+      card.style.justifyContent = "space-between";
+      card.style.minHeight = "300px";
+      card.style.textAlign = "left";
+
+      const tagsHTML = proj.tags.map(t => `<span style="font-size: 11px; font-family: 'Space Mono', monospace; background: rgba(255,255,255,0.06); padding: 5px 10px; border-radius: 6px; color: #cbd5e1;">${t}</span>`).join(" ");
+
+      card.innerHTML = `
+        <div>
+          <h3 style="font-size: 1.5rem; color: ${proj.accent}; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">${proj.title}</h3>
+          <p style="color: #94a3b8; font-size: 15px; line-height: 1.6; margin-bottom: 25px;">${proj.desc}</p>
+        </div>
+        <div>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px;">
+            ${tagsHTML}
+          </div>
+          <button onclick="openSpecsModal(${idx})" style="background: none; border: 1px solid ${proj.accent}; color: ${proj.accent}; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px; width: 100%; letter-spacing: 1px; transition: all 0.2s;">VIEW STRUCTURAL SPECS</button>
+        </div>
+      `;
+      projectsContainer.appendChild(card);
+    });
+
+    // 8. RENDER ACHIEVEMENTS
+    const achievementsContainer = document.getElementById("achievements-container");
+    ACHIEVEMENTS.forEach(ach => {
+      const row = document.createElement("div");
+      row.className = "glass";
+      row.style.padding = "35px 40px";
+      row.style.display = "flex";
+      row.style.gap = "35px";
+      row.style.alignItems = "center";
+      row.style.textAlign = "left";
+
+      row.innerHTML = `
+        <div style="background: rgba(255,255,255,0.04); padding: 20px; border-radius: 14px; display: flex; align-items: center; justify-content: center;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="${ach.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+        </div>
+        <div style="flex: 1;">
+          <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+            <span style="font-family: 'Space Mono', monospace; color: ${ach.color}; font-weight: 700;">[${ach.year}]</span>
+            <h3 style="font-size: 1.4rem; color: #fff; font-family: 'Orbitron', sans-serif;">${ach.title}</h3>
+          </div>
+          <p style="color: #94a3b8; font-size: 15px; margin-top: 10px; line-height: 1.6;">${ach.desc}</p>
+        </div>
+      `;
+      achievementsContainer.appendChild(row);
+    });
+
+    // 9. RENDER SKILLS
+    const skillsContainer = document.getElementById("skills-container");
+    SKILL_CATS.forEach(cat => {
+      const card = document.createElement("div");
+      card.className = "glass";
+      card.style.padding = "35px";
+      card.style.textAlign = "left";
+
+      const skillsHTML = cat.skills.map(sk => `<span style="padding: 8px 16px; background: rgba(7,10,18,0.5); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; font-size: 14px; color: #cbd5e1; font-family: 'Space Mono', monospace;">${sk}</span>`).join(" ");
+
+      card.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${cat.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>
+          <h3 style="font-size: 1.3rem; font-family: 'Orbitron', sans-serif; color: #fff;">${cat.name}</h3>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+          ${skillsHTML}
+        </div>
+      `;
+      skillsContainer.appendChild(card);
+    });
+
+    // 10. PROJECT SPECIFICATIONS OVERLAY MODAL
+    const modalEl = document.getElementById("project-modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalDesc = document.getElementById("modal-desc");
+    const modalLinkedinAnchor = document.getElementById("modal-linkedin-anchor");
+    const modalGithubAnchor = document.getElementById("modal-github-anchor");
+
+    function openSpecsModal(idx) {
+      const proj = PROJECTS[idx];
+      modalTitle.textContent = proj.title;
+      modalTitle.style.color = proj.accent;
+      modalDesc.textContent = proj.fullDesc;
+      modalEl.style.borderColor = proj.accent;
+      
+      modalLinkedinAnchor.setAttribute("href", proj.linkedinUrl);
+      modalGithubAnchor.setAttribute("href", proj.githubUrl);
+      
+      modalEl.style.display = "flex";
+    }
+
+    function closeSpecsModal() {
+      modalEl.style.display = "none";
+    }
+
+    // Close spec modal on background click
+    modalEl.addEventListener("click", (e) => {
+      if (e.target === modalEl) closeSpecsModal();
+    });
+
+    // 11. SCROLLSPY HIGHLIGHTS
+    const navLinks = document.querySelectorAll(".nav-link");
+    const sections = document.querySelectorAll("section");
+    
+    window.addEventListener("scroll", () => {
+      let current = "about";
+      const scrollPos = window.scrollY + window.innerHeight * 0.35;
+      
+      sections.forEach(sec => {
+        if (sec.offsetTop <= scrollPos) {
+          current = sec.getAttribute("id");
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove("nav-active");
+        if (link.getAttribute("data-section") === current) {
+          link.classList.add("nav-active");
+        }
+      });
+    });
+
+    // 12. CONTACT COMPILER SUBMISSION
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      alert("Message transmission payload sent successfully!");
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>

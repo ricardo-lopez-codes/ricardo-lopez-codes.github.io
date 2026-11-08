@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0B0B0C;
+  --foreground: #FAFAFA;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom crimson scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0B0B0C;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(220, 20, 60, 0.25);
+  border-radius: 9999px;
+  border: 1px solid #0B0B0C;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(220, 20, 60, 0.55);
+  box-shadow: 0 0 6px rgba(220, 20, 60, 0.4);
+}
+
+/* Smooth selection glows in crimson */
+::selection {
+  background: rgba(220, 20, 60, 0.3);
+  color: #FFFFFF;
+}
+
+/* Custom Orbit Animations for Hero profile */
+@keyframes orbit-1 {
+  0% {
+    transform: rotateX(65deg) rotateY(15deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(65deg) rotateY(15deg) rotateZ(360deg);
+  }
+}
+
+@keyframes orbit-2 {
+  0% {
+    transform: rotateX(45deg) rotateY(-35deg) rotateZ(360deg);
+  }
+  100% {
+    transform: rotateX(45deg) rotateY(-35deg) rotateZ(0deg);
+  }
+}
+
+@keyframes orbit-3 {
+  0% {
+    transform: rotateX(25deg) rotateY(55deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(25deg) rotateY(55deg) rotateZ(360deg);
+  }
+}
+
+.animate-orbit-1 {
+  animation: orbit-1 6s linear infinite;
+}
+
+.animate-orbit-2 {
+  animation: orbit-2 8s linear infinite;
+}
+
+.animate-orbit-3 {
+  animation: orbit-3 10s linear infinite;
+}
+
+/* CPU PCB trace crawling dot animation */
+@keyframes pcb-crawl {
+  0% {
+    stroke-dashoffset: 120;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-pcb-crawl {
+  stroke-dasharray: 6 18;
+  animation: pcb-crawl 4.5s linear infinite;
+}
+
+/* Neon Crimson Glow Utils */
+.glow-crimson {
+  box-shadow: 0 0 15px rgba(220, 20, 60, 0.25);
+  border-color: rgba(220, 20, 60, 0.4) !important;
+}
+
+.glow-crimson-hover:hover {
+  box-shadow: 0 0 25px rgba(220, 20, 60, 0.45);
+  border-color: rgba(220, 20, 60, 0.7) !important;
+}
+
+.text-glow-crimson {
+  text-shadow: 0 0 8px rgba(220, 20, 60, 0.6);
+}
+
+/* Continuous Left-to-Right Marquee Loop Animation */
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 35s linear infinite;
+}
+
+/* Subtle Vertical Scroll Indicator Pulse */
+@keyframes scroll-dot {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+}
+
+.animate-scroll-dot {
+  animation: scroll-dot 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+/* Accessibility: prefers-reduced-motion handling */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
