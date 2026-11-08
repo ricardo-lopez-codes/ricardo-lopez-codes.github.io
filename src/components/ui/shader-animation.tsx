@@ -33,7 +33,7 @@ export function ShaderAnimation({ className, style, active = true, duration = 2.
       }
     `
 
-    // Fragment shader with smooth fadeout in sync with total duration
+    // Fragment shader with transparent background and additive glow
     const fragmentShader = `
       #define TWO_PI 6.2831853072
       #define PI 3.14159265359
@@ -54,11 +54,12 @@ export function ShaderAnimation({ className, style, active = true, duration = 2.
           }
         }
 
-        // Smooth fade out towards the 2.0s mark (between 80% and 100% of duration)
+        // Smooth fade out towards the 2.0s mark
         float fade = 1.0 - smoothstep(0.8, 1.0, progress);
         color *= clamp(fade, 0.0, 1.0);
         
-        gl_FragColor = vec4(color[0], color[1], color[2], 1.0);
+        float alpha = clamp(max(color.r, max(color.g, color.b)), 0.0, 1.0);
+        gl_FragColor = vec4(color, alpha);
       }
     `
 
@@ -78,13 +79,16 @@ export function ShaderAnimation({ className, style, active = true, duration = 2.
       uniforms: uniforms,
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
     })
 
     const mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true })
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
     renderer.setPixelRatio(window.devicePixelRatio)
+    renderer.setClearColor(0x000000, 0) // transparent clear color
 
     container.appendChild(renderer.domElement)
 
@@ -159,7 +163,7 @@ export function ShaderAnimation({ className, style, active = true, duration = 2.
       ref={containerRef}
       className={className || "w-full h-screen"}
       style={{
-        background: "#000",
+        background: "transparent",
         overflow: "hidden",
         ...style,
       }}
