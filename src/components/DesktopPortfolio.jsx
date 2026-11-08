@@ -805,7 +805,7 @@ export default function DesktopPortfolio() {
   }, []);
 
   return (
-    <div style={{ background: "radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%)", minHeight: "100vh", position: "relative", paddingBottom: "120px" }} className="w-full select-none min-h-screen">
+    <div style={{ background: "#000000", minHeight: "100vh", position: "relative", paddingBottom: "120px" }} className="w-full select-none min-h-screen">
       <ParticleBackground />
       <GlobalStyles />
       
@@ -813,7 +813,7 @@ export default function DesktopPortfolio() {
       <CinematicHero />
 
       {/* NAVBAR: Ricardo_Lopez // BRANDING + SEMI-TRANSPARENT HUD */}
-      <nav className="sticky top-0 z-50 w-full bg-[#0b0f19]/70 backdrop-blur-md border-b border-white/10">
+      <nav className="sticky top-0 z-50 w-full bg-black/80 backdrop-blur-md border-b border-white/10">
         <div 
           style={{ 
             maxWidth: "1240px", 

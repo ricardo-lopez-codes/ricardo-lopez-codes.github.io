@@ -30,33 +30,14 @@ export default function CinematicHero() {
   return (
     <header 
       id="hero"
-      className="relative w-full h-[100dvh] min-h-[680px] flex flex-col justify-between items-center overflow-hidden bg-[#000] select-none text-white"
+      className="relative w-full h-[100dvh] min-h-[680px] flex flex-col justify-between items-center overflow-hidden bg-black select-none text-white"
     >
-      {/* ───────────────── THREE.JS SHADER ANIMATION BACKGROUND LAYER ───────────────── */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-85">
+      {/* ───────────────── THREE.JS SHADER ANIMATION: BROUGHT TO FOREFRONT ───────────────── */}
+      <div className="absolute inset-0 z-30 pointer-events-none opacity-100 mix-blend-screen">
         <ShaderAnimation className="w-full h-full" />
       </div>
 
-      {/* ───────────────── SUBTLE OVERLAY FOR TEXT CONTRAST & HUD INTEGRATION ───────────────── */}
-      <div 
-        className="absolute inset-0 z-10 pointer-events-none"
-        style={{
-          background: "radial-gradient(circle at 50% 50%, rgba(3, 5, 8, 0.45) 0%, rgba(2, 6, 23, 0.75) 100%)",
-        }}
-      />
-
-      {/* Delicate geometric grid overlay */}
-      <div 
-        className="absolute inset-0 z-10 pointer-events-none opacity-[0.035]"
-        style={{
-          backgroundImage: "linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-          maskImage: "radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%)",
-          WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%)"
-        }}
-      />
-
-      {/* ───────────────── TOP HUD / STATUS META BAR ───────────────── */}
+      {/* ───────────────── TOP HUD / STATUS META BAR (z-20) ───────────────── */}
       <div 
         className={`w-full max-w-7xl px-6 md:px-12 pt-6 md:pt-8 flex items-center justify-between z-20 transition-all duration-700 ${
           mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
@@ -74,18 +55,18 @@ export default function CinematicHero() {
         </div>
 
         {/* Right: Live Status badge */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/60 border border-cyan-400/30 backdrop-blur-md shadow-[0_0_15px_rgba(34,211,238,0.15)]">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/80 border border-zinc-800 backdrop-blur-md">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
           </span>
-          <span className="font-mono text-[9px] sm:text-[11px] text-cyan-200 tracking-widest uppercase font-medium">
+          <span className="font-mono text-[9px] sm:text-[11px] text-zinc-200 tracking-widest uppercase font-medium">
             ECE & INTELLIGENT SYSTEMS
           </span>
         </div>
       </div>
 
-      {/* ───────────────── CENTER CINEMATIC HERO STAGE ───────────────── */}
+      {/* ───────────────── CENTER CINEMATIC HERO STAGE (z-20) ───────────────── */}
       <div className="relative z-20 flex flex-col items-center justify-center text-center px-4 sm:px-6 max-w-5xl my-auto py-6">
         
         {/* Top Symmetrical Expanding Accent Hairline */}
@@ -118,14 +99,14 @@ export default function CinematicHero() {
             letterSpacing: "-0.02em"
           }}
         >
-          <span className="bg-gradient-to-b from-white via-slate-100 to-slate-300 bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(34,211,238,0.4)]">
+          <span className="bg-gradient-to-b from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(255,255,255,0.3)]">
             BUILDING WHAT'S NEXT.
           </span>
         </h1>
 
         {/* SUPPORTING TEXT */}
         <p 
-          className={`font-mono text-zinc-200 text-xs sm:text-sm md:text-base lg:text-lg max-w-2xl leading-relaxed mt-5 sm:mt-7 text-center font-normal px-2 transition-all duration-700 delay-350 drop-shadow ${
+          className={`font-mono text-zinc-300 text-xs sm:text-sm md:text-base lg:text-lg max-w-2xl leading-relaxed mt-5 sm:mt-7 text-center font-normal px-2 transition-all duration-700 delay-350 drop-shadow ${
             mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
@@ -141,7 +122,7 @@ export default function CinematicHero() {
           {engineeringDomains.map((domain, idx) => (
             <span
               key={idx}
-              className="px-3 py-1 rounded-md text-[10px] sm:text-xs font-mono text-zinc-200 bg-slate-900/60 border border-cyan-400/20 tracking-wider backdrop-blur-md transition-all duration-200 hover:border-cyan-400 hover:text-cyan-300 hover:shadow-[0_0_12px_rgba(34,211,238,0.3)]"
+              className="px-3 py-1 rounded-md text-[10px] sm:text-xs font-mono text-zinc-200 bg-black/80 border border-zinc-800 tracking-wider backdrop-blur-md transition-all duration-200 hover:border-cyan-400 hover:text-cyan-300 hover:shadow-[0_0_12px_rgba(34,211,238,0.3)]"
             >
               {domain}
             </span>
@@ -157,7 +138,7 @@ export default function CinematicHero() {
           {/* Primary Action Button: EXPLORE MY WORK */}
           <button
             onClick={() => scrollToSection("projects")}
-            className="group relative inline-flex items-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-cyan-400 text-slate-950 font-mono text-xs sm:text-sm font-bold tracking-widest uppercase transition-all duration-300 hover:bg-cyan-300 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-[0.98] cursor-pointer"
+            className="group relative inline-flex items-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-cyan-400 text-black font-mono text-xs sm:text-sm font-bold tracking-widest uppercase transition-all duration-300 hover:bg-cyan-300 hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] active:scale-[0.98] cursor-pointer"
           >
             <span>EXPLORE MY WORK</span>
             <ArrowDown size={16} className="transition-transform duration-300 group-hover:translate-y-0.5" />
@@ -166,7 +147,7 @@ export default function CinematicHero() {
           {/* Secondary Action Button: ABOUT ME */}
           <button
             onClick={() => scrollToSection("about")}
-            className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-slate-900/60 text-zinc-100 border border-cyan-400/30 font-mono text-xs sm:text-sm font-semibold tracking-widest uppercase backdrop-blur-md transition-all duration-300 hover:border-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/[0.1] hover:shadow-[0_0_15px_rgba(34,211,238,0.25)] active:scale-[0.98] cursor-pointer"
+            className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-black/80 text-zinc-100 border border-zinc-700 font-mono text-xs sm:text-sm font-semibold tracking-widest uppercase backdrop-blur-md transition-all duration-300 hover:border-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/[0.1] hover:shadow-[0_0_15px_rgba(34,211,238,0.25)] active:scale-[0.98] cursor-pointer"
           >
             <span>ABOUT ME</span>
           </button>
@@ -181,7 +162,7 @@ export default function CinematicHero() {
 
       </div>
 
-      {/* ───────────────── BOTTOM HUD / SCROLL INDICATOR ───────────────── */}
+      {/* ───────────────── BOTTOM HUD / SCROLL INDICATOR (z-20) ───────────────── */}
       <div 
         className={`w-full max-w-7xl px-6 md:px-12 pb-6 md:pb-8 flex items-center justify-between z-20 transition-all duration-700 delay-700 ${
           mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
@@ -203,7 +184,7 @@ export default function CinematicHero() {
           <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-zinc-300 group-hover:text-cyan-400 transition-colors">
             SCROLL TO EXPLORE
           </span>
-          <div className="w-5 h-9 rounded-full border border-cyan-400/40 flex items-start justify-center p-1 group-hover:border-cyan-400 transition-colors bg-slate-950/40 backdrop-blur-sm">
+          <div className="w-5 h-9 rounded-full border border-zinc-700 flex items-start justify-center p-1 group-hover:border-cyan-400 transition-colors bg-black/60 backdrop-blur-sm">
             <div className="w-1.5 h-2.5 rounded-full bg-cyan-400 animate-scroll-dot" />
           </div>
         </button>

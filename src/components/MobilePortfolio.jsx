@@ -781,7 +781,7 @@ export default function MobilePortfolio() {
   }, []);
 
   return (
-    <div style={{ background: "radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%)", minHeight: "100vh", position: "relative", paddingBottom: "120px" }} className="w-full select-none min-h-screen">
+    <div style={{ background: "#000000", minHeight: "100vh", position: "relative", paddingBottom: "120px" }} className="w-full select-none min-h-screen">
       <ParticleBackground />
       <GlobalStyles />
       
@@ -789,7 +789,7 @@ export default function MobilePortfolio() {
       <CinematicHero />
 
       {/* NAVBAR: MOBILE HAMBURGER MENU SYSTEM */}
-      <nav className="sticky top-0 left-0 w-full z-50 bg-[#0b0f19]/80 backdrop-blur-md border-b border-white/10 px-6 py-4" style={{ position: "sticky", top: 0, left: 0, width: "100%", zIndex: 50, background: "rgba(11, 15, 25, 0.8)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(255, 255, 255, 0.1)", padding: "16px 24px" }}>
+      <nav className="sticky top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-white/10 px-6 py-4" style={{ position: "sticky", top: 0, left: 0, width: "100%", zIndex: 50, background: "rgba(0, 0, 0, 0.9)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(255, 255, 255, 0.1)", padding: "16px 24px" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: "16px", width: "100%" }}>
           {/* Hamburger Button */}
           <button 
