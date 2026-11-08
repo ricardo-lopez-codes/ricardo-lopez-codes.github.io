@@ -6,7 +6,7 @@ import { ShaderAnimation } from "@/components/ui/shader-animation";
 
 // Exactly 10 languages: Starting with Tamil, concluding on English
 const words = [
-  "வணக்கம்",      // 1. Tamil (First: 188ms)
+  "வணக்கம்",      // 1. Tamil (First: 100ms)
   "Bonjour",      // 2. French
   "Ciao",         // 3. Italian
   "Olá",          // 4. Portuguese
@@ -14,13 +14,9 @@ const words = [
   "مرحبا",        // 6. Arabic
   "¿Qué onda?",   // 7. Mexican Spanish
   "안녕하세요",    // 8. Korean
-  "Guten tag",    // 9. German (Intermediate 8 words: 1500ms total, 187.5ms each)
-  "Hello",        // 10. English (Final ending greeting: 250ms hold)
+  "Guten tag",    // 9. German (All other 8 intermediate words within 500ms total, 62.5ms each)
+  "Hello",        // 10. English (Last word: 150ms hold)
 ];
-
-// Exact total duration: 188ms + 1500ms + 250ms + 450ms fade = 2388ms (2.388s)
-const FADE_DURATION = 0.45;
-const TOTAL_DURATION_SEC = 2.388;
 
 const opacityVariant: Variants = {
   initial: {
@@ -30,7 +26,7 @@ const opacityVariant: Variants = {
   enter: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.1, ease: "easeOut" },
+    transition: { duration: 0.05, ease: "easeOut" },
   },
 };
 
@@ -40,7 +36,7 @@ const fadeOutVariant: Variants = {
   },
   exit: {
     opacity: 0,
-    transition: { duration: FADE_DURATION, ease: "easeInOut" },
+    transition: { duration: 0.35, ease: "easeInOut" },
   },
 };
 
@@ -53,18 +49,18 @@ export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // 1. Final word hold: 250ms then trigger the 450ms fade-out
+    // 1. Last word hold: exactly 150ms
     if (index === words.length - 1) {
       const exitTimer = setTimeout(() => {
         setIsLoading(false);
         if (onComplete) onComplete();
-      }, 250);
+      }, 150);
       return () => clearTimeout(exitTimer);
     }
 
-    // 2. First word hold: 188ms
-    // 3. Intermediate 8 words: 1500ms total (187.5ms each)
-    const stepDuration = index === 0 ? 188 : 1500 / (words.length - 2);
+    // 2. First word: 100ms
+    // 3. All other 8 intermediate words within 500ms total (500 / 8 = 62.5ms each)
+    const stepDuration = index === 0 ? 100 : 500 / (words.length - 2);
 
     const timer = setTimeout(() => {
       setIndex((prev) => prev + 1);
@@ -83,7 +79,7 @@ export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-black text-white overflow-hidden px-4 pointer-events-auto"
           style={{ height: "100vh" }}
         >
-          {/* ───────────────── 1. GREETING WORDS & DOT (PROMINENT FOREGROUND LAYER) ───────────────── */}
+          {/* ───────────────── 1. GREETING WORDS & DOT (FAST-PACED FOREGROUND LAYER) ───────────────── */}
           <motion.div
             key={index}
             variants={opacityVariant}
@@ -114,9 +110,9 @@ export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
             <span>{words[index]}</span>
           </motion.div>
 
-          {/* ───────────────── 2. SHADER ANIMATION: PERFECTLY SYNCHRONIZED TO END AT THE EXACT SAME INSTANT ───────────────── */}
+          {/* ───────────────── 2. SHADER ANIMATION: TIME PRESERVED AT 2.388s ───────────────── */}
           <div className="absolute inset-0 z-30 pointer-events-none opacity-100 mix-blend-screen">
-            <ShaderAnimation className="w-full h-full" duration={TOTAL_DURATION_SEC} active={true} />
+            <ShaderAnimation className="w-full h-full" duration={2.388} active={true} />
           </div>
         </motion.div>
       )}
