@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import { ShaderAnimation } from "@/components/ui/shader-animation";
 
 const words = [
   "வணக்கம்",      // 1. Tamil (First)
@@ -120,14 +121,20 @@ export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black text-white overflow-hidden px-4 pointer-events-auto"
           style={{ height: "100vh" }}
         >
+          {/* ───────────────── SHADER ANIMATION ON TOP OF GREETING ───────────────── */}
+          <div className="absolute inset-0 z-30 pointer-events-none opacity-100 mix-blend-screen">
+            <ShaderAnimation className="w-full h-full" duration={2.0} active={true} />
+          </div>
+
           {dimensions.width > 0 && (
             <>
+              {/* Words Container behind shader canvas */}
               <motion.div
                 key={index}
                 variants={opacityVariant}
                 initial="initial"
                 animate="enter"
-                className="inline-flex items-center justify-center font-normal select-none z-10 whitespace-nowrap text-center"
+                className="relative inline-flex items-center justify-center font-normal select-none z-10 whitespace-nowrap text-center"
                 style={{
                   fontFamily: "'Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
                   fontSize: "clamp(1.5rem, 4vw, 4.2rem)",
@@ -151,7 +158,7 @@ export function GreetingAnimation({ onComplete }: GreetingAnimationProps = {}) {
                 <span>{words[index]}</span>
               </motion.div>
               <svg
-                className="absolute top-0 left-0 w-full pointer-events-none"
+                className="absolute top-0 left-0 w-full pointer-events-none z-20"
                 style={{ height: "calc(100% + 300px)" }}
               >
                 <motion.path
