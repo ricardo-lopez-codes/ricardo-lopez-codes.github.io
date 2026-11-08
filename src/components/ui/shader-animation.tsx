@@ -30,7 +30,7 @@ export function ShaderAnimation({ className, style }: ShaderAnimationProps = {})
       }
     `
 
-    // Fragment shader
+    // Fragment shader with one-shot fadeout transition once cycle completes
     const fragmentShader = `
       #define TWO_PI 6.2831853072
       #define PI 3.14159265359
@@ -41,7 +41,7 @@ export function ShaderAnimation({ className, style }: ShaderAnimationProps = {})
 
       void main(void) {
         vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
-        float t = time*0.05;
+        float t = time * 0.05;
         float lineWidth = 0.002;
 
         vec3 color = vec3(0.0);
@@ -50,8 +50,12 @@ export function ShaderAnimation({ className, style }: ShaderAnimationProps = {})
             color[j] += lineWidth*float(i*i) / abs(fract(t - 0.01*float(j)+float(i)*0.01)*5.0 - length(uv) + mod(uv.x+uv.y, 0.2));
           }
         }
+
+        // Smoothly fade out at the end of the one single cycle (t reaches 1.0, or time reaches 20.0)
+        float fade = 1.0 - smoothstep(16.0, 20.0, time);
+        color *= clamp(fade, 0.0, 1.0);
         
-        gl_FragColor = vec4(color[0],color[1],color[2],1.0);
+        gl_FragColor = vec4(color[0], color[1], color[2], 1.0);
       }
     `
 
@@ -63,7 +67,7 @@ export function ShaderAnimation({ className, style }: ShaderAnimationProps = {})
     const geometry = new THREE.PlaneGeometry(2, 2)
 
     const uniforms = {
-      time: { type: "f", value: 1.0 },
+      time: { type: "f", value: 0.0 },
       resolution: { type: "v2", value: new THREE.Vector2() },
     }
 
@@ -94,10 +98,21 @@ export function ShaderAnimation({ className, style }: ShaderAnimationProps = {})
     onWindowResize()
     window.addEventListener("resize", onWindowResize, false)
 
-    // Animation loop
+    // Single run duration threshold: one complete cycle of fract(t) is 1.0/0.05 = 20.0 time units.
+    // Speed: 0.05 / 3 = ~0.01667 (3x slower)
+    const MAX_TIME = 20.0
+    const SPEED = 0.05 / 3.0
+
+    // Animation loop (runs exactly once through the full cycle, then terminates cleanly)
     const animate = () => {
+      if (uniforms.time.value >= MAX_TIME) {
+        uniforms.time.value = MAX_TIME
+        renderer.render(scene, camera)
+        return // End loop: runs only 1 time
+      }
+
       const animationId = requestAnimationFrame(animate)
-      uniforms.time.value += 0.05
+      uniforms.time.value = Math.min(uniforms.time.value + SPEED, MAX_TIME)
       renderer.render(scene, camera)
 
       if (sceneRef.current) {
