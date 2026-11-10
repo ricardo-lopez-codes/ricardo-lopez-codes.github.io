@@ -2657,6 +2657,258 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 }
 </style>
 
+<style id="mobile-responsive-enhancements">
+/* ==========================================================================
+   MY STACK HEADER & MOBILE RESPONSIVENESS UPDATES
+   ========================================================================== */
+
+/* 1. Skills Box Header & Title Styling */
+.mystack-title,
+.MyStackBoard__title {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  font-size: 1.75rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  margin: 0 !important;
+  line-height: 1.1 !important;
+}
+
+.MyStackBoard__asterisk {
+  display: none !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.MyStackBoard {
+  background: #000000 !important;
+}
+
+/* 2. Global Mobile Adaptive Styles (@media (max-width: 768px)) */
+@media (max-width: 768px) {
+  /* --- Fixed Navigation Taskbar --- */
+  .Header__navCapsule,
+  .header-navbar {
+    top: 0.6rem !important;
+    padding: 0.4rem 0.8rem !important;
+    gap: 0.75rem !important;
+    max-width: 96% !important;
+    width: auto !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important; /* Firefox */
+  }
+  .Header__navCapsule::-webkit-scrollbar,
+  .header-navbar::-webkit-scrollbar {
+    display: none !important; /* Safari and Chrome */
+  }
+
+  .Header__nav {
+    gap: 0.75rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  .Header__nav_item a {
+    font-size: 0.75rem !important;
+    padding: 4px 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .ResumeBtn__top,
+  .download-resume-btn {
+    height: 34px !important;
+    padding: 0 0.75rem !important;
+    font-size: 0.72rem !important;
+    flex-shrink: 0 !important;
+    gap: 0.35rem !important;
+  }
+
+  .ResumeBtn__text {
+    display: inline-block !important;
+    font-size: 0.7rem !important;
+  }
+
+  /* --- Projects Grid: 1-Column Flow --- */
+  .Projects__grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .ProjectCard {
+    padding: 20px !important;
+    border-radius: 18px !important;
+  }
+
+  /* --- Patents Section & Detail Modals --- */
+  .Patents__list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    width: 100% !important;
+  }
+
+  .PatentCard {
+    width: 100% !important;
+  }
+
+  .PatentCard__main {
+    padding: 22px 18px !important;
+  }
+
+  .PatentCard__actionRow {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .PatentCard__expandBtn,
+  .patent-see-details-btn,
+  .PatentCard__downloadBtn {
+    width: 100% !important;
+    justify-content: center !important;
+    min-height: 44px !important;
+  }
+
+  .ProjectModal__backdrop {
+    padding: 10px !important;
+    align-items: center !important;
+  }
+
+  .ProjectModal__dialog {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    max-height: 90vh !important;
+    border-radius: 18px !important;
+    overflow-y: auto !important;
+    padding: 1.25rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .ProjectModal__header {
+    padding: 10px 0 14px 0 !important;
+  }
+
+  .ProjectModal__title {
+    font-size: 1.35rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .ProjectModal__body {
+    padding: 1rem 0 !important;
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    max-height: calc(90vh - 170px) !important;
+    overflow-y: auto !important;
+  }
+
+  .ProjectModal__footer {
+    padding: 14px 0 0 0 !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .ProjectModal__actionBtn {
+    width: 100% !important;
+    justify-content: center !important;
+    min-height: 48px !important;
+  }
+
+  /* --- Contact Section: 1-Column Flow & Touch-friendly Buttons --- */
+  .CyberContactCard {
+    padding: 32px 18px !important;
+    border-radius: 16px !important;
+  }
+
+  .CyberContactCard__grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Stack CONNECT & PROFILES above CONTACT ME message */
+  .CyberContactCard__left {
+    order: 1 !important;
+    width: 100% !important;
+  }
+
+  .CyberContactCard__right {
+    order: 2 !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .CyberContactCard__header {
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .CyberContactCard__emailWrapper {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  .CyberProfilePill,
+  .CyberProfilePill--textOnly {
+    min-height: 48px !important;
+  }
+
+  .CyberProfilePill__btn,
+  .CyberContactCard__emailBtn {
+    min-height: 48px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  /* --- Skills Grid: Wrapping & Flexible Gaps --- */
+  .MyStackBoard {
+    padding: 24px 16px 32px 16px !important;
+    border-radius: 14px !important;
+  }
+
+  .MyStackBoard__header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    margin-bottom: 28px !important;
+    padding-bottom: 16px !important;
+  }
+
+  .MyStackRow {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .MyStackRow__category {
+    font-size: 1.1rem !important;
+  }
+
+  .MyStackRow__items {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+  }
+
+  .MyStackItem {
+    padding: 6px 10px !important;
+    gap: 8px !important;
+  }
+
+  .MyStackItem__name {
+    font-size: 13px !important;
+  }
+}
+</style>
 </head> <body data-page="top"> <div id="loading-overlay" class="Loading__container" style="display: none !important;" data-hidden> <div class="Loading__lottieContainer"> <div id="loading-lottie" class="Loading__lottie undefined"></div> <div id="loading-logo" class="Loading__logo undefined"></div> </div> <div id="loading-text" class="Loading__text">
 Architect worlds<br>that move hearts and spark hope.
 </div> </div> <header class="Header__container header-navbar-wrapper">
