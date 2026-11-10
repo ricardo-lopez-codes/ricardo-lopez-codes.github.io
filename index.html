@@ -2689,60 +2689,356 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   background: #000000 !important;
 }
 
-/* 2. Global Mobile Adaptive Styles (@media (max-width: 768px)) */
+/* Hide mobile hamburger drawer elements on desktop screens (> 768px) */
+.mobile-nav-toggle,
+.mobile-nav-drawer {
+  display: none !important;
+}
+
+/* ==========================================================================
+   2. MOBILE ONLY UPDATES (@media (max-width: 768px))
+   All rules below apply STRICTLY to mobile viewports (<= 768px).
+   Desktop layout, taskbar, project sections, and alignments remain 100% untouched.
+   ========================================================================== */
 @media (max-width: 768px) {
-  /* --- Fixed Navigation Taskbar --- */
+  /* --- 1. Preloader Greeting Centering (Mobile Only) --- */
+  .greeting-preloader,
+  .intro-loader-screen,
+  #greeting-preloader {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    left: 0 !important;
+    top: 0 !important;
+  }
+
+  .intro-loader-screen span,
+  .intro-loader-screen div,
+  .greeting-word-container,
+  .greeting-word-container span,
+  #greeting-wordContainer {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+
+  .greeting-word-container {
+    gap: 12px !important;
+    font-size: 2.2rem !important;
+  }
+
+  .greeting-dot {
+    display: inline-block !important;
+    width: 10px !important;
+    height: 10px !important;
+    min-width: 10px !important;
+    min-height: 10px !important;
+    border-radius: 50% !important;
+    background-color: #ffffff !important;
+    margin-right: 0 !important;
+  }
+
+  #greeting-text {
+    width: auto !important;
+    display: inline-block !important;
+  }
+
+  /* --- 2. Mobile Hamburger Navigation Drawer (Mobile Only) --- */
+  /* Hide the inline horizontal glass capsule taskbar on screens below 768px */
   .Header__navCapsule,
   .header-navbar {
-    top: 0.6rem !important;
-    padding: 0.4rem 0.8rem !important;
-    gap: 0.75rem !important;
-    max-width: 96% !important;
-    width: auto !important;
-    overflow-x: auto !important;
-    white-space: nowrap !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: none !important; /* Firefox */
-  }
-  .Header__navCapsule::-webkit-scrollbar,
-  .header-navbar::-webkit-scrollbar {
-    display: none !important; /* Safari and Chrome */
+    display: none !important;
   }
 
-  .Header__nav {
-    gap: 0.75rem !important;
-    flex-shrink: 0 !important;
+  /* Show floating mobile hamburger button */
+  .mobile-nav-toggle {
+    display: flex !important;
+    position: fixed !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    z-index: 9999999 !important;
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 50% !important;
+    background: rgba(14, 14, 20, 0.85) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    outline: none !important;
+    transition: transform 0.2s ease, background 0.2s ease !important;
   }
 
-  .Header__nav_item a {
-    font-size: 0.75rem !important;
-    padding: 4px 0 !important;
-    white-space: nowrap !important;
+  .mobile-nav-toggle:active {
+    transform: scale(0.92) !important;
   }
 
-  .ResumeBtn__top,
-  .download-resume-btn {
-    height: 34px !important;
-    padding: 0 0.75rem !important;
+  .mobile-nav-toggle svg {
+    width: 22px !important;
+    height: 22px !important;
+    stroke: #ffffff !important;
+    transition: transform 0.3s ease !important;
+  }
+
+  .mobile-nav-toggle[data-open="true"] svg.hamburger-icon {
+    display: none !important;
+  }
+
+  .mobile-nav-toggle[data-open="true"] svg.close-icon {
+    display: block !important;
+  }
+
+  .mobile-nav-toggle[data-open="false"] svg.hamburger-icon {
+    display: block !important;
+  }
+
+  .mobile-nav-toggle[data-open="false"] svg.close-icon {
+    display: none !important;
+  }
+
+  /* Fullscreen Slide-out / Fade-in Mobile Navigation Drawer */
+  .mobile-nav-drawer {
+    display: flex !important;
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9999998 !important;
+    background: rgba(8, 8, 12, 0.96) !important;
+    backdrop-filter: blur(28px) !important;
+    -webkit-backdrop-filter: blur(28px) !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 1.5rem !important;
+    padding: 2rem !important;
+    box-sizing: border-box !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-12px) !important;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s !important;
+  }
+
+  .mobile-nav-drawer[data-open="true"] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
+  }
+
+  .mobile-nav-drawer .mobile-nav-link {
+    font-size: 1.35rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    text-decoration: none !important;
+    text-transform: uppercase !important;
+    padding: 0.5rem 1rem !important;
+    transition: color 0.2s ease, transform 0.2s ease !important;
+    display: block !important;
+  }
+
+  .mobile-nav-drawer .mobile-nav-link:active,
+  .mobile-nav-drawer .mobile-nav-link:hover {
+    color: #38bdf8 !important;
+    transform: scale(1.05) !important;
+  }
+
+  .mobile-nav-drawer .mobile-nav-resume-btn {
+    margin-top: 1rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.6rem !important;
+    background: linear-gradient(135deg, #0284c7, #2563eb) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.05em !important;
+    padding: 0.85rem 1.6rem !important;
+    border-radius: 9999px !important;
+    text-decoration: none !important;
+    box-shadow: 0 4px 18px rgba(37, 99, 235, 0.4) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  }
+
+  .mobile-nav-drawer .mobile-nav-resume-btn:active {
+    transform: scale(0.96) !important;
+  }
+
+  /* --- 3. Projects Section Mobile Rendering & Visibility (Mobile Only) --- */
+  #projects,
+  .projects-section,
+  .SectionContainer__container[data-top_section="mission"] {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    position: relative !important;
+    padding: 2rem 0 !important;
+    display: block !important;
+  }
+
+  .MissionVision__missionContent {
+    height: 0 !important;
+    min-height: 0 !important;
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  .MissionVision__container[data-mission-container],
+  .MissionVision__inner {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    height: auto !important;
+    min-height: auto !important;
+    display: block !important;
+  }
+
+  .Projects__overlayContainer,
+  .projects-section-container,
+  #projects-container {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 2.5rem 1rem !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    overflow: visible !important;
+  }
+
+  /* Override any desktop body-data rules on mobile */
+  body .Projects__overlayContainer,
+  body[data-current_section="vision"] .Projects__overlayContainer,
+  body[data-current_section="vision_out"] .Projects__overlayContainer,
+  body[data-current_section="service_in"] .Projects__overlayContainer,
+  body[data-current_section="service"] .Projects__overlayContainer,
+  body[data-current_section="stellla"] .Projects__overlayContainer,
+  body[data-current_section="works"] .Projects__overlayContainer,
+  body[data-current_section="kv"] .Projects__overlayContainer,
+  body[data-current_section="mission"] .Projects__overlayContainer {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+
+  .Projects__header,
+  .projects-section-header {
+    margin-top: 1rem !important;
+    padding-top: 0 !important;
+    margin-bottom: 24px !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .Projects__headerTitle {
+    font-size: 1.6rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .Projects__headerSubtitle {
     font-size: 0.72rem !important;
-    flex-shrink: 0 !important;
-    gap: 0.35rem !important;
+    letter-spacing: 0.1em !important;
   }
 
-  .ResumeBtn__text {
-    display: inline-block !important;
-    font-size: 0.7rem !important;
-  }
-
-  /* --- Projects Grid: 1-Column Flow --- */
   .Projects__grid {
     grid-template-columns: 1fr !important;
     gap: 20px !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .ProjectCard {
-    padding: 20px !important;
+    padding: 20px 16px !important;
     border-radius: 18px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* --- 4. Contact Card Padding & Screen Margins (Mobile Only) --- */
+  #contact,
+  .Stellla__main {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .CyberContactCard,
+  .contact-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    padding: 28px 16px !important;
+    border-radius: 16px !important;
+  }
+
+  .CyberContactCard__grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  .CyberContactCard__left {
+    order: 1 !important;
+    width: 100% !important;
+  }
+
+  .CyberContactCard__right {
+    order: 2 !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .CyberContactCard__header {
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .CyberContactCard__emailWrapper {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  .CyberProfilePill,
+  .CyberProfilePill--textOnly {
+    min-height: 48px !important;
+  }
+
+  .CyberProfilePill__btn,
+  .CyberContactCard__emailBtn {
+    min-height: 48px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
   }
 
   /* --- Patents Section & Detail Modals --- */
@@ -2817,57 +3113,6 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     width: 100% !important;
     justify-content: center !important;
     min-height: 48px !important;
-  }
-
-  /* --- Contact Section: 1-Column Flow & Touch-friendly Buttons --- */
-  .CyberContactCard {
-    padding: 32px 18px !important;
-    border-radius: 16px !important;
-  }
-
-  .CyberContactCard__grid {
-    grid-template-columns: 1fr !important;
-    gap: 36px !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-
-  /* Stack CONNECT & PROFILES above CONTACT ME message */
-  .CyberContactCard__left {
-    order: 1 !important;
-    width: 100% !important;
-  }
-
-  .CyberContactCard__right {
-    order: 2 !important;
-    width: 100% !important;
-    text-align: center !important;
-  }
-
-  .CyberContactCard__header {
-    align-items: center !important;
-    text-align: center !important;
-  }
-
-  .CyberContactCard__emailWrapper {
-    display: flex !important;
-    justify-content: center !important;
-    width: 100% !important;
-  }
-
-  .CyberProfilePill,
-  .CyberProfilePill--textOnly {
-    min-height: 48px !important;
-  }
-
-  .CyberProfilePill__btn,
-  .CyberContactCard__emailBtn {
-    min-height: 48px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    box-sizing: border-box !important;
-    width: 100% !important;
   }
 
   /* --- Skills Grid: Wrapping & Flexible Gaps --- */
@@ -3109,7 +3354,91 @@ Architect worlds<br>that move hearts and spark hope.
       <span class="ResumeBtn__text">Download Resume</span>
     </a>
   </div>
-</header> <div class="SideMenu__overlay  Header__side_menu" data-side-menu> <div class="SideMenu__backdrop" data-backdrop></div> <nav class="SideMenu__menu" data-menu> <div class="SideMenu__menu_inner"> <div class="SideMenu__menu_item"> <a href="/"> <span>Top</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/"> <span>About Me</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/works"> <span>Achievements</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/about"> <span>About</span> </a> </div> <div class="SideMenu__menu_item"> <a href="#projects" id="side-projects-link"> <span>Projects</span> </a> </div> <div class="SideMenu__menu_item"> <a href="#skills" id="side-skills-link"> <span>Skills</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/RICARDO_RESUME.pdf" download="RICARDO_LOPEZ_RESUME.pdf" target="_blank"> <span>DOWNLOAD RESUME</span> </a> </div> </div> </nav> <button class="HamburgerIcon__hamburger  SideMenu__hamburger" type="button" aria-label="メニューを開く" data-hamburger> <span class="HamburgerIcon__line"></span> <span class="HamburgerIcon__line"></span> <span class="HamburgerIcon__line"></span> </button> </div> <div class="Layout__wrapper"> <div class="Layout__gl"> <div class="Layout__gl_inner"> <div id="gl-canvas" class="GLCanvas__container"></div> </div> </div> <div class="Layout__inner"> <main id="swup" class="Layout__main">  <div> <div class="TopScrollIndicator__top_scroll_indicator " data-top-scroll-indicator> <div class="TopScrollIndicator__section_list"> <div class="TopScrollIndicator__section_item" data-section="kv"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>About Me</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="works"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>ACHIEVEMENTS</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="mission"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>PROJECTS</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="vision"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>Skills</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="service"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>Contact</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div> </div> </div>  <div class="SectionContainer__container" id="about" data-top_section="kv" data-snap-ratio="1"> <div class="SectionContainer__label">kv</div>  <div class="KV__container" data-kv-container> <div class="KV__inner">
+</header>
+<!-- Mobile Hamburger Menu Button & Fullscreen Drawer (Mobile Only) -->
+<button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu" data-open="false">
+  <!-- Hamburger SVG Icon -->
+  <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+  <!-- Close (X) SVG Icon -->
+  <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+  </svg>
+</button>
+
+<div class="mobile-nav-drawer" id="mobile-nav-drawer" data-open="false">
+  <a href="#about" class="mobile-nav-link" data-section="about">About Me</a>
+  <a href="#achievements" class="mobile-nav-link" data-section="achievements">Achievements</a>
+  <a href="#projects" class="mobile-nav-link" data-section="projects">Projects</a>
+  <a href="#patents" class="mobile-nav-link" data-section="patents">Patents</a>
+  <a href="#skills" class="mobile-nav-link" data-section="skills">Skills</a>
+  <a href="#contact" class="mobile-nav-link" data-section="contact">Contact</a>
+  <a href="/RICARDO_RESUME.pdf" download="RICARDO_LOPEZ_RESUME.pdf" target="_blank" rel="noopener noreferrer" class="mobile-nav-resume-btn">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+    <span>Download Resume</span>
+  </a>
+</div>
+
+<script id="mobile-nav-script">
+(function() {
+  function initMobileNav() {
+    var toggleBtn = document.getElementById('mobile-nav-toggle');
+    var drawer = document.getElementById('mobile-nav-drawer');
+    if (!toggleBtn || !drawer) return;
+
+    function setDrawerOpen(isOpen) {
+      toggleBtn.setAttribute('data-open', isOpen ? 'true' : 'false');
+      drawer.setAttribute('data-open', isOpen ? 'true' : 'false');
+      if (isOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    }
+
+    toggleBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var isOpen = drawer.getAttribute('data-open') === 'true';
+      setDrawerOpen(!isOpen);
+    });
+
+    var links = drawer.querySelectorAll('.mobile-nav-link');
+    links.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        var section = link.getAttribute('data-section');
+        setDrawerOpen(false);
+        if (section && window.scrollToSection) {
+          window.scrollToSection(e, section);
+        }
+      });
+    });
+
+    var resumeBtn = drawer.querySelector('.mobile-nav-resume-btn');
+    if (resumeBtn) {
+      resumeBtn.addEventListener('click', function() {
+        setDrawerOpen(false);
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileNav);
+  } else {
+    initMobileNav();
+  }
+})();
+</script>
+
+ <div class="SideMenu__overlay  Header__side_menu" data-side-menu> <div class="SideMenu__backdrop" data-backdrop></div> <nav class="SideMenu__menu" data-menu> <div class="SideMenu__menu_inner"> <div class="SideMenu__menu_item"> <a href="/"> <span>Top</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/"> <span>About Me</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/works"> <span>Achievements</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/about"> <span>About</span> </a> </div> <div class="SideMenu__menu_item"> <a href="#projects" id="side-projects-link"> <span>Projects</span> </a> </div> <div class="SideMenu__menu_item"> <a href="#skills" id="side-skills-link"> <span>Skills</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/RICARDO_RESUME.pdf" download="RICARDO_LOPEZ_RESUME.pdf" target="_blank"> <span>DOWNLOAD RESUME</span> </a> </div> </div> </nav> <button class="HamburgerIcon__hamburger  SideMenu__hamburger" type="button" aria-label="メニューを開く" data-hamburger> <span class="HamburgerIcon__line"></span> <span class="HamburgerIcon__line"></span> <span class="HamburgerIcon__line"></span> </button> </div> <div class="Layout__wrapper"> <div class="Layout__gl"> <div class="Layout__gl_inner"> <div id="gl-canvas" class="GLCanvas__container"></div> </div> </div> <div class="Layout__inner"> <main id="swup" class="Layout__main">  <div> <div class="TopScrollIndicator__top_scroll_indicator " data-top-scroll-indicator> <div class="TopScrollIndicator__section_list"> <div class="TopScrollIndicator__section_item" data-section="kv"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>About Me</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="works"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>ACHIEVEMENTS</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="mission"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>PROJECTS</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="vision"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>Skills</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="service"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>Contact</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div> </div> </div>  <div class="SectionContainer__container" id="about" data-top_section="kv" data-snap-ratio="1"> <div class="SectionContainer__label">kv</div>  <div class="KV__container" data-kv-container> <div class="KV__inner">
     <!-- Portfolio Hero Showcase -->
     <div class="HeroPortfolio__container">
       <div class="HeroPortfolio__grid">
