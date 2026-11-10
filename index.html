@@ -3152,6 +3152,50 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   .MyStackItem__name {
     font-size: 13px !important;
   }
+
+  /* --- Fix 1: Justify Bio Text in About Me Card (Mobile Only) --- */
+  #about .bio-text-container,
+  #about p {
+    text-align: justify !important;
+    text-justify: inter-word !important;
+  }
+
+  /* --- Fix 2: Preloader sits above hamburger button z-index --- */
+  .greeting-preloader,
+  #greeting-preloader {
+    z-index: 9999999 !important;
+  }
+
+  /* Hide hamburger menu toggle during preloader */
+  body:not(.preloader-done) .mobile-nav-toggle {
+    z-index: 100 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Fix preloader text clipping and overflow on narrow screens */
+  .greeting-word-container,
+  #greeting-wordContainer {
+    max-width: 92vw !important;
+    overflow: hidden !important;
+  }
+
+  #greeting-text {
+    max-width: 88vw !important;
+    font-size: clamp(1.6rem, 7vw, 3rem) !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    letter-spacing: normal !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    display: inline-block !important;
+    margin: 0 auto !important;
+  }
+
+  .greeting-dot {
+    flex-shrink: 0 !important;
+  }
+
 }
 </style>
 
@@ -4797,6 +4841,7 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
       } else {
         setTimeout(() => {
           preloader.style.display = "none";
+          document.body.classList.add('preloader-done');
         }, 300);
       }
     }
