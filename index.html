@@ -3491,6 +3491,93 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     margin: 0 !important;
   }
 
+  /* ==========================================================================
+     MOBILE ACHIEVEMENTS SECTION UI & SMOOTH TRANSITION FIXES (max-width: 768px)
+     ========================================================================== */
+  .Works__item {
+    position: absolute !important;
+    left: 5vw !important;
+    right: 5vw !important;
+    width: 90vw !important;
+    max-width: 90vw !important;
+    bottom: 6vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-end !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    transform: translateZ(0) !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    will-change: transform, opacity !important;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .Works__item .achievement__prize,
+  .Works__item .Works__item_impression_title {
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+    border-radius: 6px !important;
+    letter-spacing: 0.08em !important;
+    margin-bottom: 6px !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  .Works__item .achievement__title,
+  .Works__item .Works__item_title {
+    font-size: clamp(20px, 6vw, 26px) !important;
+    font-weight: 900 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.01em !important;
+    margin: 0 0 6px 0 !important;
+    width: 100% !important;
+    word-break: break-word !important;
+    text-transform: uppercase !important;
+  }
+
+  .Works__item .Works__item_title_link {
+    display: inline-block !important;
+    color: #ffffff !important;
+  }
+
+  .Works__item .achievement__venue,
+  .Works__item .Works__item_title_ja {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    color: #22d3ee !important; /* cyan-400 */
+    font-family: 'Google Sans Code', monospace !important;
+    margin: 0 0 10px 0 !important;
+    width: 100% !important;
+    word-break: break-word !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .Works__item .Works__item_categoryList {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    width: 100% !important;
+  }
+
+  .Works__item .Works__item_categoryList_item {
+    font-size: 10px !important;
+    font-family: 'Google Sans Code', monospace !important;
+    padding: 3px 8px !important;
+    border-radius: 6px !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    color: rgba(255, 255, 255, 0.82) !important;
+    white-space: nowrap !important;
+  }
+
 }
 </style>
 
