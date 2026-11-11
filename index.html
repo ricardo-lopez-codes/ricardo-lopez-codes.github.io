@@ -4263,6 +4263,63 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   filter: none !important;
 }
 </style>
+<style id="mobile-achievements-carousel-isolation">
+/* ==========================================================================
+   MOBILE ACHIEVEMENTS ISOLATION & OVERFLOW LOCK (@media max-width: 768px)
+   Prevents overlapping text, stacking details, and inactive background bleed
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Lock outer viewport overflow so inactive side items never bleed */
+  #achievements,
+  .Works__container,
+  .Works__content,
+  .Works__content_inner,
+  .Works__list {
+    overflow: hidden !important;
+  }
+
+  /* Wrap each achievement item in an isolated bounds container */
+  .Works__item {
+    position: absolute !important;
+    left: 1rem !important;
+    right: 1rem !important;
+    width: calc(100vw - 2rem) !important;
+    max-width: 400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    bottom: 7vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 4px !important;
+    padding: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    box-sizing: border-box !important;
+    z-index: 20 !important;
+    overflow: hidden !important;
+    transform: translateZ(0) !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    will-change: transform, opacity !important;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  /* Strictly isolate active card vs non-active cards on mobile */
+  .Works__item.is-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .Works__item.is-active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+}
+</style>
 </head> <body data-page="top">
 <!-- Dennis Snellenberg Multilingual Greeting Preloader Curtain -->
 <!-- Dennis Snellenberg Multilingual Greeting Preloader Curtain with Shader Animation -->
@@ -5110,7 +5167,7 @@ Architect worlds<br>that move hearts and spark hope.
 
               </div>
             </div>
-          </div> </div> </div> </div> <div class="Stellla__frame_container"> <div class="Stellla__frame" data-top-stellla-frame> <div class="Stellla__cross"> <div class="Stellla__cross_item"></div> <div class="Stellla__cross_item"></div> <div class="Stellla__cross_item"></div> <div class="Stellla__cross_item"></div> </div> <div class="Stellla__rect"> <div class="Stellla__rect_inner"> <div class="Stellla__rect_line" data-line="top"></div> <div class="Stellla__rect_line" data-line="right"></div> <div class="Stellla__rect_line" data-line="bottom"></div> <div class="Stellla__rect_line" data-line="left"></div> </div> </div> </div> </div> </div> </div> </div>  </div> </div>  </main> </div> </div>    <script type="module" src="/_astro/index.astro_astro_type_script_index_0_lang.Cn_goiN_.js?v=fix_1794259438"></script>
+          </div> </div> </div> </div> <div class="Stellla__frame_container"> <div class="Stellla__frame" data-top-stellla-frame> <div class="Stellla__cross"> <div class="Stellla__cross_item"></div> <div class="Stellla__cross_item"></div> <div class="Stellla__cross_item"></div> <div class="Stellla__cross_item"></div> </div> <div class="Stellla__rect"> <div class="Stellla__rect_inner"> <div class="Stellla__rect_line" data-line="top"></div> <div class="Stellla__rect_line" data-line="right"></div> <div class="Stellla__rect_line" data-line="bottom"></div> <div class="Stellla__rect_line" data-line="left"></div> </div> </div> </div> </div> </div> </div> </div>  </div> </div>  </main> </div> </div>    <script type="module" src="/_astro/index.astro_astro_type_script_index_0_lang.Cn_goiN_.js?v=swipe_1794434817"></script>
 
 
 
@@ -6005,7 +6062,27 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
     var touchStartY = 0;
     var touchEndX = 0;
     var touchEndY = 0;
-    var minSwipeDistance = 45; // Minimum horizontal delta in px
+    var minSwipeDistance = 40; // Minimum horizontal delta in px
+
+    function setActiveCard(index) {
+      var items = document.querySelectorAll('.Works__item');
+      if (!items || items.length === 0) return;
+      items.forEach(function(item, idx) {
+        if (idx === index) {
+          item.classList.remove('is-hidden');
+          item.classList.add('is-active');
+          item.style.visibility = 'visible';
+          item.style.opacity = '1';
+          item.style.pointerEvents = 'auto';
+        } else {
+          item.classList.remove('is-active');
+          item.classList.add('is-hidden');
+          item.style.visibility = 'hidden';
+          item.style.opacity = '0';
+          item.style.pointerEvents = 'none';
+        }
+      });
+    }
 
     container.addEventListener('touchstart', function(e) {
       if (!isMobile() || !e.touches || !e.touches[0]) return;
@@ -6026,8 +6103,8 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
       var deltaX = touchStartX - touchEndX;
       var deltaY = touchStartY - touchEndY;
 
-      // Check threshold and ensure horizontal swipe intent (deltaX significantly dominates deltaY)
-      if (Math.abs(deltaX) >= minSwipeDistance && Math.abs(deltaX) > Math.abs(deltaY) * 1.15) {
+      // Check threshold and ensure horizontal swipe intent
+      if (Math.abs(deltaX) >= minSwipeDistance && Math.abs(deltaX) > Math.abs(deltaY) * 1.1) {
         var scrollItems = document.querySelectorAll('.Works__scroll_item');
         if (!scrollItems || scrollItems.length === 0) return;
 
@@ -6056,16 +6133,45 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
         }
 
         if (targetIndex !== currentIndex && scrollItems[targetIndex]) {
+          // Pre-isolate active card container immediately to eliminate transition ghosting
+          setActiveCard(targetIndex);
+
           var targetEl = scrollItems[targetIndex];
           var targetY = targetEl.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop);
 
           if (window.lenis && typeof window.lenis.scrollTo === 'function') {
-            window.lenis.scrollTo(targetY, { duration: 0.2 });
+            window.lenis.scrollTo(targetY, { duration: 0.22 });
           } else {
             window.scrollTo({ top: targetY, behavior: 'smooth' });
           }
         }
       }
+    }, { passive: true });
+
+    // Also monitor scroll to keep active card isolated during native scrolling
+    var scrollTicking = false;
+    window.addEventListener('scroll', function() {
+      if (!isMobile() || scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(function() {
+        var scrollItems = document.querySelectorAll('.Works__scroll_item');
+        if (scrollItems && scrollItems.length > 0) {
+          var currentIndex = 0;
+          var closestDist = Infinity;
+          var centerY = window.innerHeight * 0.5;
+          scrollItems.forEach(function(el, idx) {
+            var rect = el.getBoundingClientRect();
+            var itemCenter = rect.top + rect.height * 0.5;
+            var dist = Math.abs(itemCenter - centerY);
+            if (dist < closestDist) {
+              closestDist = dist;
+              currentIndex = idx;
+            }
+          });
+          setActiveCard(currentIndex);
+        }
+        scrollTicking = false;
+      });
     }, { passive: true });
   }
 
