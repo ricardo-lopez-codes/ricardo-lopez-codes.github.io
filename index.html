@@ -3720,6 +3720,13 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   }
 
   /* 2. Details Container: Enforce Fixed Vertical Grid Slotting */
+  .Works__container,
+  .Works__content,
+  .Works__list,
+  .Works__item {
+    touch-action: pan-y !important;
+  }
+
   .Works__item {
     position: absolute !important;
     left: 1rem !important;
@@ -5705,6 +5712,92 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
     document.addEventListener("DOMContentLoaded", mountMobileHero);
   } else {
     mountMobileHero();
+  }
+})();
+</script>
+
+<script id="mobile-achievements-swipe">
+(function() {
+  function initMobileSwipe() {
+    var isMobile = function() {
+      return window.innerWidth <= 768 || ('ontouchstart' in window);
+    };
+
+    var container = document.getElementById('achievements') || document.querySelector('[data-top_section="works"]');
+    if (!container) return;
+
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var touchEndX = 0;
+    var touchEndY = 0;
+    var minSwipeDistance = 45; // Minimum horizontal delta in px
+
+    container.addEventListener('touchstart', function(e) {
+      if (!isMobile() || !e.touches || !e.touches[0]) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchEndX = touchStartX;
+      touchEndY = touchStartY;
+    }, { passive: true });
+
+    container.addEventListener('touchmove', function(e) {
+      if (!isMobile() || !e.touches || !e.touches[0]) return;
+      touchEndX = e.touches[0].clientX;
+      touchEndY = e.touches[0].clientY;
+    }, { passive: true });
+
+    container.addEventListener('touchend', function(e) {
+      if (!isMobile()) return;
+      var deltaX = touchStartX - touchEndX;
+      var deltaY = touchStartY - touchEndY;
+
+      // Check threshold and ensure horizontal swipe intent (deltaX significantly dominates deltaY)
+      if (Math.abs(deltaX) >= minSwipeDistance && Math.abs(deltaX) > Math.abs(deltaY) * 1.15) {
+        var scrollItems = document.querySelectorAll('.Works__scroll_item');
+        if (!scrollItems || scrollItems.length === 0) return;
+
+        // Determine current active item index based on viewport position
+        var currentIndex = 0;
+        var closestDist = Infinity;
+        var centerY = window.innerHeight * 0.5;
+
+        scrollItems.forEach(function(el, idx) {
+          var rect = el.getBoundingClientRect();
+          var itemCenter = rect.top + rect.height * 0.5;
+          var dist = Math.abs(itemCenter - centerY);
+          if (dist < closestDist) {
+            closestDist = dist;
+            currentIndex = idx;
+          }
+        });
+
+        var targetIndex = currentIndex;
+        if (deltaX > 0) {
+          // Swipe Left -> Next achievement
+          targetIndex = Math.min(scrollItems.length - 1, currentIndex + 1);
+        } else {
+          // Swipe Right -> Previous achievement
+          targetIndex = Math.max(0, currentIndex - 1);
+        }
+
+        if (targetIndex !== currentIndex && scrollItems[targetIndex]) {
+          var targetEl = scrollItems[targetIndex];
+          var targetY = targetEl.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop);
+
+          if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+            window.lenis.scrollTo(targetY, { duration: 0.65 });
+          } else {
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+          }
+        }
+      }
+    }, { passive: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileSwipe);
+  } else {
+    initMobileSwipe();
   }
 })();
 </script>
