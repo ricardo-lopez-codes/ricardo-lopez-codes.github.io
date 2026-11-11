@@ -2748,6 +2748,19 @@ body[data-current_section="kv"] .Projects__overlayContainer {
    Desktop layout, taskbar, project sections, and alignments remain 100% untouched.
    ========================================================================== */
 @media (max-width: 768px) {
+  /* Prevent initial unstyled DOM flash on mobile */
+  body:not(.mounted) .mobile-hero-container,
+  body:not(.mounted) #hero-section,
+  body:not(.mounted) .HeroPortfolio__container {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  .mobile-hero-container,
+  .HeroPortfolio__container {
+    transition: opacity 0.3s ease-in-out !important;
+  }
+
   /* --- Completely Disable Loading Screen / Intro Animation (Mobile Only) --- */
   .preloader-overlay,
   .intro-loader-screen,
@@ -3950,7 +3963,7 @@ Architect worlds<br>that move hearts and spark hope.
 
  <div class="SideMenu__overlay  Header__side_menu" data-side-menu> <div class="SideMenu__backdrop" data-backdrop></div> <nav class="SideMenu__menu" data-menu> <div class="SideMenu__menu_inner"> <div class="SideMenu__menu_item"> <a href="/"> <span>Top</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/"> <span>About Me</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/works"> <span>Achievements</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/about"> <span>About</span> </a> </div> <div class="SideMenu__menu_item"> <a href="#projects" id="side-projects-link"> <span>Projects</span> </a> </div> <div class="SideMenu__menu_item"> <a href="#skills" id="side-skills-link"> <span>Skills</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/RICARDO_RESUME.pdf" download="RICARDO_LOPEZ_RESUME.pdf" target="_blank"> <span>DOWNLOAD RESUME</span> </a> </div> </div> </nav> <button class="HamburgerIcon__hamburger  SideMenu__hamburger" type="button" aria-label="メニューを開く" data-hamburger> <span class="HamburgerIcon__line"></span> <span class="HamburgerIcon__line"></span> <span class="HamburgerIcon__line"></span> </button> </div> <div class="Layout__wrapper"> <div class="Layout__gl"> <div class="Layout__gl_inner"> <div id="gl-canvas" class="GLCanvas__container"></div> </div> </div> <div class="Layout__inner"> <main id="swup" class="Layout__main">  <div> <div class="TopScrollIndicator__top_scroll_indicator " data-top-scroll-indicator> <div class="TopScrollIndicator__section_list"> <div class="TopScrollIndicator__section_item" data-section="kv"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>About Me</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="works"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>ACHIEVEMENTS</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="mission"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>PROJECTS</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="vision"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>Skills</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="service"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>Contact</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div> </div> </div>  <div class="SectionContainer__container" id="about" data-top_section="kv" data-snap-ratio="1"> <div class="SectionContainer__label">kv</div>  <div class="KV__container" data-kv-container> <div class="KV__inner">
     <!-- Portfolio Hero Showcase -->
-    <div class="HeroPortfolio__container">
+    <div class="HeroPortfolio__container mobile-hero-container">
       <div class="HeroPortfolio__grid">
         
         <!-- Top Row on Mobile: Image (Left) + Social Icons (Right) Side-by-Side -->
@@ -5460,7 +5473,7 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
 (function() {
   var IS_MOBILE = window.innerWidth <= 768;
 
-  // ---- A. Skip preloader on mobile ----
+  // ---- A. Skip preloader on mobile and trigger mounted state ----
   if (IS_MOBILE) {
     // Hide preloader immediately via inline style (belt-and-suspenders with CSS)
     var preloader = document.getElementById('greeting-preloader');
@@ -5469,6 +5482,24 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
     }
     // Mark body so CSS rules can respond
     document.body.classList.add('preloader-done');
+  }
+
+  // Client-side hydration/mounting trigger to smoothly fade in mobile hero layout
+  function triggerMounted() {
+    requestAnimationFrame(function() {
+      document.body.classList.add('mounted');
+      var hero = document.querySelector('.mobile-hero-container');
+      if (hero) {
+        hero.style.opacity = '1';
+        hero.style.visibility = 'visible';
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', triggerMounted);
+  } else {
+    triggerMounted();
   }
 
   // ---- B. Show sticky header only on mobile ----
