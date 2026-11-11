@@ -2727,6 +2727,10 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   background: #000000 !important;
 }
 
+
+.mobile-achievements-header {
+  display: none !important;
+}
 /* Hide mobile hamburger drawer elements on desktop screens (> 768px) */
 .mobile-nav-toggle,
 .mobile-nav-drawer {
@@ -3504,8 +3508,34 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   }
 
   /* ==========================================================================
-     MOBILE ACHIEVEMENTS SECTION UI, 3D CANVAS & TEXTURE RESTORATION (max-width: 768px)
+     MOBILE ACHIEVEMENTS SECTION UI REFINEMENTS (max-width: 768px)
      ========================================================================== */
+  /* Hide desktop section header if any on desktop, show mobile title on mobile */
+  .mobile-achievements-header {
+    display: block !important;
+    position: absolute !important;
+    top: 70px !important;
+    left: 1.25rem !important;
+    right: 1.25rem !important;
+    z-index: 30 !important;
+    pointer-events: none !important;
+    box-sizing: border-box !important;
+  }
+
+  .mobile-achievements-title {
+    font-family: 'acumin-pro', 'Segoe UI', -apple-system, sans-serif !important;
+    font-size: 1.25rem !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding-bottom: 0.5rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+    text-align: left !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8) !important;
+  }
+
   /* Force 3D canvas container to stay visible behind content */
   .achievements-canvas-container,
   #achievements canvas,
@@ -3525,7 +3555,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     pointer-events: none !important;
   }
 
-  /* Restore & Enlarge Achievement Images (Mobile Only) */
+  /* Achievement Photo Display Box (~70vw / max-w-[270px], shifted upward) */
   #achievements .achievement-card-img-wrapper,
   #achievements .achievement-image,
   .achievement-card-img-wrapper,
@@ -3533,24 +3563,24 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    width: 90vw !important;
-    max-width: 360px !important;
+    width: 70vw !important;
+    max-width: 270px !important;
     height: auto !important;
     aspect-ratio: 16 / 10 !important;
     object-fit: cover !important;
-    margin: 0 auto !important;
+    margin: -1.5rem auto 0 !important;
     z-index: 10 !important;
     position: relative !important;
   }
 
-  /* Smooth Mobile Scroll & Text Overlay Fix */
+  /* Smooth Mobile Scroll & Enlarged Text Details Container */
   .Works__item {
     position: absolute !important;
-    left: 5vw !important;
-    right: 5vw !important;
-    width: 90vw !important;
-    max-width: 90vw !important;
-    bottom: 6vh !important;
+    left: 1.25rem !important;
+    right: 1.25rem !important;
+    width: calc(100vw - 2.5rem) !important;
+    max-width: calc(100vw - 2.5rem) !important;
+    bottom: 5vh !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -3569,27 +3599,29 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 
   .Works__item .achievement__prize,
   .Works__item .Works__item_impression_title {
-    font-size: 11px !important;
-    padding: 4px 8px !important;
+    font-size: 11.5px !important;
+    padding: 5px 10px !important;
     border-radius: 6px !important;
-    letter-spacing: 0.08em !important;
-    margin-bottom: 6px !important;
-    background: rgba(255, 255, 255, 0.12) !important;
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    letter-spacing: 0.1em !important;
+    margin-bottom: 8px !important;
+    background: rgba(255, 255, 255, 0.14) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
   }
 
+  /* Enlarged Title (text-2xl / text-3xl font-black) */
   .Works__item .achievement__title,
   .Works__item .Works__item_title {
-    font-size: clamp(20px, 6vw, 26px) !important;
+    font-size: clamp(24px, 6.5vw, 30px) !important;
     font-weight: 900 !important;
-    line-height: 1.2 !important;
+    line-height: 1.15 !important;
     letter-spacing: -0.01em !important;
-    margin: 0 0 6px 0 !important;
+    margin: 0 0 8px 0 !important;
     width: 100% !important;
     word-break: break-word !important;
     text-transform: uppercase !important;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9) !important;
   }
 
   .Works__item .Works__item_title_link {
@@ -3597,22 +3629,26 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     color: #ffffff !important;
   }
 
+  /* Enlarged Location/Institution (text-xs / text-sm font-mono text-cyan-400) */
   .Works__item .achievement__venue,
   .Works__item .Works__item_title_ja {
-    font-size: 12px !important;
-    line-height: 1.4 !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
     color: #22d3ee !important; /* cyan-400 */
     font-family: 'Google Sans Code', monospace !important;
-    margin: 0 0 10px 0 !important;
+    font-weight: 600 !important;
+    margin: 0 0 12px 0 !important;
     width: 100% !important;
     word-break: break-word !important;
-    letter-spacing: 0.02em !important;
+    letter-spacing: 0.03em !important;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8) !important;
   }
 
+  /* Tags with Enlarged Text and Padding */
   .Works__item .Works__item_categoryList {
     display: flex !important;
     flex-wrap: wrap !important;
-    gap: 6px !important;
+    gap: 8px !important;
     margin: 0 !important;
     padding: 0 !important;
     list-style: none !important;
@@ -3620,13 +3656,13 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   }
 
   .Works__item .Works__item_categoryList_item {
-    font-size: 10px !important;
+    font-size: 11.5px !important;
     font-family: 'Google Sans Code', monospace !important;
-    padding: 3px 8px !important;
+    padding: 5px 11px !important;
     border-radius: 6px !important;
-    background: rgba(255, 255, 255, 0.06) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    color: rgba(255, 255, 255, 0.82) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
     white-space: nowrap !important;
   }
 
@@ -4007,7 +4043,12 @@ Architect worlds<br>that move hearts and spark hope.
     </div>
 
     
- <!-- scroll to explore 縦書きテキスト --> <div class="KV__scrollText"> <span>scroll to explore →</span> </div> </div> </div>  </div> <div class="SectionContainer__container" data-top_section="works_intro" data-snap-ratio="1"> <div class="SectionContainer__label">works_intro</div>  <div class="PageTop__worksIntro"></div>  </div> <div class="SectionContainer__container" id="achievements" data-top_section="works" data-snap-ratio="1"> <div class="SectionContainer__label">works</div>  <div class="Works__container" data-works-container> <div class="Works__content"> <div class="Works__content_inner"> <div class="Works__list">
+ <!-- scroll to explore 縦書きテキスト --> <div class="KV__scrollText"> <span>scroll to explore →</span> </div> </div> </div>  </div> <div class="SectionContainer__container" data-top_section="works_intro" data-snap-ratio="1"> <div class="SectionContainer__label">works_intro</div>  <div class="PageTop__worksIntro"></div>  </div> <div class="SectionContainer__container" id="achievements" data-top_section="works" data-snap-ratio="1"> <div class="SectionContainer__label">works</div>  <div class="Works__container" data-works-container> <div class="Works__content"> <div class="Works__content_inner">
+      <!-- Mobile Achievements Section Header (Mobile Only) -->
+      <div class="mobile-achievements-header">
+        <h2 class="mobile-achievements-title">ACHIEVEMENTS</h2>
+      </div>
+      <div class="Works__list">
   <!-- 1. Next Gen AI Hacks -->
   <div class="Works__item" data-works_item>
     <div class="Works__item_info">
