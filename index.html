@@ -2,25 +2,23 @@
 <!-- CRITICAL INLINE PRE-RENDER BLOCKER -->
 <style>
   @media (max-width: 768px) {
-    /* Keep mobile hero & card content hidden from 0ms initial HTML parse */
+    /* Natively hide mobile hero on first frame and fade in cleanly once browser initializes */
     .mobile-hero-container,
     .HeroPortfolio__container,
-    #about,
     #hero-section {
-      display: none !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
+      animation: mobileFadeIn 0.4s ease-in-out 0.2s forwards;
+      opacity: 0;
     }
+  }
 
-    /* Reveal layout ONLY when client app marks initialization complete */
-    html.app-ready .mobile-hero-container,
-    html.app-ready .HeroPortfolio__container,
-    html.app-ready #about,
-    html.app-ready #hero-section {
-      display: flex !important;
-      opacity: 1 !important;
-      visibility: visible !important;
-      transition: opacity 0.3s ease-in-out;
+  @keyframes mobileFadeIn {
+    from {
+      opacity: 0;
+      visibility: hidden;
+    }
+    to {
+      opacity: 1;
+      visibility: visible;
     }
   }
 </style>
@@ -2776,37 +2774,12 @@ body[data-current_section="kv"] .Projects__overlayContainer {
    Desktop layout, taskbar, project sections, and alignments remain 100% untouched.
    ========================================================================== */
 @media (max-width: 768px) {
-  /* Pre-render blocker: hides mobile hero prior to first paint and hydration */
-  html:not(.app-ready) .mobile-hero-container,
-  html:not(.app-ready) .HeroPortfolio__container,
-  html:not(.app-ready) #about,
-  html:not(.app-ready) #hero-section,
-  html:not([data-ready="true"]) .mobile-hero-container,
-  html:not([data-ready="true"]) .HeroPortfolio__container,
-  html:not([data-ready="true"]) #hero-section,
-  html.is-mobile-loading .mobile-hero-container,
-  html.is-mobile-loading .HeroPortfolio__container,
-  html.is-mobile-loading #hero-section,
-  body:not(.mounted) .mobile-hero-container,
-  body:not(.mounted) #hero-section,
-  body:not(.mounted) .HeroPortfolio__container {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-  }
-
+  /* Natively hide mobile hero on first frame and fade in cleanly once browser initializes */
   .mobile-hero-container,
-  .HeroPortfolio__container {
-    transition: opacity 0.3s ease-in-out !important;
-  }
-
-  html.app-ready .mobile-hero-container,
-  html.app-ready .HeroPortfolio__container,
-  html.app-ready #about,
-  html[data-ready="true"] .mobile-hero-container,
-  html[data-ready="true"] .HeroPortfolio__container {
-    opacity: 1 !important;
-    visibility: visible !important;
+  .HeroPortfolio__container,
+  #hero-section {
+    animation: mobileFadeIn 0.4s ease-in-out 0.2s forwards;
+    opacity: 0;
   }
 
   /* --- Completely Disable Loading Screen / Intro Animation (Mobile Only) --- */
@@ -4010,79 +3983,76 @@ Architect worlds<br>that move hearts and spark hope.
 </script>
 
  <div class="SideMenu__overlay  Header__side_menu" data-side-menu> <div class="SideMenu__backdrop" data-backdrop></div> <nav class="SideMenu__menu" data-menu> <div class="SideMenu__menu_inner"> <div class="SideMenu__menu_item"> <a href="/"> <span>Top</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/"> <span>About Me</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/works"> <span>Achievements</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/about"> <span>About</span> </a> </div> <div class="SideMenu__menu_item"> <a href="#projects" id="side-projects-link"> <span>Projects</span> </a> </div> <div class="SideMenu__menu_item"> <a href="#skills" id="side-skills-link"> <span>Skills</span> </a> </div> <div class="SideMenu__menu_item"> <a href="/RICARDO_RESUME.pdf" download="RICARDO_LOPEZ_RESUME.pdf" target="_blank"> <span>DOWNLOAD RESUME</span> </a> </div> </div> </nav> <button class="HamburgerIcon__hamburger  SideMenu__hamburger" type="button" aria-label="メニューを開く" data-hamburger> <span class="HamburgerIcon__line"></span> <span class="HamburgerIcon__line"></span> <span class="HamburgerIcon__line"></span> </button> </div> <div class="Layout__wrapper"> <div class="Layout__gl"> <div class="Layout__gl_inner"> <div id="gl-canvas" class="GLCanvas__container"></div> </div> </div> <div class="Layout__inner"> <main id="swup" class="Layout__main">  <div> <div class="TopScrollIndicator__top_scroll_indicator " data-top-scroll-indicator> <div class="TopScrollIndicator__section_list"> <div class="TopScrollIndicator__section_item" data-section="kv"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>About Me</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="works"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>ACHIEVEMENTS</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="mission"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>PROJECTS</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="vision"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>Skills</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div><div class="TopScrollIndicator__section_item" data-section="service"> <div class="TopScrollIndicator__section_main"> <div class="TopScrollIndicator__section_line"> <div class="TopScrollIndicator__section_label" data-section-label>Contact</div> </div> </div> <div class="TopScrollIndicator__subsection_list"> <div class="TopScrollIndicator__subsection_item" data-subsection="0"> <div class="TopScrollIndicator__subsection_line">  </div> </div><div class="TopScrollIndicator__subsection_item" data-subsection="1"> <div class="TopScrollIndicator__subsection_line">  </div> </div> </div> </div> </div> </div>  <div class="SectionContainer__container" id="about" data-top_section="kv" data-snap-ratio="1"> <div class="SectionContainer__label">kv</div>  <div class="KV__container" data-kv-container> <div class="KV__inner">
-    <!-- Portfolio Hero Showcase: Client-Only Dynamic Mounting to completely eliminate SSR/Static HTML flash -->
-    <template id="hero-portfolio-template">
-      <div class="HeroPortfolio__container mobile-hero-container">
-        <div class="HeroPortfolio__grid">
-          
-          <!-- Top Row on Mobile: Image (Left) + Social Icons (Right) Side-by-Side -->
-          <div class="HeroPortfolio__topRow">
-            <!-- Photo Card (Left) -->
-            <div class="HeroPortfolio__photoCard">
-              <div class="HeroPortfolio__glassFrame">
-                <div class="HeroPortfolio__sheen"></div>
-                <div class="HeroPortfolio__imgWrap">
-                  <img src="/top/profile.jpg" alt="Ricardo Lopez" class="HeroPortfolio__img" />
-                </div>
+    <!-- Portfolio Hero Showcase -->
+    <div class="HeroPortfolio__container mobile-hero-container">
+      <div class="HeroPortfolio__grid">
+        
+        <!-- Top Row on Mobile: Image (Left) + Social Icons (Right) Side-by-Side -->
+        <div class="HeroPortfolio__topRow">
+          <!-- Photo Card (Left) -->
+          <div class="HeroPortfolio__photoCard">
+            <div class="HeroPortfolio__glassFrame">
+              <div class="HeroPortfolio__sheen"></div>
+              <div class="HeroPortfolio__imgWrap">
+                <img src="/top/profile.jpg" alt="Ricardo Lopez" class="HeroPortfolio__img" />
               </div>
             </div>
-
-            <!-- Social Links Column (Right) -->
-            <div class="HeroPortfolio__linksCard">
-              <a href="https://www.linkedin.com/in/ricardo-alvaro-lopez/" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--linkedin">
-                <span class="btn__icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.6 1.6 0 0 0-1.6 1.6 1.6 1.6 0 0 0 1.6 1.6 1.6 1.6 0 0 0 1.6-1.6c0-.89-.72-1.6-1.6-1.6Z"/>
-                  </svg>
-                </span>
-                <span class="btn__text">LINKEDIN</span>
-                <span class="btn__dot"></span>
-              </a>
-
-              <a href="https://github.com/ricardo-lopez-codes" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--github">
-                <span class="btn__icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
-                  </svg>
-                </span>
-                <span class="btn__text">GITHUB</span>
-              </a>
-
-              <a href="https://leetcode.com/u/ricardo_lopez/" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--leetcode">
-                <span class="btn__icon">&lt;&gt;</span>
-                <span class="btn__text">LEETCODE</span>
-              </a>
-
-              <a href="https://www.geeksforgeeks.org/profile/rl69d0d6?from=edit" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--gfg" aria-label="GeeksforGeeks">
-                <span class="btn__icon">
-                  <img src="/gfg-logo.png" alt="GeeksforGeeks" class="gfg-logo-img" />
-                </span>
-                <span class="btn__text">GEEKSFORGEEKS</span>
-              </a>
-            </div>
           </div>
 
-          <!-- Bottom Row: About Me & Bio Card Stacked Below -->
-          <div class="HeroPortfolio__bioCard">
-            <div class="HeroPortfolio__headerTitles">
-              <h1 class="HeroPortfolio__name">
-                <span class="HeroPortfolio__nameLine">RICARDO</span>
-                <span class="HeroPortfolio__nameLine">LOPEZ</span>
-              </h1>
-              <p class="HeroPortfolio__tagline">Embedded Systems and IOT Developer</p>
-            </div>
-            
-            <div class="HeroPortfolio__aboutBox">
-              <p class="HeroPortfolio__aboutText">
-                I'm Ricardo Lopez, an Electronics and Communication Engineering student passionate about building intelligent systems that solve real-world problems. I specialize in IoT, Embedded Systems, AI, and Computer Vision, creating projects that combine hardware and software innovation. My work ranges from smart EV health monitoring and accident prediction systems to energy and automation solutions. I enjoy turning ideas into practical technology through hands-on development, teamwork, and continuous learning.
-              </p>
-            </div>
-          </div>
+          <!-- Social Links Column (Right) -->
+          <div class="HeroPortfolio__linksCard">
+            <a href="https://www.linkedin.com/in/ricardo-alvaro-lopez/" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--linkedin">
+              <span class="btn__icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.6 1.6 0 0 0-1.6 1.6 1.6 1.6 0 0 0 1.6 1.6 1.6 1.6 0 0 0 1.6-1.6c0-.89-.72-1.6-1.6-1.6Z"/>
+                </svg>
+              </span>
+              <span class="btn__text">LINKEDIN</span>
+              <span class="btn__dot"></span>
+            </a>
 
+            <a href="https://github.com/ricardo-lopez-codes" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--github">
+              <span class="btn__icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
+              </svg>
+            </span>
+            <span class="btn__text">GITHUB</span>
+          </a>
+
+          <a href="https://leetcode.com/u/ricardo_lopez/" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--leetcode">
+            <span class="btn__icon">&lt;&gt;</span>
+            <span class="btn__text">LEETCODE</span>
+          </a>
+
+          <a href="https://www.geeksforgeeks.org/profile/rl69d0d6?from=edit" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--gfg" aria-label="GeeksforGeeks">
+            <span class="btn__icon">
+              <img src="/gfg-logo.png" alt="GeeksforGeeks" class="gfg-logo-img" />
+            </span>
+            <span class="btn__text">GEEKSFORGEEKS</span>
+          </a>
         </div>
       </div>
-    </template>
-    <div id="hero-portfolio-mount"></div>
+
+      <!-- Bottom Row: About Me & Bio Card Stacked Below -->
+      <div class="HeroPortfolio__bioCard">
+        <div class="HeroPortfolio__headerTitles">
+          <h1 class="HeroPortfolio__name">
+            <span class="HeroPortfolio__nameLine">RICARDO</span>
+            <span class="HeroPortfolio__nameLine">LOPEZ</span>
+          </h1>
+          <p class="HeroPortfolio__tagline">Embedded Systems and IOT Developer</p>
+        </div>
+        
+        <div class="HeroPortfolio__aboutBox">
+          <p class="HeroPortfolio__aboutText">
+            I'm Ricardo Lopez, an Electronics and Communication Engineering student passionate about building intelligent systems that solve real-world problems. I specialize in IoT, Embedded Systems, AI, and Computer Vision, creating projects that combine hardware and software innovation. My work ranges from smart EV health monitoring and accident prediction systems to energy and automation solutions. I enjoy turning ideas into practical technology through hands-on development, teamwork, and continuous learning.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
     
  <!-- scroll to explore 縦書きテキスト --> <div class="KV__scrollText"> <span>scroll to explore →</span> </div> </div> </div>  </div> <div class="SectionContainer__container" data-top_section="works_intro" data-snap-ratio="1"> <div class="SectionContainer__label">works_intro</div>  <div class="PageTop__worksIntro"></div>  </div> <div class="SectionContainer__container" id="achievements" data-top_section="works" data-snap-ratio="1"> <div class="SectionContainer__label">works</div>  <div class="Works__container" data-works-container> <div class="Works__content"> <div class="Works__content_inner">
@@ -5535,29 +5505,13 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
     document.body.classList.add('preloader-done');
   }
 
-  // Client-side hydration/mounting trigger to dynamically mount hero and reveal
+  // Client-side initialization trigger
   function triggerMounted() {
     if (typeof window !== 'undefined') {
-      // Ensure state, width checks, and 3D canvas mounting complete first
-      requestAnimationFrame(function() {
-        // Option A / Client-side guard: Mount hero template into DOM on client only
-        var mountPoint = document.getElementById('hero-portfolio-mount');
-        var template = document.getElementById('hero-portfolio-template');
-        if (mountPoint && template && !mountPoint.hasChildNodes()) {
-          var clone = template.content.cloneNode(true);
-          mountPoint.appendChild(clone);
-        }
-
-        document.documentElement.classList.add('app-ready');
-        document.documentElement.setAttribute('data-ready', 'true');
-        document.documentElement.classList.remove('is-mobile-loading');
-        document.body.classList.add('mounted');
-        var hero = document.querySelector('.mobile-hero-container');
-        if (hero) {
-          hero.style.opacity = '1';
-          hero.style.visibility = 'visible';
-        }
-      });
+      document.documentElement.classList.add('app-ready');
+      document.documentElement.setAttribute('data-ready', 'true');
+      document.documentElement.classList.remove('is-mobile-loading');
+      document.body.classList.add('mounted');
     }
   }
 
