@@ -1,9 +1,12 @@
 <!DOCTYPE html><html lang="ja"> <head>
 <!-- 基本設定 --><meta charset="utf-8">
 <script>
-  if (typeof window !== 'undefined' && window.innerWidth <= 768) {
-    document.documentElement.classList.add('preloader-done');
-  }
+  (function() {
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      document.documentElement.classList.add('preloader-done');
+      document.documentElement.classList.add('is-mobile-loading');
+    }
+  })();
 </script><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Astro v5.13.3"><!-- Title --><title>Lopez, Inc</title><!-- SEO Meta Tags --><meta name="description" content="Lopezは、デジタルネイティブ時代にこれまでにないエンターテイメント体験を生み出すクリエイティブスタジオです。"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://alche.studio/"><meta property="og:title" content="Lopez, Inc"><meta property="og:description" content="Lopezは、デジタルネイティブ時代にこれまでにないエンターテイメント体験を生み出すクリエイティブスタジオです。"><meta property="og:image" content="https://alche.studio/ogp.jpg"><meta property="og:site_name" content="Lopez, Inc"><meta property="og:locale" content="ja_JP"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Lopez, Inc"><meta name="twitter:description" content="Lopezは、デジタルネイティブ時代にこれまでにないエンターテイメント体験を生み出すクリエイティブスタジオです。"><meta name="twitter:image" content="https://alche.studio/ogp.jpg"><meta name="twitter:site" content="@alche_studio"><!-- Favicon --><link rel="icon" href="/favicon.png"><link rel="apple-touch-icon" href="/favicon/000.png"><!-- その他 --><meta name="theme-color" content="#000000"><meta name="msapplication-TileColor" content="#000000"><link rel="stylesheet" href="/_astro/index.DnJ5xLaK.css">
 <style>@charset "UTF-8";*{box-sizing:border-box;padding:0;margin:0}html,body{font-family:kozuka-gothic-pr6n,Noto Sans JP,Hiragino Kaku Gothic ProN,Yu Gothic Medium,メイリオ,sans-serif;text-size-adjust:100%;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;color:#fff;background-color:#000}body{position:relative}body[data-modal=true]{overflow-y:hidden}img{max-width:100%;vertical-align:top}li{list-style:none}a{text-decoration:none;color:#fff}button{appearance:none;cursor:pointer;user-select:none;outline:none;background:none;border:none;color:inherit}input,textarea{appearance:none;user-select:all;outline:none;border:none}svg{display:block}[data-media=max-xl]{display:none}@media only screen and (min-width: 950px){[data-media=max-xl]{display:block}}[data-media=max-md]{display:none}@media only screen and (min-width: 769px){[data-media=max-md]{display:block}}@media only screen and (min-width: 950px){[data-media=min-xl]{display:none}}@media not screen and (min-width: 950px){[data-media=min-xl]{display:block}}[data-media=min-md]{display:none}@media not screen and (min-width: 769px){[data-media=min-md]{display:block}}[data-media=max-xl-inline]{display:none}@media only screen and (min-width: 950px){[data-media=max-xl-inline]{display:inline}}@media only screen and (min-width: 950px){[data-media=min-xl-inline]{display:none}}@media not screen and (min-width: 950px){[data-media=min-xl-inline]{display:inline}}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-stopped{overflow:hidden}.lenis.lenis-smooth iframe{pointer-events:none}
 
@@ -2748,7 +2751,15 @@ body[data-current_section="kv"] .Projects__overlayContainer {
    Desktop layout, taskbar, project sections, and alignments remain 100% untouched.
    ========================================================================== */
 @media (max-width: 768px) {
-  /* Prevent initial unstyled DOM flash on mobile */
+  /* Prevent initial unstyled DOM flash on mobile before parser/hydration finishes */
+  html.is-mobile-loading .mobile-hero-container,
+  html.is-mobile-loading .HeroPortfolio__container,
+  html.is-mobile-loading #hero-section {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
   body:not(.mounted) .mobile-hero-container,
   body:not(.mounted) #hero-section,
   body:not(.mounted) .HeroPortfolio__container {
@@ -5487,6 +5498,7 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
   // Client-side hydration/mounting trigger to smoothly fade in mobile hero layout
   function triggerMounted() {
     requestAnimationFrame(function() {
+      document.documentElement.classList.remove('is-mobile-loading');
       document.body.classList.add('mounted');
       var hero = document.querySelector('.mobile-hero-container');
       if (hero) {
