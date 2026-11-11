@@ -1508,7 +1508,7 @@ header,
 
 
 <style>
-/* Achievements Typography & Strict Vertical Layout Ordering */
+/* Achievements Typography & Enforced Fixed Vertical Grid Slotting */
 .Works__item {
   display: flex !important;
   flex-direction: column !important;
@@ -1516,14 +1516,16 @@ header,
   align-items: flex-start !important;
 }
 
-/* 1. Prize Details (Fixed height badge line) */
+/* 1. Badge Slot: Fixed Height Slot */
 .Works__item .Works__item_info {
   height: 38px !important;
   min-height: 38px !important;
+  max-height: 38px !important;
   display: flex !important;
   align-items: center !important;
-  margin-bottom: 10px !important;
-  margin-top: 0 !important;
+  margin: 0 0 10px 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
 }
 .Works__item_impression_title.achievement__prize, .Works__item_impression_title {
   font-family: 'Google Sans Code', monospace !important;
@@ -1541,42 +1543,59 @@ header,
   align-items: center !important;
 }
 
-/* 2. Event Name (Fixed Line Height / Min Height) */
+/* 2. Event Title Slot: Fixed Minimum Height Slot */
 .Works__item_title.achievement__title, .Works__item_title {
   font-family: 'acumin-pro', 'Segoe UI', -apple-system, sans-serif !important;
-  font-size: clamp(38px, 4.2vw, 56px) !important;
+  font-size: clamp(36px, 4vw, 54px) !important;
   font-weight: 800 !important;
   letter-spacing: 0.05em !important;
-  line-height: 1.1 !important;
-  min-height: 64px !important;
+  line-height: 1.15 !important;
+  height: 72px !important;
+  min-height: 72px !important;
+  max-height: 72px !important;
   display: flex !important;
   align-items: center !important;
-  margin: 0 0 12px 0 !important;
+  margin: 0 0 8px 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
 }
 
-/* 3. College Name (Fixed Location Line) */
+/* 3. College / Institution Name Slot: Fixed Height Slot for up to 2 lines */
 .Works__item_title_ja.achievement__venue, .Works__item_title_ja {
   font-family: 'Google Sans Code', monospace !important;
-  font-size: 16px !important;
+  font-size: 15px !important;
   font-weight: 600 !important;
   color: #00e5ff !important;
-  letter-spacing: 0.08em !important;
-  min-height: 42px !important;
-  display: flex !important;
-  align-items: center !important;
-  margin: 0 0 16px 0 !important;
+  letter-spacing: 0.06em !important;
+  line-height: 1.35 !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  margin: 0 0 12px 0 !important;
+  padding: 0 !important;
   text-shadow: 0 0 10px rgba(0, 229, 255, 0.4) !important;
+  box-sizing: border-box !important;
 }
 
-/* 4. Words about event (Tags Row) */
+/* 4. Tags Container Slot: Fixed Height Box */
 .Works__item .Works__item_categoryList {
-  min-height: 36px !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
   display: flex !important;
   align-items: center !important;
   flex-wrap: wrap !important;
   gap: 8px !important;
   margin: 0 !important;
   padding: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
 }
 </style>
 
@@ -3685,20 +3704,24 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     position: relative !important;
   }
 
-  /* 2. Details Container: Strict & Permanent Vertical Hierarchy */
+  /* 2. Details Container: Enforce Fixed Vertical Grid Slotting */
   .Works__item {
     position: absolute !important;
     left: 1rem !important;
     right: 1rem !important;
     width: calc(100vw - 2rem) !important;
-    max-width: calc(100vw - 2rem) !important;
-    bottom: 8vh !important;
+    max-width: 400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    bottom: 7vh !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
     justify-content: flex-start !important;
+    gap: 4px !important;
     padding: 0 !important;
-    margin: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
     box-sizing: border-box !important;
     z-index: 20 !important;
     pointer-events: auto !important;
@@ -3709,22 +3732,23 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     transition: opacity 0.3s ease, transform 0.3s ease !important;
   }
 
-  /* 1. Prize Details (Top badge: e.g. 1ST PRIZE WINNER) */
+  /* 1. Badge Slot (Fixed 28px Height: h-7 flex items-center) */
   .Works__item .Works__item_info {
-    height: 32px !important;
-    min-height: 32px !important;
-    max-height: 32px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    max-height: 28px !important;
     display: flex !important;
     align-items: center !important;
-    margin: 0 0 8px 0 !important;
+    margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .Works__item .achievement__prize,
   .Works__item .Works__item_impression_title {
-    font-size: 11.5px !important;
-    padding: 5px 10px !important;
+    font-size: 11px !important;
+    padding: 4px 10px !important;
     border-radius: 6px !important;
     letter-spacing: 0.1em !important;
     margin: 0 !important;
@@ -3734,72 +3758,93 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
     display: inline-flex !important;
     align-items: center !important;
+    line-height: 1 !important;
   }
 
-  /* 2. Event Name (Main title: e.g. TECHNO-A-THON) */
+  /* 2. Event Title Slot (Fixed 40px Minimum Height: min-h-[40px] flex items-center) */
   .Works__item .achievement__title,
   .Works__item .Works__item_title {
-    font-size: clamp(23px, 6.2vw, 29px) !important;
+    font-size: clamp(21px, 5.8vw, 26px) !important;
     font-weight: 900 !important;
     line-height: 1.15 !important;
     letter-spacing: -0.01em !important;
-    min-height: 58px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
     display: flex !important;
     align-items: center !important;
-    margin: 0 0 6px 0 !important;
+    margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
+    overflow: hidden !important;
     word-break: break-word !important;
     text-transform: uppercase !important;
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9) !important;
+    box-sizing: border-box !important;
   }
 
   .Works__item .Works__item_title_link {
     display: inline-block !important;
     color: #ffffff !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
   }
 
-  /* 3. College Name (Location line: e.g. St. Joseph's College of Engineering - OMR) */
+  /* 3. Location / College Name Slot (Fixed 36px Height for up to 2 lines: text-ellipsis overflow-hidden) */
   .Works__item .achievement__venue,
   .Works__item .Works__item_title_ja {
-    font-size: 12.5px !important;
+    font-size: 12px !important;
     line-height: 1.35 !important;
     color: #22d3ee !important; /* cyan-400 */
     font-family: 'Google Sans Code', monospace !important;
     font-weight: 600 !important;
-    min-height: 38px !important;
-    display: flex !important;
-    align-items: center !important;
-    margin: 0 0 10px 0 !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
     word-break: break-word !important;
-    letter-spacing: 0.03em !important;
+    letter-spacing: 0.02em !important;
     text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8) !important;
+    box-sizing: border-box !important;
   }
 
-  /* 4. Some words about the event (Tag pills / Category labels) */
+  /* 4. Tags Container Slot (Fixed 44px Minimum Height box: min-h-[44px] flex flex-wrap items-center gap-1.5) */
   .Works__item .Works__item_categoryList {
-    min-height: 32px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
     display: flex !important;
     flex-wrap: wrap !important;
     align-items: center !important;
-    gap: 7px !important;
+    align-content: center !important;
+    gap: 6px !important;
     margin: 0 !important;
     padding: 0 !important;
     list-style: none !important;
     width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
   }
 
   .Works__item .Works__item_categoryList_item {
-    font-size: 11px !important;
+    font-size: 10.5px !important;
     font-family: 'Google Sans Code', monospace !important;
-    padding: 4px 10px !important;
+    padding: 3px 9px !important;
     border-radius: 6px !important;
     background: rgba(255, 255, 255, 0.08) !important;
     border: 1px solid rgba(255, 255, 255, 0.22) !important;
     color: rgba(255, 255, 255, 0.9) !important;
     white-space: nowrap !important;
+    line-height: 1.2 !important;
   }
 
 }
