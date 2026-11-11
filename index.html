@@ -4162,6 +4162,81 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   z-index: 1 !important;
 }
 </style>
+
+<style id="enforced-desktop-taskbar-visibility">
+/* ==========================================================================
+   ENFORCE ABSOLUTE CSS VISIBILITY FOR DESKTOP TASKBAR (OVERRIDE ANY CONFLICT)
+   ========================================================================== */
+@media (min-width: 769px) {
+  /* Override any potential hidden states on PC viewports */
+  header#main-header,
+  header.desktop-header,
+  header.desktop-taskbar,
+  .desktop-taskbar,
+  header nav,
+  #desktop-nav {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    top: 1.5rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 999999 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Keep inner nav elements aligned in a single horizontal row without re-centering */
+  #desktop-nav .Header__nav,
+  .desktop-taskbar .Header__nav {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 1.5rem !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .desktop-taskbar-inner {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1.5rem !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Glassmorphism Capsule Styling for Desktop Taskbar */
+  header#main-header.desktop-taskbar,
+  .desktop-taskbar.Header__navCapsule {
+    background: rgba(18, 24, 38, 0.7) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 9999px !important;
+    padding: 0.55rem 0.75rem 0.55rem 1.75rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    width: auto !important;
+    max-width: 92% !important;
+    box-sizing: border-box !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Hide mobile headers on desktop */
+  .mobile-sticky-header,
+  .mobile-nav-toggle,
+  .mobile-nav-drawer {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
+</style>
 </head> <body data-page="top">
 <!-- Dennis Snellenberg Multilingual Greeting Preloader Curtain -->
 <!-- Dennis Snellenberg Multilingual Greeting Preloader Curtain with Shader Animation -->
@@ -4185,10 +4260,9 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 </div>
  <div id="loading-overlay" class="Loading__container" style="display: none !important;" data-hidden> <div class="Loading__lottieContainer"> <div id="loading-lottie" class="Loading__lottie undefined"></div> <div id="loading-logo" class="Loading__logo undefined"></div> </div> <div id="loading-text" class="Loading__text">
 Architect worlds<br>that move hearts and spark hope.
-</div> </div> <header id="main-header" class="Header__container header-navbar-wrapper top-nav-bar desktop-header">
-  <!-- Center-aligned 50% Transparent Glassmorphism Navigation Bar -->
-  <div class="Header__navCapsule header-navbar desktop-taskbar" id="desktop-nav">
-    <nav class="Header__nav">
+</div> </div> <header id="main-header" class="hidden md:flex desktop-taskbar desktop-header Header__navCapsule header-navbar" style="position: fixed !important; top: 1.5rem !important; left: 50% !important; transform: translateX(-50%) !important; z-index: 999999 !important; display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;">
+  <div class="desktop-taskbar-inner" id="desktop-nav" style="display: flex !important; align-items: center !important; gap: 1.5rem !important;">
+    <nav class="Header__nav" style="display: flex !important; align-items: center !important; gap: 1.5rem !important; list-style: none !important; margin: 0 !important; padding: 0 !important;">
       <div class="Header__nav_item" data-page="about">
         <a href="#about" id="nav-about-link"><span>About Me</span></a>
       </div>
