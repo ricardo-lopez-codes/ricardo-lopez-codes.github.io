@@ -2658,6 +2658,25 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 </style>
 
 <style id="mobile-responsive-enhancements">
+/* Desktop preservation for Hero grid when topRow wrapper is present */
+@media (min-width: 769px) {
+  .HeroPortfolio__topRow {
+    display: contents !important;
+  }
+  .HeroPortfolio__photoCard {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+  .HeroPortfolio__bioCard {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+  }
+  .HeroPortfolio__linksCard {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+  }
+}
+
 /* ==========================================================================
    MY STACK HEADER & MOBILE RESPONSIVENESS UPDATES
    ========================================================================== */
@@ -3271,6 +3290,169 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     padding-top: 56px !important;
   }
 
+  /* ==========================================================================
+     RESTRUCTURE HERO SECTION (MOBILE ONLY: max-width: 768px)
+     Top Row: Profile Photo (Left) + 4 Social Icons Column (Right) Side-by-Side
+     Bottom Row: Name, Tagline & Justified About Me Bio Card Stacked Below
+     ========================================================================== */
+  #about,
+  .SectionContainer__container[data-top_section="kv"],
+  .KV__container,
+  .KV__inner {
+    height: auto !important;
+    min-height: auto !important;
+    position: relative !important;
+  }
+
+  .KV__scrollText {
+    display: none !important;
+  }
+
+  .HeroPortfolio__container {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 1.25rem 1rem 2.5rem !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+  }
+
+  .HeroPortfolio__grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Container wrapper for Top Row on mobile */
+  .HeroPortfolio__topRow {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Photo Card on Left */
+  .HeroPortfolio__photoCard {
+    width: 60% !important;
+    max-width: 210px !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .HeroPortfolio__glassFrame {
+    padding: 8px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 180, 255, 0.2) !important;
+  }
+
+  .HeroPortfolio__imgWrap {
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+  }
+
+  /* Social Icons Column on Right */
+  .HeroPortfolio__linksCard {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.65rem !important;
+    flex: 1 !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    justify-content: center !important;
+    align-items: stretch !important;
+  }
+
+  .HeroPortfolio__linkBtn {
+    padding: 0.65rem 0.85rem !important;
+    min-height: 42px !important;
+    border-radius: 12px !important;
+    gap: 0.5rem !important;
+    justify-content: flex-start !important;
+    box-sizing: border-box !important;
+  }
+
+  .HeroPortfolio__linkBtn .btn__icon {
+    width: 20px !important;
+    height: 20px !important;
+    margin-right: 6px !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .HeroPortfolio__linkBtn .btn__text {
+    font-size: 11px !important;
+    letter-spacing: 0.1em !important;
+    white-space: nowrap !important;
+  }
+
+  .HeroPortfolio__linkBtn .btn__dot {
+    display: none !important;
+  }
+
+  /* Bottom Row: Name, Tagline & About Me Bio Card Stacked Below */
+  .HeroPortfolio__bioCard {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    width: 100% !important;
+    margin: 0 !important;
+    text-align: left !important;
+  }
+
+  .HeroPortfolio__headerTitles {
+    text-align: left !important;
+    width: 100% !important;
+  }
+
+  .HeroPortfolio__name {
+    font-size: clamp(32px, 8.5vw, 44px) !important;
+    line-height: 1 !important;
+    letter-spacing: 0.05em !important;
+    margin: 0 0 6px 0 !important;
+    text-align: left !important;
+  }
+
+  .HeroPortfolio__nameLine {
+    display: inline !important;
+    margin-right: 8px !important;
+  }
+
+  .HeroPortfolio__tagline {
+    font-size: clamp(13px, 3.6vw, 15px) !important;
+    margin: 4px 0 0 0 !important;
+    text-align: left !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .HeroPortfolio__aboutBox {
+    padding: 18px 16px !important;
+    border-radius: 16px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .HeroPortfolio__aboutText,
+  #about .HeroPortfolio__aboutText,
+  #about p {
+    font-size: 13.5px !important;
+    line-height: 1.65 !important;
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    margin: 0 !important;
+  }
+
 }
 </style>
 
@@ -3580,17 +3762,52 @@ Architect worlds<br>that move hearts and spark hope.
     <div class="HeroPortfolio__container">
       <div class="HeroPortfolio__grid">
         
-        <!-- Left: Glass Framed Portrait -->
-        <div class="HeroPortfolio__photoCard">
-          <div class="HeroPortfolio__glassFrame">
-            <div class="HeroPortfolio__sheen"></div>
-            <div class="HeroPortfolio__imgWrap">
-              <img src="/top/profile.jpg" alt="Ricardo Lopez" class="HeroPortfolio__img" />
+        <!-- Top Row on Mobile: Image (Left) + Social Icons (Right) Side-by-Side -->
+        <div class="HeroPortfolio__topRow">
+          <!-- Photo Card (Left) -->
+          <div class="HeroPortfolio__photoCard">
+            <div class="HeroPortfolio__glassFrame">
+              <div class="HeroPortfolio__sheen"></div>
+              <div class="HeroPortfolio__imgWrap">
+                <img src="/top/profile.jpg" alt="Ricardo Lopez" class="HeroPortfolio__img" />
+              </div>
             </div>
+          </div>
+
+          <!-- Social Links Column (Right) -->
+          <div class="HeroPortfolio__linksCard">
+            <a href="https://www.linkedin.com/in/ricardo-alvaro-lopez/" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--linkedin">
+              <span class="btn__icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.6 1.6 0 0 0-1.6 1.6 1.6 1.6 0 0 0 1.6 1.6 1.6 1.6 0 0 0 1.6-1.6c0-.89-.72-1.6-1.6-1.6Z"/>
+                </svg>
+              </span>
+              <span class="btn__text">LINKEDIN</span>
+              <span class="btn__dot"></span>
+            </a>
+
+            <a href="https://github.com/ricardo-lopez-codes" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--github">
+              <span class="btn__icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
+                </svg>
+              </span>
+              <span class="btn__text">GITHUB</span>
+            </a>
+
+            <a href="https://leetcode.com/u/ricardo_lopez/" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--leetcode">
+              <span class="btn__icon">&lt;&gt;</span>
+              <span class="btn__text">LEETCODE</span>
+            </a>
+
+            <a href="https://www.geeksforgeeks.org/profile/rl69d0d6?from=edit" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--gfg">
+              <span class="btn__icon">{ }</span>
+              <span class="btn__text">GEEKSFORGEEKS</span>
+            </a>
           </div>
         </div>
 
-        <!-- Center: About Me & Bio Card (10% Transparent Glass Box) -->
+        <!-- Bottom Row: About Me & Bio Card Stacked Below -->
         <div class="HeroPortfolio__bioCard">
           <div class="HeroPortfolio__headerTitles">
             <h1 class="HeroPortfolio__name">
@@ -3605,38 +3822,6 @@ Architect worlds<br>that move hearts and spark hope.
               I'm Ricardo Lopez, an Electronics and Communication Engineering student passionate about building intelligent systems that solve real-world problems. I specialize in IoT, Embedded Systems, AI, and Computer Vision, creating projects that combine hardware and software innovation. My work ranges from smart EV health monitoring and accident prediction systems to energy and automation solutions. I enjoy turning ideas into practical technology through hands-on development, teamwork, and continuous learning.
             </p>
           </div>
-        </div>
-
-        <!-- Right: Social & Coding Platform Links -->
-        <div class="HeroPortfolio__linksCard">
-          <a href="https://www.linkedin.com/in/ricardo-alvaro-lopez/" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--linkedin">
-            <span class="btn__icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.6 1.6 0 0 0-1.6 1.6 1.6 1.6 0 0 0 1.6 1.6 1.6 1.6 0 0 0 1.6-1.6c0-.89-.72-1.6-1.6-1.6Z"/>
-              </svg>
-            </span>
-            <span class="btn__text">LINKEDIN</span>
-            <span class="btn__dot"></span>
-          </a>
-
-          <a href="https://github.com/ricardo-lopez-codes" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--github">
-            <span class="btn__icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
-              </svg>
-            </span>
-            <span class="btn__text">GITHUB</span>
-          </a>
-
-          <a href="https://leetcode.com/u/ricardo_lopez/" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--leetcode">
-            <span class="btn__icon">&lt;&gt;</span>
-            <span class="btn__text">LEETCODE</span>
-          </a>
-
-          <a href="https://www.geeksforgeeks.org/profile/rl69d0d6?from=edit" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--gfg">
-            <span class="btn__icon">{ }</span>
-            <span class="btn__text">GEEKSFORGEEKS</span>
-          </a>
         </div>
 
       </div>
