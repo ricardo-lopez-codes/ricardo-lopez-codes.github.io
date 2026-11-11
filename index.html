@@ -1239,6 +1239,38 @@ a[href*="/works/unreal_engine"] {
 
 
 
+<style id="viewport-and-scroll-lock">
+/* ==========================================================================
+   MOBILE CHROME ADDRESS BAR & STICKY HEADER AUTO-HIDING FIX
+   ========================================================================== */
+html, body {
+  /* Allow native document scroll so browser UI stays stable */
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+  min-height: 100dvh;
+}
+
+#root, main, .Layout__inner, .Layout__wrapper {
+  min-height: 100dvh;
+}
+
+/* Guard: Lock Mobile Top Header Bar to Top Viewport Edge */
+.mobile-sticky-header,
+.mobile-header,
+header,
+#main-header,
+.top-nav-bar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  z-index: 9999999 !important;
+  transform: translateZ(0); /* Prevent mobile compositing repaint glitch */
+  -webkit-transform: translateZ(0);
+}
+</style>
+
 <style id="ResumeBtnStyles">
 
 /* ==========================================================================
@@ -3032,7 +3064,8 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     position: fixed !important;
     inset: 0 !important;
     width: 100vw !important;
-    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
     z-index: 9999998 !important;
     background: rgba(8, 8, 12, 0.96) !important;
     backdrop-filter: blur(28px) !important;
@@ -3736,7 +3769,8 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     position: fixed !important;
     inset: 0 !important;
     width: 100vw !important;
-    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
     z-index: 0 !important;
     pointer-events: none !important;
   }
