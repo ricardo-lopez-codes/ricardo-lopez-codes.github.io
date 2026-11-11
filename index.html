@@ -1657,17 +1657,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 }
 
 /* Header Area with Studio Elevation */
-.Projects__header,
-.projects-section-header {
-  text-align: center;
-  margin-top: 3rem !important;
-  padding-top: 1rem !important;
-  margin-bottom: 36px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+
 .Projects__headerBadge {
   display: inline-flex;
   align-items: center;
@@ -1694,16 +1684,33 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   box-shadow: 0 0 8px #0284c7;
 }
 
+.Projects__header {
+  text-align: center;
+  margin-top: 3rem !important;
+  padding: 1.5rem 2rem 1.25rem 2rem !important;
+  margin-bottom: 36px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.12) !important;
+}
+
 .Projects__headerTitle {
   font-family: 'acumin-pro', 'Google Sans Code', sans-serif;
-  font-size: clamp(32px, 4.4vw, 50px);
-  font-weight: 900;
-  color: #ffffff !important;
+  font-size: clamp(2rem, 4.8vw, 3rem) !important; /* text-3xl md:text-5xl */
+  font-weight: 900 !important;
+  color: #000000 !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
-  margin: 0 0 8px 0;
-  line-height: 1.1;
-  text-shadow: 0 2px 20px rgba(255, 255, 255, 0.4);
+  margin: 0 0 10px 0 !important;
+  line-height: 1.1 !important;
+  text-shadow: none !important;
 }
 .Projects__headerSubtitle {
   font-family: 'Google Sans Code', monospace;
@@ -3116,17 +3123,26 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   .Projects__header,
   .projects-section-header {
     margin-top: 1rem !important;
-    padding-top: 0 !important;
+    padding: 1.25rem 1rem !important;
     margin-bottom: 24px !important;
     width: 100% !important;
     text-align: center !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.95) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.12) !important;
+    box-sizing: border-box !important;
   }
 
   .Projects__headerTitle {
-    font-size: 1.6rem !important;
-    line-height: 1.2 !important;
-    color: #ffffff !important;
-    letter-spacing: 0.12em !important;
+    font-size: clamp(1.85rem, 7.5vw, 2.35rem) !important; /* prominent text-3xl */
+    line-height: 1.15 !important;
+    color: #000000 !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.1em !important;
+    text-shadow: none !important;
   }
 
   .Projects__headerSubtitle {
@@ -4273,7 +4289,7 @@ Architect worlds<br>that move hearts and spark hope.
     <!-- Custom Projects Showcase -->
     <div class="Projects__overlayContainer projects-section-container" id="projects-container"><div class="Projects__header projects-section-header">
         
-        <h2 class="Projects__headerTitle text-xl md:text-2xl font-black tracking-widest text-white uppercase">FEATURED BUILDS</h2>
+        <h2 class="Projects__headerTitle text-3xl md:text-5xl font-black tracking-widest text-black uppercase">FEATURED BUILDS</h2>
         <p class="Projects__headerSubtitle">EMBEDDED SYSTEMS / IOT PLATFORMS / AERONAUTICS / AI</p>
       </div>
       
