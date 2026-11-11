@@ -1,13 +1,26 @@
 <!DOCTYPE html><html lang="ja"> <head>
-<!-- Pre-render blocker: hides mobile hero prior to first paint -->
+<!-- CRITICAL INLINE PRE-RENDER BLOCKER -->
 <style>
   @media (max-width: 768px) {
-    html:not([data-ready="true"]) .mobile-hero-container,
-    html:not([data-ready="true"]) .HeroPortfolio__container,
-    html:not([data-ready="true"]) #hero-section {
+    /* Keep mobile hero & card content hidden from 0ms initial HTML parse */
+    .mobile-hero-container,
+    .HeroPortfolio__container,
+    #about,
+    #hero-section {
       display: none !important;
       opacity: 0 !important;
       visibility: hidden !important;
+    }
+
+    /* Reveal layout ONLY when client app marks initialization complete */
+    html.app-ready .mobile-hero-container,
+    html.app-ready .HeroPortfolio__container,
+    html.app-ready #about,
+    html.app-ready #hero-section {
+      display: flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      transition: opacity 0.3s ease-in-out;
     }
   }
 </style>
@@ -2764,6 +2777,10 @@ body[data-current_section="kv"] .Projects__overlayContainer {
    ========================================================================== */
 @media (max-width: 768px) {
   /* Pre-render blocker: hides mobile hero prior to first paint and hydration */
+  html:not(.app-ready) .mobile-hero-container,
+  html:not(.app-ready) .HeroPortfolio__container,
+  html:not(.app-ready) #about,
+  html:not(.app-ready) #hero-section,
   html:not([data-ready="true"]) .mobile-hero-container,
   html:not([data-ready="true"]) .HeroPortfolio__container,
   html:not([data-ready="true"]) #hero-section,
@@ -2780,9 +2797,12 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 
   .mobile-hero-container,
   .HeroPortfolio__container {
-    transition: opacity 0.4s ease-in-out !important;
+    transition: opacity 0.3s ease-in-out !important;
   }
 
+  html.app-ready .mobile-hero-container,
+  html.app-ready .HeroPortfolio__container,
+  html.app-ready #about,
   html[data-ready="true"] .mobile-hero-container,
   html[data-ready="true"] .HeroPortfolio__container {
     opacity: 1 !important;
@@ -5514,9 +5534,10 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
 
   // Client-side hydration/mounting trigger to smoothly fade in mobile hero layout
   function triggerMounted() {
-    if (window.innerWidth <= 768) {
-      // Small frame delay ensures all background scripts and canvas are fully initialized
+    if (typeof window !== 'undefined') {
+      // Ensure state, width checks, and 3D canvas mounting complete first
       requestAnimationFrame(function() {
+        document.documentElement.classList.add('app-ready');
         document.documentElement.setAttribute('data-ready', 'true');
         document.documentElement.classList.remove('is-mobile-loading');
         document.body.classList.add('mounted');
@@ -5526,9 +5547,6 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
           hero.style.visibility = 'visible';
         }
       });
-    } else {
-      document.documentElement.setAttribute('data-ready', 'true');
-      document.body.classList.add('mounted');
     }
   }
 
