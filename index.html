@@ -14,11 +14,23 @@ a[href*="/works/unreal_engine"] {
   pointer-events: none !important;
 }
 
-/* Ensure WebGL canvas sits in natural background layer */
+/* Force 3D canvas container to stay visible behind content */
+.achievements-canvas-container,
+#achievements canvas,
 .Layout__gl,
 .Layout__gl_inner,
-.GLCanvas__container {
+.GLCanvas__container,
+#gl-canvas,
+#gl-canvas canvas {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
   z-index: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Seamless flow between Vision and Service/MY STACK without extra blank buffer */
@@ -3492,8 +3504,46 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   }
 
   /* ==========================================================================
-     MOBILE ACHIEVEMENTS SECTION UI & SMOOTH TRANSITION FIXES (max-width: 768px)
+     MOBILE ACHIEVEMENTS SECTION UI, 3D CANVAS & TEXTURE RESTORATION (max-width: 768px)
      ========================================================================== */
+  /* Force 3D canvas container to stay visible behind content */
+  .achievements-canvas-container,
+  #achievements canvas,
+  .Layout__gl,
+  .Layout__gl_inner,
+  .GLCanvas__container,
+  #gl-canvas,
+  #gl-canvas canvas {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Restore & Enlarge Achievement Images (Mobile Only) */
+  #achievements .achievement-card-img-wrapper,
+  #achievements .achievement-image,
+  .achievement-card-img-wrapper,
+  .achievement-image {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 90vw !important;
+    max-width: 360px !important;
+    height: auto !important;
+    aspect-ratio: 16 / 10 !important;
+    object-fit: cover !important;
+    margin: 0 auto !important;
+    z-index: 10 !important;
+    position: relative !important;
+  }
+
+  /* Smooth Mobile Scroll & Text Overlay Fix */
   .Works__item {
     position: absolute !important;
     left: 5vw !important;
@@ -3508,11 +3558,13 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     padding: 0 !important;
     margin: 0 !important;
     box-sizing: border-box !important;
+    z-index: 20 !important;
+    pointer-events: auto !important;
     transform: translateZ(0) !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
     will-change: transform, opacity !important;
-    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
   }
 
   .Works__item .achievement__prize,
