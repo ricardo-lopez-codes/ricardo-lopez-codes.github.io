@@ -4121,7 +4121,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 
 <style id="enforced-desktop-taskbar-visibility">
 /* ==========================================================================
-   CONSOLIDATED DESKTOP TASKBAR VISIBILITY & STRAY TEXT CLEANUP
+   CONSOLIDATED DESKTOP TASKBAR SCROLL-BASED VISIBILITY & CLEANUP
    ========================================================================== */
 
 /* Hide stray left-edge scroll indicator ("About Me" text on far left) */
@@ -4132,17 +4132,14 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 }
 
 @media (min-width: 769px) {
-  /* Desktop taskbar: single glass capsule centered at top */
+  /* Desktop taskbar: sleek fixed glass capsule at top, starts hidden during intro */
   header#main-header {
     display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
     position: fixed !important;
     top: 1.5rem !important;
     left: 50% !important;
-    transform: translateX(-50%) !important;
+    transform: translate(-50%, 0) !important;
     z-index: 999999 !important;
-    pointer-events: auto !important;
     background: rgba(18, 24, 38, 0.7) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
@@ -4155,6 +4152,23 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     box-sizing: border-box !important;
     align-items: center !important;
     justify-content: center !important;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  /* When inside initial greeting/animation spacer, hide smoothly */
+  header#main-header.taskbar-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translate(-50%, -1.5rem) !important;
+  }
+
+  /* When scrolled into main content (About Me and below), reveal smoothly */
+  header#main-header.taskbar-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translate(-50%, 0) !important;
   }
 
   /* Inner wrapper: keep it inline flex, no repositioning */
@@ -4162,9 +4176,9 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     display: flex !important;
     align-items: center !important;
     gap: 1.5rem !important;
-    visibility: visible !important;
+    visibility: inherit !important;
     opacity: 1 !important;
-    pointer-events: auto !important;
+    pointer-events: inherit !important;
     position: static !important;
     transform: none !important;
   }
@@ -4176,25 +4190,25 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     display: flex !important;
     align-items: center !important;
     gap: 1.5rem !important;
-    visibility: visible !important;
+    visibility: inherit !important;
     opacity: 1 !important;
-    pointer-events: auto !important;
+    pointer-events: inherit !important;
   }
 
   .Header__nav_item,
   .Header__nav_item a {
     display: inline-flex !important;
-    visibility: visible !important;
+    visibility: inherit !important;
     opacity: 1 !important;
-    pointer-events: auto !important;
+    pointer-events: inherit !important;
   }
 
   .ResumeBtn__top,
   .download-resume-btn {
     display: inline-flex !important;
-    visibility: visible !important;
+    visibility: inherit !important;
     opacity: 1 !important;
-    pointer-events: auto !important;
+    pointer-events: inherit !important;
   }
 
   /* Hide mobile elements on desktop */
@@ -4210,26 +4224,43 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 
 <style id="achievement-glass-frame-styles">
 /* ==========================================================================
-   ACHIEVEMENT PHOTO GLASS-MORPHISM FRAME BORDER ON WEBGL CARD CONTAINERS
-   Applied to .Works__scroll_item_thumb (Three.js rendered card textures)
+   ACHIEVEMENT PHOTO CRISP GLASS FRAME (ZERO BLUR OVER PHOTOS)
+   Ensures 100% sharp achievement photos with clean outer border & glow
    ========================================================================== */
 
-/* Desktop: Glass border on the WebGL-rendered card thumbnails */
-.Works__scroll_item_thumb {
-  border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
-  background: rgba(255, 255, 255, 0.06) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  padding: 8px !important;
+.Works__scroll_item_thumb,
+.achievement-card-img-wrapper,
+.achievement-photo-img,
+.achievement-image {
+  border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
   border-radius: 16px !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 0 16px rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.08) !important;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
   overflow: hidden !important;
+  padding: 0 !important;
 }
 
-.Works__scroll_item_thumb:hover {
-  border-color: rgba(34, 211, 238, 0.5) !important;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(34, 211, 238, 0.2), inset 0 0 18px rgba(255, 255, 255, 0.1) !important;
+.Works__scroll_item_thumb:hover,
+.achievement-card-img-wrapper:hover {
+  border-color: rgba(34, 211, 238, 0.6) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 24px rgba(34, 211, 238, 0.3) !important;
+}
+
+/* Guard against any blur filter over the achievements section or canvas */
+#achievements,
+#achievements canvas,
+.Works__container,
+.Works__content,
+.Works__list,
+.Works__scroll {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
 }
 </style>
 </head> <body data-page="top">
@@ -4255,7 +4286,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 </div>
  <div id="loading-overlay" class="Loading__container" style="display: none !important;" data-hidden> <div class="Loading__lottieContainer"> <div id="loading-lottie" class="Loading__lottie undefined"></div> <div id="loading-logo" class="Loading__logo undefined"></div> </div> <div id="loading-text" class="Loading__text">
 Architect worlds<br>that move hearts and spark hope.
-</div> </div> <header id="main-header" class="hidden md:flex desktop-taskbar desktop-header Header__navCapsule header-navbar" style="position: fixed !important; top: 1.5rem !important; left: 50% !important; transform: translateX(-50%) !important; z-index: 999999 !important; display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;">
+</div> </div> <header id="main-header" class="hidden md:flex desktop-taskbar desktop-header Header__navCapsule header-navbar taskbar-hidden" style="position: fixed !important; top: 1.5rem !important; left: 50% !important; z-index: 999999 !important;">
   <div class="desktop-taskbar-inner" id="desktop-nav" style="display: flex !important; align-items: center !important; gap: 1.5rem !important;">
     <nav class="Header__nav" style="display: flex !important; align-items: center !important; gap: 1.5rem !important; list-style: none !important; margin: 0 !important; padding: 0 !important;">
       <div class="Header__nav_item" data-page="about">
@@ -6042,6 +6073,63 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
     document.addEventListener('DOMContentLoaded', initMobileSwipe);
   } else {
     initMobileSwipe();
+  }
+})();
+</script>
+
+
+<script id="desktop-taskbar-scroll-guard">
+(function() {
+  function initTaskbarScrollTracker() {
+    var header = document.getElementById('main-header');
+    if (!header) return;
+
+    var ticking = false;
+
+    function updateTaskbar() {
+      // Reveal threshold: past initial greeting/hero spacer (window.innerHeight * 0.85)
+      var threshold = window.innerHeight * 0.85;
+      var scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
+
+      // On desktop (min-width: 769px)
+      if (window.innerWidth > 768) {
+        if (scrollY >= threshold) {
+          header.classList.remove('taskbar-hidden');
+          header.classList.add('taskbar-visible');
+        } else {
+          header.classList.remove('taskbar-visible');
+          header.classList.add('taskbar-hidden');
+        }
+      }
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateTaskbar);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateTaskbar);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Initial check
+    updateTaskbar();
+    // Also re-check once preloader finishes or DOM fully ready
+    setTimeout(updateTaskbar, 300);
+    setTimeout(updateTaskbar, 1000);
+    setTimeout(updateTaskbar, 2500);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTaskbarScrollTracker);
+  } else {
+    initTaskbarScrollTracker();
   }
 })();
 </script>
