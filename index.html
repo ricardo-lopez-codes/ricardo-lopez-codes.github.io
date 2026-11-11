@@ -3336,13 +3336,14 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     justify-content: space-between !important;
     gap: 1rem !important;
     width: 100% !important;
+    padding-right: 1rem !important;
     box-sizing: border-box !important;
   }
 
-  /* Photo Card on Left */
+  /* Photo Card on Left (Enlarged width/scale up to 70% / 260px) */
   .HeroPortfolio__photoCard {
-    flex: 1 !important;
-    max-width: 220px !important;
+    width: 70% !important;
+    max-width: 260px !important;
     margin: 0 !important;
     flex-shrink: 0 !important;
   }
@@ -3359,7 +3360,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     overflow: hidden !important;
   }
 
-  /* Social Icons Column on Right (Square Icon Buttons Only on Mobile) */
+  /* Social Icons Column on Right (Shifted left closer to photo) */
   .HeroPortfolio__linksCard {
     display: flex !important;
     flex-direction: column !important;
@@ -3367,6 +3368,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     width: auto !important;
     max-width: none !important;
     margin: 0 !important;
+    margin-right: 0.5rem !important;
     justify-content: center !important;
     align-items: center !important;
     flex-shrink: 0 !important;
@@ -3418,26 +3420,27 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     padding: 0 !important;
   }
 
-  /* Bottom Row: Name, Tagline & About Me Bio Card Stacked Below */
+  /* Bottom Row: Name, Tagline & About Me Bio Card Stacked Below (Pushed down) */
   .HeroPortfolio__bioCard {
     display: flex !important;
     flex-direction: column !important;
-    gap: 1rem !important;
+    gap: 0 !important;
     width: 100% !important;
-    margin: 0 !important;
+    margin-top: 1.25rem !important;
     text-align: left !important;
   }
 
   .HeroPortfolio__headerTitles {
     text-align: left !important;
     width: 100% !important;
+    margin-bottom: 0 !important;
   }
 
   .HeroPortfolio__name {
     font-size: clamp(32px, 8.5vw, 44px) !important;
-    line-height: 1 !important;
+    line-height: 1.1 !important;
     letter-spacing: 0.05em !important;
-    margin: 0 0 6px 0 !important;
+    margin: 0 0 8px 0 !important;
     text-align: left !important;
   }
 
@@ -3448,13 +3451,16 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 
   .HeroPortfolio__tagline {
     font-size: clamp(13px, 3.6vw, 15px) !important;
-    margin: 4px 0 0 0 !important;
+    margin: 0 !important;
     text-align: left !important;
     color: rgba(255, 255, 255, 0.9) !important;
     letter-spacing: 0.04em !important;
+    line-height: 1.4 !important;
   }
 
+  /* About Me box pushed down with margin-top 1.5rem (mt-6) */
   .HeroPortfolio__aboutBox {
+    margin-top: 1.5rem !important;
     padding: 18px 16px !important;
     border-radius: 16px !important;
     width: 100% !important;
@@ -3818,8 +3824,12 @@ Architect worlds<br>that move hearts and spark hope.
               <span class="btn__text">LEETCODE</span>
             </a>
 
-            <a href="https://www.geeksforgeeks.org/profile/rl69d0d6?from=edit" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--gfg">
-              <span class="btn__icon">{ }</span>
+            <a href="https://www.geeksforgeeks.org/profile/rl69d0d6?from=edit" target="_blank" rel="noopener noreferrer" class="HeroPortfolio__linkBtn btn--gfg" aria-label="GeeksforGeeks">
+              <span class="btn__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#00E676">
+                  <path d="M19.165 9.428c-.08-.052-.165-.104-.257-.156a5.74 5.74 0 0 0-.583-.263c-.426-.164-.913-.254-1.428-.254-1.127 0-2.146.438-2.905 1.157l-1.992 1.884-1.992-1.884c-.759-.719-1.778-1.157-2.905-1.157-.515 0-1.002.09-1.428.254-.207.08-.402.17-.583.263-.092.052-.177.104-.257.156A6.16 6.16 0 0 0 2.5 13.593c0 1.64.636 3.13 1.684 4.24l7.816 7.397 7.816-7.397A6.29 6.29 0 0 0 21.5 13.593a6.16 6.16 0 0 0-2.335-4.165z" />
+                </svg>
+              </span>
               <span class="btn__text">GEEKSFORGEEKS</span>
             </a>
           </div>
