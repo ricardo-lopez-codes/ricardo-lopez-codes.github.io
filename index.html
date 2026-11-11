@@ -1,4 +1,16 @@
 <!DOCTYPE html><html lang="ja"> <head>
+<!-- Pre-render blocker: hides mobile hero prior to first paint -->
+<style>
+  @media (max-width: 768px) {
+    html:not([data-ready="true"]) .mobile-hero-container,
+    html:not([data-ready="true"]) .HeroPortfolio__container,
+    html:not([data-ready="true"]) #hero-section {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+  }
+</style>
 <!-- 基本設定 --><meta charset="utf-8">
 <script>
   (function() {
@@ -2751,25 +2763,30 @@ body[data-current_section="kv"] .Projects__overlayContainer {
    Desktop layout, taskbar, project sections, and alignments remain 100% untouched.
    ========================================================================== */
 @media (max-width: 768px) {
-  /* Prevent initial unstyled DOM flash on mobile before parser/hydration finishes */
+  /* Pre-render blocker: hides mobile hero prior to first paint and hydration */
+  html:not([data-ready="true"]) .mobile-hero-container,
+  html:not([data-ready="true"]) .HeroPortfolio__container,
+  html:not([data-ready="true"]) #hero-section,
   html.is-mobile-loading .mobile-hero-container,
   html.is-mobile-loading .HeroPortfolio__container,
-  html.is-mobile-loading #hero-section {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-  }
-
+  html.is-mobile-loading #hero-section,
   body:not(.mounted) .mobile-hero-container,
   body:not(.mounted) #hero-section,
   body:not(.mounted) .HeroPortfolio__container {
+    display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
   }
 
   .mobile-hero-container,
   .HeroPortfolio__container {
-    transition: opacity 0.3s ease-in-out !important;
+    transition: opacity 0.4s ease-in-out !important;
+  }
+
+  html[data-ready="true"] .mobile-hero-container,
+  html[data-ready="true"] .HeroPortfolio__container {
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 
   /* --- Completely Disable Loading Screen / Intro Animation (Mobile Only) --- */
@@ -5497,15 +5514,22 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
 
   // Client-side hydration/mounting trigger to smoothly fade in mobile hero layout
   function triggerMounted() {
-    requestAnimationFrame(function() {
-      document.documentElement.classList.remove('is-mobile-loading');
+    if (window.innerWidth <= 768) {
+      // Small frame delay ensures all background scripts and canvas are fully initialized
+      requestAnimationFrame(function() {
+        document.documentElement.setAttribute('data-ready', 'true');
+        document.documentElement.classList.remove('is-mobile-loading');
+        document.body.classList.add('mounted');
+        var hero = document.querySelector('.mobile-hero-container');
+        if (hero) {
+          hero.style.opacity = '1';
+          hero.style.visibility = 'visible';
+        }
+      });
+    } else {
+      document.documentElement.setAttribute('data-ready', 'true');
       document.body.classList.add('mounted');
-      var hero = document.querySelector('.mobile-hero-container');
-      if (hero) {
-        hero.style.opacity = '1';
-        hero.style.visibility = 'visible';
-      }
-    });
+    }
   }
 
   if (document.readyState === 'loading') {
