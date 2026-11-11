@@ -1450,14 +1450,22 @@ a[href*="/works/unreal_engine"] {
 
 
 <style>
-/* Achievements Typography Styling */
-.Works__item_title.achievement__title, .Works__item_title {
-  font-family: 'acumin-pro', 'Segoe UI', -apple-system, sans-serif !important;
-  font-size: clamp(38px, 4.2vw, 56px) !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.05em !important;
-  line-height: 1.1 !important;
-  margin-bottom: 12px !important;
+/* Achievements Typography & Strict Vertical Layout Ordering */
+.Works__item {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+/* 1. Prize Details (Fixed height badge line) */
+.Works__item .Works__item_info {
+  height: 38px !important;
+  min-height: 38px !important;
+  display: flex !important;
+  align-items: center !important;
+  margin-bottom: 10px !important;
+  margin-top: 0 !important;
 }
 .Works__item_impression_title.achievement__prize, .Works__item_impression_title {
   font-family: 'Google Sans Code', monospace !important;
@@ -1470,15 +1478,47 @@ a[href*="/works/unreal_engine"] {
   border: 1px solid rgba(215, 255, 0, 0.4) !important;
   border-radius: 8px !important;
   text-shadow: 0 0 10px rgba(215, 255, 0, 0.5) !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
 }
+
+/* 2. Event Name (Fixed Line Height / Min Height) */
+.Works__item_title.achievement__title, .Works__item_title {
+  font-family: 'acumin-pro', 'Segoe UI', -apple-system, sans-serif !important;
+  font-size: clamp(38px, 4.2vw, 56px) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.05em !important;
+  line-height: 1.1 !important;
+  min-height: 64px !important;
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 0 12px 0 !important;
+}
+
+/* 3. College Name (Fixed Location Line) */
 .Works__item_title_ja.achievement__venue, .Works__item_title_ja {
   font-family: 'Google Sans Code', monospace !important;
   font-size: 16px !important;
   font-weight: 600 !important;
   color: #00e5ff !important;
   letter-spacing: 0.08em !important;
-  margin-bottom: 16px !important;
+  min-height: 42px !important;
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 0 16px 0 !important;
   text-shadow: 0 0 10px rgba(0, 229, 255, 0.4) !important;
+}
+
+/* 4. Words about event (Tags Row) */
+.Works__item .Works__item_categoryList {
+  min-height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 </style>
 
@@ -1581,12 +1621,12 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   font-family: 'acumin-pro', 'Google Sans Code', sans-serif;
   font-size: clamp(32px, 4.4vw, 50px);
   font-weight: 900;
-  color: #090d16;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  color: #ffffff !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
   margin: 0 0 8px 0;
   line-height: 1.1;
-  text-shadow: 0 4px 24px rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 20px rgba(255, 255, 255, 0.4);
 }
 .Projects__headerSubtitle {
   font-family: 'Google Sans Code', monospace;
@@ -3008,6 +3048,8 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   .Projects__headerTitle {
     font-size: 1.6rem !important;
     line-height: 1.2 !important;
+    color: #ffffff !important;
+    letter-spacing: 0.12em !important;
   }
 
   .Projects__headerSubtitle {
@@ -3585,18 +3627,18 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     position: relative !important;
   }
 
-  /* 2. Details Container (Sits Snugly Directly Below the Larger Photo Box) */
+  /* 2. Details Container: Strict & Permanent Vertical Hierarchy */
   .Works__item {
     position: absolute !important;
     left: 1rem !important;
     right: 1rem !important;
     width: calc(100vw - 2rem) !important;
     max-width: calc(100vw - 2rem) !important;
-    bottom: 9vh !important;
+    bottom: 8vh !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
-    justify-content: flex-end !important;
+    justify-content: flex-start !important;
     padding: 0 !important;
     margin: 0 !important;
     box-sizing: border-box !important;
@@ -3609,27 +3651,45 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     transition: opacity 0.3s ease, transform 0.3s ease !important;
   }
 
+  /* 1. Prize Details (Top badge: e.g. 1ST PRIZE WINNER) */
+  .Works__item .Works__item_info {
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 0 8px 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
   .Works__item .achievement__prize,
   .Works__item .Works__item_impression_title {
     font-size: 11.5px !important;
     padding: 5px 10px !important;
     border-radius: 6px !important;
     letter-spacing: 0.1em !important;
-    margin-bottom: 8px !important;
+    margin: 0 !important;
     background: rgba(255, 255, 255, 0.14) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    display: inline-flex !important;
+    align-items: center !important;
   }
 
-  /* Enlarged Title (text-2xl / text-3xl font-black) */
+  /* 2. Event Name (Main title: e.g. TECHNO-A-THON) */
   .Works__item .achievement__title,
   .Works__item .Works__item_title {
-    font-size: clamp(24px, 6.5vw, 30px) !important;
+    font-size: clamp(23px, 6.2vw, 29px) !important;
     font-weight: 900 !important;
     line-height: 1.15 !important;
     letter-spacing: -0.01em !important;
-    margin: 0 0 8px 0 !important;
+    min-height: 58px !important;
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 0 6px 0 !important;
+    padding: 0 !important;
     width: 100% !important;
     word-break: break-word !important;
     text-transform: uppercase !important;
@@ -3641,26 +3701,32 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     color: #ffffff !important;
   }
 
-  /* Enlarged Location/Institution (text-xs / text-sm font-mono text-cyan-400) */
+  /* 3. College Name (Location line: e.g. St. Joseph's College of Engineering - OMR) */
   .Works__item .achievement__venue,
   .Works__item .Works__item_title_ja {
-    font-size: 13px !important;
-    line-height: 1.45 !important;
+    font-size: 12.5px !important;
+    line-height: 1.35 !important;
     color: #22d3ee !important; /* cyan-400 */
     font-family: 'Google Sans Code', monospace !important;
     font-weight: 600 !important;
-    margin: 0 0 12px 0 !important;
+    min-height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 0 10px 0 !important;
+    padding: 0 !important;
     width: 100% !important;
     word-break: break-word !important;
     letter-spacing: 0.03em !important;
     text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8) !important;
   }
 
-  /* Tags with Enlarged Text and Padding */
+  /* 4. Some words about the event (Tag pills / Category labels) */
   .Works__item .Works__item_categoryList {
+    min-height: 32px !important;
     display: flex !important;
     flex-wrap: wrap !important;
-    gap: 8px !important;
+    align-items: center !important;
+    gap: 7px !important;
     margin: 0 !important;
     padding: 0 !important;
     list-style: none !important;
@@ -3668,9 +3734,9 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   }
 
   .Works__item .Works__item_categoryList_item {
-    font-size: 11.5px !important;
+    font-size: 11px !important;
     font-family: 'Google Sans Code', monospace !important;
-    padding: 5px 11px !important;
+    padding: 4px 10px !important;
     border-radius: 6px !important;
     background: rgba(255, 255, 255, 0.08) !important;
     border: 1px solid rgba(255, 255, 255, 0.22) !important;
@@ -4104,7 +4170,7 @@ Architect worlds<br>that move hearts and spark hope.
     <!-- Custom Projects Showcase -->
     <div class="Projects__overlayContainer projects-section-container" id="projects-container"><div class="Projects__header projects-section-header">
         
-        <h2 class="Projects__headerTitle">FEATURED BUILDS</h2>
+        <h2 class="Projects__headerTitle text-xl md:text-2xl font-black tracking-widest text-white uppercase">FEATURED BUILDS</h2>
         <p class="Projects__headerSubtitle">EMBEDDED SYSTEMS / IOT PLATFORMS / AERONAUTICS / AI</p>
       </div>
       
