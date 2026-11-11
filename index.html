@@ -4228,27 +4228,63 @@ body[data-current_section="kv"] .Projects__overlayContainer {
    Ensures 100% sharp achievement photos with clean outer border & glow
    ========================================================================== */
 
-.Works__scroll_item_thumb,
-.achievement-card-img-wrapper,
-.achievement-photo-img,
-.achievement-image {
-  border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  filter: none !important;
-  -webkit-filter: none !important;
-  border-radius: 16px !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.08) !important;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  overflow: hidden !important;
-  padding: 0 !important;
+
+/* Hide mobile photo frame on desktop screens */
+@media (min-width: 769px) {
+  .mobile-achievement-card-frame {
+    display: none !important;
+  }
 }
 
-.Works__scroll_item_thumb:hover,
-.achievement-card-img-wrapper:hover {
-  border-color: rgba(34, 211, 238, 0.6) !important;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 24px rgba(34, 211, 238, 0.3) !important;
+/* Standalone mobile achievement photo frame with crisp glass border */
+.mobile-achievement-card-frame {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 350px !important;
+  margin: 0 auto 12px auto !important;
+  aspect-ratio: 16 / 10 !important;
+  border-radius: 16px !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.08) !important;
+  overflow: hidden !important;
+  background: rgba(14, 14, 20, 0.6) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.mobile-achievement-card-frame img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* Desktop glass frame styling for Three.js / desktop cards */
+@media (min-width: 769px) {
+  .Works__scroll_item_thumb,
+  .achievement-card-img-wrapper,
+  .achievement-photo-img,
+  .achievement-image {
+    border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.08) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+
+  .Works__scroll_item_thumb:hover,
+  .achievement-card-img-wrapper:hover {
+    border-color: rgba(34, 211, 238, 0.6) !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 24px rgba(34, 211, 238, 0.3) !important;
+  }
 }
 
 /* Guard against any blur filter over the achievements section or canvas */
@@ -4265,11 +4301,34 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 </style>
 <style id="mobile-achievements-carousel-isolation">
 /* ==========================================================================
-   MOBILE ACHIEVEMENTS ISOLATION & OVERFLOW LOCK (@media max-width: 768px)
-   Prevents overlapping text, stacking details, and inactive background bleed
+   MOBILE ACHIEVEMENTS ISOLATION & CLEANUP (@media max-width: 768px)
+   1. Removes giant outer rounded outline boxes & secondary horizontal box
+   2. Completely eliminates overlapping text by rendering ONLY active card
+   3. Guarantees zero photo clipping with a standalone glass framed image
    ========================================================================== */
 @media (max-width: 768px) {
-  /* Lock outer viewport overflow so inactive side items never bleed */
+  /* REMOVE ALL GIANT OUTER OUTLINE BOXES & BACKGROUND RECTANGLES */
+  #achievements,
+  #achievements *,
+  .Works__container,
+  .Works__content,
+  .Works__content_inner,
+  .Works__list,
+  .Works__scroll,
+  .Works__scroll_item,
+  .Works__scroll_item_thumb {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Keep glass frame ONLY on the actual achievement photo container */
+  .mobile-achievement-card-frame {
+    border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* Lock viewport overflow */
   #achievements,
   .Works__container,
   .Works__content,
@@ -4278,45 +4337,46 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     overflow: hidden !important;
   }
 
-  /* Wrap each achievement item in an isolated bounds container */
+  /* Hide Three.js WebGL 3D achievement cards on mobile to avoid half-clipped side swinging */
+  #achievements canvas {
+    display: none !important;
+  }
+
+  /* STRICT CARD ISOLATION: Inactive cards are completely unmounted from layout (display: none) */
   .Works__item {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
     position: absolute !important;
     left: 1rem !important;
     right: 1rem !important;
     width: calc(100vw - 2rem) !important;
-    max-width: 400px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    bottom: 7vh !important;
-    display: flex !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
+    bottom: 5vh !important;
     flex-direction: column !important;
-    align-items: flex-start !important;
+    align-items: center !important;
     justify-content: flex-start !important;
-    gap: 4px !important;
-    padding: 0 !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    gap: 6px !important;
     box-sizing: border-box !important;
-    z-index: 20 !important;
-    overflow: hidden !important;
-    transform: translateZ(0) !important;
-    backface-visibility: hidden !important;
-    -webkit-backface-visibility: hidden !important;
-    will-change: transform, opacity !important;
-    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    z-index: 25 !important;
+    transition: opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
 
-  /* Strictly isolate active card vs non-active cards on mobile */
-  .Works__item.is-hidden {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-  }
-
+  /* ONLY the single active card renders */
   .Works__item.is-active {
+    display: flex !important;
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
+  }
+
+  .Works__item.is-hidden {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
 }
 </style>
@@ -4492,6 +4552,10 @@ Architect worlds<br>that move hearts and spark hope.
       <div class="Works__list">
   <!-- 1. Next Gen AI Hacks -->
   <div class="Works__item" data-works_item>
+    <!-- Standalone Crisp Mobile Photo Frame (Zero Clipping & Sleek Glass Border) -->
+    <div class="mobile-achievement-card-frame">
+      <img src="/top/achievement_card.jpg?v=1794170220" alt="NextGen AI Hacks 2026" loading="lazy" />
+    </div>
     <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
@@ -4514,6 +4578,10 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 2. Datathon SRMIST -->
   <div class="Works__item" data-works_item>
+    <!-- Standalone Crisp Mobile Photo Frame (Zero Clipping & Sleek Glass Border) -->
+    <div class="mobile-achievement-card-frame">
+      <img src="/top/datathon_card.jpg?v=1794171533" alt="Datathon 2026" loading="lazy" />
+    </div>
     <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
@@ -4536,6 +4604,10 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 3. Proto-Thon -->
   <div class="Works__item" data-works_item>
+    <!-- Standalone Crisp Mobile Photo Frame (Zero Clipping & Sleek Glass Border) -->
+    <div class="mobile-achievement-card-frame">
+      <img src="/top/protothon_card.jpg?v=1794171815" alt="Proto-Thon" loading="lazy" />
+    </div>
     <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
@@ -4558,6 +4630,10 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 4. Techno-A-Thon -->
   <div class="Works__item" data-works_item>
+    <!-- Standalone Crisp Mobile Photo Frame (Zero Clipping & Sleek Glass Border) -->
+    <div class="mobile-achievement-card-frame">
+      <img src="/top/technoathon_card.jpg?v=1794172042" alt="Techno-A-Thon" loading="lazy" />
+    </div>
     <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
@@ -4580,6 +4656,10 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 5. Micronex '25 Paper Presentation -->
   <div class="Works__item" data-works_item>
+    <!-- Standalone Crisp Mobile Photo Frame (Zero Clipping & Sleek Glass Border) -->
+    <div class="mobile-achievement-card-frame">
+      <img src="/top/micronex_card.jpg?v=1794172255" alt="Micronex '25" loading="lazy" />
+    </div>
     <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
@@ -4602,6 +4682,10 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 6. Open Sesame -->
   <div class="Works__item" data-works_item>
+    <!-- Standalone Crisp Mobile Photo Frame (Zero Clipping & Sleek Glass Border) -->
+    <div class="mobile-achievement-card-frame">
+      <img src="/top/opensesame_card.jpg?v=1794172545" alt="Open Sesame" loading="lazy" />
+    </div>
     <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
@@ -6052,7 +6136,7 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
 (function() {
   function initMobileSwipe() {
     var isMobile = function() {
-      return window.innerWidth <= 768 || ('ontouchstart' in window);
+      return window.innerWidth <= 768;
     };
 
     var container = document.getElementById('achievements') || document.querySelector('[data-top_section="works"]');
@@ -6062,26 +6146,34 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
     var touchStartY = 0;
     var touchEndX = 0;
     var touchEndY = 0;
-    var minSwipeDistance = 40; // Minimum horizontal delta in px
+    var minSwipeDistance = 35; // Minimum horizontal delta in px
 
     function setActiveCard(index) {
+      if (!isMobile()) return;
       var items = document.querySelectorAll('.Works__item');
       if (!items || items.length === 0) return;
       items.forEach(function(item, idx) {
         if (idx === index) {
           item.classList.remove('is-hidden');
           item.classList.add('is-active');
-          item.style.visibility = 'visible';
-          item.style.opacity = '1';
-          item.style.pointerEvents = 'auto';
+          item.style.setProperty('display', 'flex', 'important');
+          item.style.setProperty('opacity', '1', 'important');
+          item.style.setProperty('visibility', 'visible', 'important');
+          item.style.setProperty('pointer-events', 'auto', 'important');
         } else {
           item.classList.remove('is-active');
           item.classList.add('is-hidden');
-          item.style.visibility = 'hidden';
-          item.style.opacity = '0';
-          item.style.pointerEvents = 'none';
+          item.style.setProperty('display', 'none', 'important');
+          item.style.setProperty('opacity', '0', 'important');
+          item.style.setProperty('visibility', 'hidden', 'important');
+          item.style.setProperty('pointer-events', 'none', 'important');
         }
       });
+    }
+
+    // Set initial card (first card active) on mobile immediately
+    if (isMobile()) {
+      setActiveCard(0);
     }
 
     container.addEventListener('touchstart', function(e) {
@@ -6173,6 +6265,20 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
         scrollTicking = false;
       });
     }, { passive: true });
+
+    // Window resize handler
+    window.addEventListener('resize', function() {
+      if (isMobile()) {
+        var active = document.querySelector('.Works__item.is-active');
+        if (!active) setActiveCard(0);
+      } else {
+        // Restore desktop styles if resized to desktop
+        var items = document.querySelectorAll('.Works__item');
+        items.forEach(function(item) {
+          item.style.display = '';
+        });
+      }
+    });
   }
 
   if (document.readyState === 'loading') {
