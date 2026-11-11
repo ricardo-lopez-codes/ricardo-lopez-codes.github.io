@@ -4237,6 +4237,99 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   }
 }
 </style>
+
+<style id="achievement-glass-frame-styles">
+/* ==========================================================================
+   ACHIEVEMENT PHOTO CONTAINER GLASS-MORPHISM FRAME BORDER
+   ========================================================================== */
+.achievement-photo-glass-frame,
+.achievement-card-img-wrapper {
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 1rem !important; /* rounded-2xl */
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 0 16px rgba(255, 255, 255, 0.08) !important;
+  padding: 6px !important; /* p-1.5 */
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  width: 100% !important;
+  max-width: 400px !important;
+  margin: 0 0 10px 0 !important;
+  box-sizing: border-box !important;
+  display: block !important;
+}
+
+.achievement-photo-glass-frame:hover,
+.achievement-card-img-wrapper:hover {
+  border-color: rgba(34, 211, 238, 0.6) !important;
+  box-shadow: 0 12px 36px 0 rgba(0, 0, 0, 0.45), 0 0 20px rgba(34, 211, 238, 0.25), inset 0 0 18px rgba(255, 255, 255, 0.12) !important;
+  transform: translateY(-2px);
+}
+
+/* High-Tech Corner Accent Highlights */
+.corner-accent {
+  position: absolute !important;
+  width: 12px !important;
+  height: 12px !important;
+  z-index: 20 !important;
+  pointer-events: none !important;
+}
+
+.corner-accent-tl {
+  top: 0 !important;
+  left: 0 !important;
+  border-top: 2px solid rgba(34, 211, 238, 0.8) !important;
+  border-left: 2px solid rgba(34, 211, 238, 0.8) !important;
+  border-top-left-radius: 4px !important;
+}
+
+.corner-accent-tr {
+  top: 0 !important;
+  right: 0 !important;
+  border-top: 2px solid rgba(34, 211, 238, 0.8) !important;
+  border-right: 2px solid rgba(34, 211, 238, 0.8) !important;
+  border-top-right-radius: 4px !important;
+}
+
+.corner-accent-bl {
+  bottom: 0 !important;
+  left: 0 !important;
+  border-bottom: 2px solid rgba(34, 211, 238, 0.8) !important;
+  border-left: 2px solid rgba(34, 211, 238, 0.8) !important;
+  border-bottom-left-radius: 4px !important;
+}
+
+.corner-accent-br {
+  bottom: 0 !important;
+  right: 0 !important;
+  border-bottom: 2px solid rgba(34, 211, 238, 0.8) !important;
+  border-right: 2px solid rgba(34, 211, 238, 0.8) !important;
+  border-bottom-right-radius: 4px !important;
+}
+
+/* Actual Achievement Image */
+.achievement-photo-img,
+.achievement-image {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 10 !important;
+  object-fit: cover !important;
+  border-radius: 0.75rem !important; /* rounded-xl */
+  display: block !important;
+}
+
+@media (max-width: 768px) {
+  .Works__item {
+    bottom: 5vh !important;
+    gap: 3px !important;
+  }
+  .achievement-photo-glass-frame {
+    margin: 0 0 6px 0 !important;
+  }
+}
+</style>
 </head> <body data-page="top">
 <!-- Dennis Snellenberg Multilingual Greeting Preloader Curtain -->
 <!-- Dennis Snellenberg Multilingual Greeting Preloader Curtain with Shader Animation -->
@@ -4409,15 +4502,30 @@ Architect worlds<br>that move hearts and spark hope.
       <div class="Works__list">
   <!-- 1. Next Gen AI Hacks -->
   <div class="Works__item" data-works_item>
+    <!-- Achievement Photo Wrapper with Glass Frame -->
+    <div class="achievement-photo-glass-frame relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] p-1.5 transition-all duration-300">
+      <!-- High-Tech Corner Accent Highlights -->
+      <div class="corner-accent corner-accent-tl absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-tr absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-bl absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-br absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-cyan-400/80 z-20"></div>
+      <!-- Actual Achievement Image -->
+      <img src="/top/achievement_card.jpg?v=1794170220" alt="NEXTGEN AI HACKS 2026" class="w-full h-auto object-cover rounded-xl achievement-photo-img" loading="lazy" />
+    </div>
+
+    <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
         <div class="Works__item_impression_title achievement__prize">THEME PRIZE WINNER</div>
       </div>
     </div>
+    <!-- 2. Event Name (Main Title Line) -->
     <h3 class="Works__item_title achievement__title" data-works_title>
       <a href="https://lnkd.in/p/gCxNwX67" class="Works__item_title_link" target="_blank" rel="noopener noreferrer">NEXTGEN AI HACKS 2026</a>
     </h3>
+    <!-- 3. College / Institution Name (Location Line) -->
     <p class="Works__item_title_ja achievement__venue">RAJALAKSHMI ENGINEERING COLLEGE (REC) , SOUTH CHENNAI CAMPUS</p>
+    <!-- 4. Category Pills / Tags -->
     <ul class="Works__item_categoryList">
       <li class="Works__item_categoryList_item">Hackathon Winner</li>
       <li class="Works__item_categoryList_item">Track Prize</li>
@@ -4427,15 +4535,30 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 2. Datathon SRMIST -->
   <div class="Works__item" data-works_item>
+    <!-- Achievement Photo Wrapper with Glass Frame -->
+    <div class="achievement-photo-glass-frame relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] p-1.5 transition-all duration-300">
+      <!-- High-Tech Corner Accent Highlights -->
+      <div class="corner-accent corner-accent-tl absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-tr absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-bl absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-br absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-cyan-400/80 z-20"></div>
+      <!-- Actual Achievement Image -->
+      <img src="/top/datathon_card.jpg?v=1794171533" alt="DATATHON 2026" class="w-full h-auto object-cover rounded-xl achievement-photo-img" loading="lazy" />
+    </div>
+
+    <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
         <div class="Works__item_impression_title achievement__prize">1ST PRIZE WINNER</div>
       </div>
     </div>
+    <!-- 2. Event Name (Main Title Line) -->
     <h3 class="Works__item_title achievement__title" data-works_title>
       <a href="https://lnkd.in/p/g6bN9qAt" class="Works__item_title_link" target="_blank" rel="noopener noreferrer">DATATHON 2026</a>
     </h3>
+    <!-- 3. College / Institution Name (Location Line) -->
     <p class="Works__item_title_ja achievement__venue">SRMIST - Ramapuram Campus</p>
+    <!-- 4. Category Pills / Tags -->
     <ul class="Works__item_categoryList">
       <li class="Works__item_categoryList_item">1st Prize</li>
       <li class="Works__item_categoryList_item">Data Science</li>
@@ -4445,15 +4568,30 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 3. Proto-Thon -->
   <div class="Works__item" data-works_item>
+    <!-- Achievement Photo Wrapper with Glass Frame -->
+    <div class="achievement-photo-glass-frame relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] p-1.5 transition-all duration-300">
+      <!-- High-Tech Corner Accent Highlights -->
+      <div class="corner-accent corner-accent-tl absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-tr absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-bl absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-br absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-cyan-400/80 z-20"></div>
+      <!-- Actual Achievement Image -->
+      <img src="/top/protothon_card.jpg?v=1794171815" alt="PROTO-THON" class="w-full h-auto object-cover rounded-xl achievement-photo-img" loading="lazy" />
+    </div>
+
+    <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
         <div class="Works__item_impression_title achievement__prize">THEME PRIZE WINNER</div>
       </div>
     </div>
+    <!-- 2. Event Name (Main Title Line) -->
     <h3 class="Works__item_title achievement__title" data-works_title>
       <a href="https://lnkd.in/p/g9sSifg3" class="Works__item_title_link" target="_blank" rel="noopener noreferrer">PROTO-THON</a>
     </h3>
+    <!-- 3. College / Institution Name (Location Line) -->
     <p class="Works__item_title_ja achievement__venue">Hindustan ITS - OMR</p>
+    <!-- 4. Category Pills / Tags -->
     <ul class="Works__item_categoryList">
       <li class="Works__item_categoryList_item">Hardware Prototype</li>
       <li class="Works__item_categoryList_item">Theme Prize</li>
@@ -4463,15 +4601,30 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 4. Techno-A-Thon -->
   <div class="Works__item" data-works_item>
+    <!-- Achievement Photo Wrapper with Glass Frame -->
+    <div class="achievement-photo-glass-frame relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] p-1.5 transition-all duration-300">
+      <!-- High-Tech Corner Accent Highlights -->
+      <div class="corner-accent corner-accent-tl absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-tr absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-bl absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-br absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-cyan-400/80 z-20"></div>
+      <!-- Actual Achievement Image -->
+      <img src="/top/technoathon_card.jpg?v=1794172042" alt="TECHNO-A-THON" class="w-full h-auto object-cover rounded-xl achievement-photo-img" loading="lazy" />
+    </div>
+
+    <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
         <div class="Works__item_impression_title achievement__prize">1ST PRIZE WINNER</div>
       </div>
     </div>
+    <!-- 2. Event Name (Main Title Line) -->
     <h3 class="Works__item_title achievement__title" data-works_title>
       <a href="https://lnkd.in/p/gSfcq-Mh" class="Works__item_title_link" target="_blank" rel="noopener noreferrer">TECHNO-A-THON</a>
     </h3>
+    <!-- 3. College / Institution Name (Location Line) -->
     <p class="Works__item_title_ja achievement__venue">St. Joseph's College of Engineering - OMR</p>
+    <!-- 4. Category Pills / Tags -->
     <ul class="Works__item_categoryList">
       <li class="Works__item_categoryList_item">1st Prize</li>
       <li class="Works__item_categoryList_item">Hackathon</li>
@@ -4481,15 +4634,30 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 5. Micronex '25 Paper Presentation -->
   <div class="Works__item" data-works_item>
+    <!-- Achievement Photo Wrapper with Glass Frame -->
+    <div class="achievement-photo-glass-frame relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] p-1.5 transition-all duration-300">
+      <!-- High-Tech Corner Accent Highlights -->
+      <div class="corner-accent corner-accent-tl absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-tr absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-bl absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-br absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-cyan-400/80 z-20"></div>
+      <!-- Actual Achievement Image -->
+      <img src="/top/micronex_card.jpg?v=1794172255" alt="MICRONEX '25" class="w-full h-auto object-cover rounded-xl achievement-photo-img" loading="lazy" />
+    </div>
+
+    <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
         <div class="Works__item_impression_title achievement__prize">2ND PRIZE WINNER</div>
       </div>
     </div>
+    <!-- 2. Event Name (Main Title Line) -->
     <h3 class="Works__item_title achievement__title" data-works_title>
       <a href="https://lnkd.in/p/gmiWs8iw" class="Works__item_title_link" target="_blank" rel="noopener noreferrer">MICRONEX '25</a>
     </h3>
+    <!-- 3. College / Institution Name (Location Line) -->
     <p class="Works__item_title_ja achievement__venue">SIMATS Engineering - Paper Presentation</p>
+    <!-- 4. Category Pills / Tags -->
     <ul class="Works__item_categoryList">
       <li class="Works__item_categoryList_item">Paper Presentation</li>
       <li class="Works__item_categoryList_item">2nd Prize</li>
@@ -4499,22 +4667,38 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 6. Open Sesame -->
   <div class="Works__item" data-works_item>
+    <!-- Achievement Photo Wrapper with Glass Frame -->
+    <div class="achievement-photo-glass-frame relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] p-1.5 transition-all duration-300">
+      <!-- High-Tech Corner Accent Highlights -->
+      <div class="corner-accent corner-accent-tl absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-tr absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-bl absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-cyan-400/80 z-20"></div>
+      <div class="corner-accent corner-accent-br absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-cyan-400/80 z-20"></div>
+      <!-- Actual Achievement Image -->
+      <img src="/top/opensesame_card.jpg?v=1794172545" alt="OPEN SESAME" class="w-full h-auto object-cover rounded-xl achievement-photo-img" loading="lazy" />
+    </div>
+
+    <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
         <div class="Works__item_impression_title achievement__prize">2ND PRIZE</div>
       </div>
     </div>
+    <!-- 2. Event Name (Main Title Line) -->
     <h3 class="Works__item_title achievement__title" data-works_title>
       <a href="https://lnkd.in/p/gEiUzC64" class="Works__item_title_link" target="_blank" rel="noopener noreferrer">OPEN SESAME</a>
     </h3>
+    <!-- 3. College / Institution Name (Location Line) -->
     <p class="Works__item_title_ja achievement__venue">SRMIST , RAMAPURAM</p>
+    <!-- 4. Category Pills / Tags -->
     <ul class="Works__item_categoryList">
       <li class="Works__item_categoryList_item">2nd Prize</li>
       <li class="Works__item_categoryList_item">Innovation</li>
       <li class="Works__item_categoryList_item">Competition</li>
     </ul>
   </div>
-</div> </div> </div> <div class="Works__scroll"> <div class="Works__scroll_item" data-top_works_item="/top/achievement_card.jpg?v=1794170220" data-works_id="x-7xjmugndty" data-external_link="https://lnkd.in/p/gCxNwX67" data-is_flat="true"> <div class="Works__scroll_item_thumb"></div> </div><div class="Works__scroll_item" data-top_works_item="/top/datathon_card.jpg?v=1794171533" data-works_id="8ekyy7vviu" data-external_link="https://lnkd.in/p/g6bN9qAt" data-is_flat="true"> <div class="Works__scroll_item_thumb"></div> </div><div class="Works__scroll_item" data-top_works_item="/top/protothon_card.jpg?v=1794171815" data-works_id="uqdzssjeiox" data-external_link="https://lnkd.in/p/g9sSifg3" data-is_flat="true"> <div class="Works__scroll_item_thumb"></div> </div><div class="Works__scroll_item" data-top_works_item="/top/technoathon_card.jpg?v=1794172042" data-works_id="05tscxftkq" data-external_link="https://lnkd.in/p/gSfcq-Mh" data-is_flat="true"> <div class="Works__scroll_item_thumb"></div> </div><div class="Works__scroll_item" data-top_works_item="/top/micronex_card.jpg?v=1794172255" data-works_id="997ia9e6cty7" data-external_link="https://lnkd.in/p/gmiWs8iw" data-is_flat="true"> <div class="Works__scroll_item_thumb"></div> </div><div class="Works__scroll_item" data-top_works_item="/top/opensesame_card.jpg?v=1794172545" data-works_id="lqlwmmtrsd6s" data-external_link="https://lnkd.in/p/gEiUzC64" data-is_flat="true"> <div class="Works__scroll_item_thumb"></div> </div> </div> </div>  </div> <div data-snapper> <div class="SectionContainer__container" data-top_section="works_outro" data-snap-ratio="1.5"> <div class="SectionContainer__label">works_outro</div>  <div class="PageTop__worksOutro"></div>  </div> <div class="SectionContainer__container" data-top_section="mission_in" data-snap-ratio="1"> <div class="SectionContainer__label">mission_in</div>  </div> <div class="SectionContainer__container projects-section" id="projects" data-top_section="mission" data-snap-ratio="3.5"> <div class="SectionContainer__label">mission</div>  <div class="MissionVision__missionContent" style="height: 350vh;"></div> <div class="MissionVision__container" data-mission-container> <div class="MissionVision__inner">
+
+</div> </div> </div> </div> <div class="Works__scroll"> <div class="Works__scroll_item" data-top_works_item="/top/achievement_card.jpg?v=1794170220" data-works_id="x-7xjmugndty" data-external_link="https://lnkd.in/p/gCxNwX67" data-is_flat="true"> <div class="Works__scroll_item_thumb"></div> </div><div class="Works__scroll_item" data-top_works_item="/top/datathon_card.jpg?v=1794171533" data-works_id="8ekyy7vviu" data-external_link="https://lnkd.in/p/g6bN9qAt" data-is_flat="true"> <div class="Works__scroll_item_thumb"></div> </div><div class="Works__scroll_item" data-top_works_item="/top/protothon_card.jpg?v=1794171815" data-works_id="uqdzssjeiox" data-external_link="https://lnkd.in/p/g9sSifg3" data-is_flat="true"> <div class="Works__scroll_item_thumb"></div> </div><div class="Works__scroll_item" data-top_works_item="/top/technoathon_card.jpg?v=1794172042" data-works_id="05tscxftkq" data-external_link="https://lnkd.in/p/gSfcq-Mh" data-is_flat="true"> <div class="Works__scroll_item_thumb"></div> </div><div class="Works__scroll_item" data-top_works_item="/top/micronex_card.jpg?v=1794172255" data-works_id="997ia9e6cty7" data-external_link="https://lnkd.in/p/gmiWs8iw" data-is_flat="true"> <div class="Works__scroll_item_thumb"></div> </div><div class="Works__scroll_item" data-top_works_item="/top/opensesame_card.jpg?v=1794172545" data-works_id="lqlwmmtrsd6s" data-external_link="https://lnkd.in/p/gEiUzC64" data-is_flat="true"> <div class="Works__scroll_item_thumb"></div> </div> </div> </div>  </div> <div data-snapper> <div class="SectionContainer__container" data-top_section="works_outro" data-snap-ratio="1.5"> <div class="SectionContainer__label">works_outro</div>  <div class="PageTop__worksOutro"></div>  </div> <div class="SectionContainer__container" data-top_section="mission_in" data-snap-ratio="1"> <div class="SectionContainer__label">mission_in</div>  </div> <div class="SectionContainer__container projects-section" id="projects" data-top_section="mission" data-snap-ratio="3.5"> <div class="SectionContainer__label">mission</div>  <div class="MissionVision__missionContent" style="height: 350vh;"></div> <div class="MissionVision__container" data-mission-container> <div class="MissionVision__inner">
 
     <!-- Custom Projects Showcase -->
     <div class="Projects__overlayContainer projects-section-container" id="projects-container"><div class="Projects__header projects-section-header">
