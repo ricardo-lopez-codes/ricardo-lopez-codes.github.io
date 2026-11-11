@@ -1,5 +1,10 @@
 <!DOCTYPE html><html lang="ja"> <head>
-<!-- 基本設定 --><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Astro v5.13.3"><!-- Title --><title>Lopez, Inc</title><!-- SEO Meta Tags --><meta name="description" content="Lopezは、デジタルネイティブ時代にこれまでにないエンターテイメント体験を生み出すクリエイティブスタジオです。"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://alche.studio/"><meta property="og:title" content="Lopez, Inc"><meta property="og:description" content="Lopezは、デジタルネイティブ時代にこれまでにないエンターテイメント体験を生み出すクリエイティブスタジオです。"><meta property="og:image" content="https://alche.studio/ogp.jpg"><meta property="og:site_name" content="Lopez, Inc"><meta property="og:locale" content="ja_JP"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Lopez, Inc"><meta name="twitter:description" content="Lopezは、デジタルネイティブ時代にこれまでにないエンターテイメント体験を生み出すクリエイティブスタジオです。"><meta name="twitter:image" content="https://alche.studio/ogp.jpg"><meta name="twitter:site" content="@alche_studio"><!-- Favicon --><link rel="icon" href="/favicon.png"><link rel="apple-touch-icon" href="/favicon/000.png"><!-- その他 --><meta name="theme-color" content="#000000"><meta name="msapplication-TileColor" content="#000000"><link rel="stylesheet" href="/_astro/index.DnJ5xLaK.css">
+<!-- 基本設定 --><meta charset="utf-8">
+<script>
+  if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+    document.documentElement.classList.add('preloader-done');
+  }
+</script><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Astro v5.13.3"><!-- Title --><title>Lopez, Inc</title><!-- SEO Meta Tags --><meta name="description" content="Lopezは、デジタルネイティブ時代にこれまでにないエンターテイメント体験を生み出すクリエイティブスタジオです。"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://alche.studio/"><meta property="og:title" content="Lopez, Inc"><meta property="og:description" content="Lopezは、デジタルネイティブ時代にこれまでにないエンターテイメント体験を生み出すクリエイティブスタジオです。"><meta property="og:image" content="https://alche.studio/ogp.jpg"><meta property="og:site_name" content="Lopez, Inc"><meta property="og:locale" content="ja_JP"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Lopez, Inc"><meta name="twitter:description" content="Lopezは、デジタルネイティブ時代にこれまでにないエンターテイメント体験を生み出すクリエイティブスタジオです。"><meta name="twitter:image" content="https://alche.studio/ogp.jpg"><meta name="twitter:site" content="@alche_studio"><!-- Favicon --><link rel="icon" href="/favicon.png"><link rel="apple-touch-icon" href="/favicon/000.png"><!-- その他 --><meta name="theme-color" content="#000000"><meta name="msapplication-TileColor" content="#000000"><link rel="stylesheet" href="/_astro/index.DnJ5xLaK.css">
 <style>@charset "UTF-8";*{box-sizing:border-box;padding:0;margin:0}html,body{font-family:kozuka-gothic-pr6n,Noto Sans JP,Hiragino Kaku Gothic ProN,Yu Gothic Medium,メイリオ,sans-serif;text-size-adjust:100%;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;color:#fff;background-color:#000}body{position:relative}body[data-modal=true]{overflow-y:hidden}img{max-width:100%;vertical-align:top}li{list-style:none}a{text-decoration:none;color:#fff}button{appearance:none;cursor:pointer;user-select:none;outline:none;background:none;border:none;color:inherit}input,textarea{appearance:none;user-select:all;outline:none;border:none}svg{display:block}[data-media=max-xl]{display:none}@media only screen and (min-width: 950px){[data-media=max-xl]{display:block}}[data-media=max-md]{display:none}@media only screen and (min-width: 769px){[data-media=max-md]{display:block}}@media only screen and (min-width: 950px){[data-media=min-xl]{display:none}}@media not screen and (min-width: 950px){[data-media=min-xl]{display:block}}[data-media=min-md]{display:none}@media not screen and (min-width: 769px){[data-media=min-md]{display:block}}[data-media=max-xl-inline]{display:none}@media only screen and (min-width: 950px){[data-media=max-xl-inline]{display:inline}}@media only screen and (min-width: 950px){[data-media=min-xl-inline]{display:none}}@media not screen and (min-width: 950px){[data-media=min-xl-inline]{display:inline}}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-stopped{overflow:hidden}.lenis.lenis-smooth iframe{pointer-events:none}
 
 
@@ -2743,52 +2748,23 @@ body[data-current_section="kv"] .Projects__overlayContainer {
    Desktop layout, taskbar, project sections, and alignments remain 100% untouched.
    ========================================================================== */
 @media (max-width: 768px) {
-  /* --- 1. Preloader Greeting Centering (Mobile Only) --- */
-  .greeting-preloader,
+  /* --- Completely Disable Loading Screen / Intro Animation (Mobile Only) --- */
+  .preloader-overlay,
   .intro-loader-screen,
-  #greeting-preloader {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    left: 0 !important;
-    top: 0 !important;
-  }
-
-  .intro-loader-screen span,
-  .intro-loader-screen div,
+  #greeting-preloader,
+  .greeting-preloader,
+  .greeting-shader-bg,
+  #greeting-shader-bg,
   .greeting-word-container,
-  .greeting-word-container span,
-  #greeting-wordContainer {
-    width: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin: 0 auto !important;
-    text-align: center !important;
-  }
-
-  .greeting-word-container {
-    gap: 12px !important;
-    font-size: 2.2rem !important;
-  }
-
-  .greeting-dot {
-    display: inline-block !important;
-    width: 10px !important;
-    height: 10px !important;
-    min-width: 10px !important;
-    min-height: 10px !important;
-    border-radius: 50% !important;
-    background-color: #ffffff !important;
-    margin-right: 0 !important;
-  }
-
-  #greeting-text {
-    width: auto !important;
-    display: inline-block !important;
+  #greeting-wordContainer,
+  .greeting-curve-svg,
+  .loader-backdrop,
+  #loading-overlay,
+  .Loading__container {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
 
   /* --- 2. Mobile Hamburger Navigation Drawer (Mobile Only) --- */
@@ -5284,6 +5260,13 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
   }
 
   function startGreetingSequence() {
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      if (preloader) {
+        preloader.style.cssText = 'display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;';
+      }
+      document.body.classList.add('preloader-done');
+      return;
+    }
     if (timer) clearTimeout(timer);
 
     preloader.classList.remove("slide-up");
@@ -5366,6 +5349,7 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
 <script id="shader-animation-script">
 (function() {
   function initShader() {
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) return;
     const container = document.getElementById('shader-canvas-target');
     if (!container || typeof THREE === 'undefined') return;
 
