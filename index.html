@@ -3749,25 +3749,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     pointer-events: none !important;
   }
 
-  /* 1. Enlarged Achievement Photo Box (94vw / max-w-[400px], aspect-ratio: 16/11) */
-  #achievements .achievement-card-img-wrapper,
-  #achievements .achievement-image,
-  .achievement-card-img-wrapper,
-  .achievement-image {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    width: 94vw !important;
-    max-width: 400px !important;
-    height: auto !important;
-    min-height: 240px !important;
-    max-height: 260px !important;
-    aspect-ratio: 16 / 11 !important;
-    object-fit: cover !important;
-    margin: -1.25rem auto 0 !important;
-    z-index: 10 !important;
-    position: relative !important;
-  }
+  
 
   /* 2. Details Container: Enforce Fixed Vertical Grid Slotting */
   .Works__container,
@@ -4228,40 +4210,6 @@ body[data-current_section="kv"] .Projects__overlayContainer {
    Ensures 100% sharp achievement photos with clean outer border & glow
    ========================================================================== */
 
-
-/* Hide mobile photo frame on desktop screens */
-@media (min-width: 769px) {
-  .mobile-achievement-card-frame {
-    display: none !important;
-  }
-}
-
-/* Standalone mobile achievement photo frame with crisp glass border */
-.mobile-achievement-card-frame {
-  position: relative !important;
-  width: 100% !important;
-  max-width: 350px !important;
-  margin: 0 auto 12px auto !important;
-  aspect-ratio: 16 / 10 !important;
-  border-radius: 16px !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.08) !important;
-  overflow: hidden !important;
-  background: rgba(14, 14, 20, 0.6) !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  flex-shrink: 0 !important;
-  box-sizing: border-box !important;
-}
-
-.mobile-achievement-card-frame img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  display: block !important;
-}
-
-/* Desktop glass frame styling for Three.js / desktop cards */
 @media (min-width: 769px) {
   .Works__scroll_item_thumb,
   .achievement-card-img-wrapper,
@@ -4302,14 +4250,13 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 <style id="mobile-achievements-carousel-isolation">
 /* ==========================================================================
    MOBILE ACHIEVEMENTS ISOLATION & CLEANUP (@media max-width: 768px)
-   1. Removes giant outer rounded outline boxes & secondary horizontal box
-   2. Completely eliminates overlapping text by rendering ONLY active card
-   3. Guarantees zero photo clipping with a standalone glass framed image
+   1. Removes giant outer wrapper outline boxes so 3D background is clean
+   2. Isolates single active card text to prevent overlapping details during swipe
+   3. Keeps locked slot heights for badges, titles, locations, and category tags
    ========================================================================== */
 @media (max-width: 768px) {
   /* REMOVE ALL GIANT OUTER OUTLINE BOXES & BACKGROUND RECTANGLES */
   #achievements,
-  #achievements *,
   .Works__container,
   .Works__content,
   .Works__content_inner,
@@ -4322,13 +4269,18 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     box-shadow: none !important;
   }
 
-  /* Keep glass frame ONLY on the actual achievement photo container */
-  .mobile-achievement-card-frame {
-    border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.08) !important;
+  /* Keep canvas active and visible for the main 3D achievement photo */
+  #achievements canvas,
+  .achievements-canvas-container,
+  #gl-canvas,
+  #gl-canvas canvas {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: none !important;
   }
 
-  /* Lock viewport overflow */
+  /* Lock viewport overflow so inactive side items never bleed */
   #achievements,
   .Works__container,
   .Works__content,
@@ -4337,12 +4289,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     overflow: hidden !important;
   }
 
-  /* Hide Three.js WebGL 3D achievement cards on mobile to avoid half-clipped side swinging */
-  #achievements canvas {
-    display: none !important;
-  }
-
-  /* STRICT CARD ISOLATION: Inactive cards are completely unmounted from layout (display: none) */
+  /* STRICT CARD ISOLATION: Inactive card texts are completely hidden (display: none) */
   .Works__item {
     display: none !important;
     opacity: 0 !important;
@@ -4352,16 +4299,16 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     left: 1rem !important;
     right: 1rem !important;
     width: calc(100vw - 2rem) !important;
-    max-width: 360px !important;
+    max-width: 420px !important;
     margin: 0 auto !important;
-    bottom: 5vh !important;
+    bottom: 5.5vh !important;
     flex-direction: column !important;
-    align-items: center !important;
+    align-items: flex-start !important;
     justify-content: flex-start !important;
-    gap: 6px !important;
+    gap: 4px !important;
     box-sizing: border-box !important;
     z-index: 25 !important;
-    transition: opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
 
   /* ONLY the single active card renders */
@@ -4552,10 +4499,6 @@ Architect worlds<br>that move hearts and spark hope.
       <div class="Works__list">
   <!-- 1. Next Gen AI Hacks -->
   <div class="Works__item" data-works_item>
-    <!-- Standalone Crisp Mobile Photo Frame (Zero Clipping & Sleek Glass Border) -->
-    <div class="mobile-achievement-card-frame">
-      <img src="/top/achievement_card.jpg?v=1794170220" alt="NextGen AI Hacks 2026" loading="lazy" />
-    </div>
     <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
@@ -4578,10 +4521,6 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 2. Datathon SRMIST -->
   <div class="Works__item" data-works_item>
-    <!-- Standalone Crisp Mobile Photo Frame (Zero Clipping & Sleek Glass Border) -->
-    <div class="mobile-achievement-card-frame">
-      <img src="/top/datathon_card.jpg?v=1794171533" alt="Datathon 2026" loading="lazy" />
-    </div>
     <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
@@ -4604,10 +4543,6 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 3. Proto-Thon -->
   <div class="Works__item" data-works_item>
-    <!-- Standalone Crisp Mobile Photo Frame (Zero Clipping & Sleek Glass Border) -->
-    <div class="mobile-achievement-card-frame">
-      <img src="/top/protothon_card.jpg?v=1794171815" alt="Proto-Thon" loading="lazy" />
-    </div>
     <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
@@ -4630,10 +4565,6 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 4. Techno-A-Thon -->
   <div class="Works__item" data-works_item>
-    <!-- Standalone Crisp Mobile Photo Frame (Zero Clipping & Sleek Glass Border) -->
-    <div class="mobile-achievement-card-frame">
-      <img src="/top/technoathon_card.jpg?v=1794172042" alt="Techno-A-Thon" loading="lazy" />
-    </div>
     <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
@@ -4656,10 +4587,6 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 5. Micronex '25 Paper Presentation -->
   <div class="Works__item" data-works_item>
-    <!-- Standalone Crisp Mobile Photo Frame (Zero Clipping & Sleek Glass Border) -->
-    <div class="mobile-achievement-card-frame">
-      <img src="/top/micronex_card.jpg?v=1794172255" alt="Micronex '25" loading="lazy" />
-    </div>
     <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
@@ -4682,10 +4609,6 @@ Architect worlds<br>that move hearts and spark hope.
 
   <!-- 6. Open Sesame -->
   <div class="Works__item" data-works_item>
-    <!-- Standalone Crisp Mobile Photo Frame (Zero Clipping & Sleek Glass Border) -->
-    <div class="mobile-achievement-card-frame">
-      <img src="/top/opensesame_card.jpg?v=1794172545" alt="Open Sesame" loading="lazy" />
-    </div>
     <!-- 1. Prize Details (Fixed Height Badge Line) -->
     <div class="Works__item_info">
       <div class="Works__item_impression">
