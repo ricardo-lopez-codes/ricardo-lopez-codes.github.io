@@ -4103,7 +4103,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 
 <style id="enforced-desktop-taskbar-visibility">
 /* ==========================================================================
-   CONSOLIDATED DESKTOP TASKBAR SCROLL-BASED VISIBILITY & CLEANUP
+   CONSOLIDATED DESKTOP TASKBAR SCROLL-BASED VISIBILITY & 1.5X SCALED UI
    ========================================================================== */
 
 /* Hide stray left-edge scroll indicator ("About Me" text on far left) */
@@ -4114,7 +4114,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 }
 
 @media (min-width: 769px) {
-  /* Desktop taskbar: sleek fixed glass capsule at top, starts hidden during intro */
+  /* Desktop taskbar: scaled up 50% fixed glass capsule at top */
   header#main-header {
     display: flex !important;
     position: fixed !important;
@@ -4122,15 +4122,15 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     left: 50% !important;
     transform: translate(-50%, 0) !important;
     z-index: 999999 !important;
-    background: rgba(18, 24, 38, 0.7) !important;
+    background: rgba(18, 24, 38, 0.75) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
     border-radius: 9999px !important;
-    padding: 0.55rem 0.75rem 0.55rem 1.75rem !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    padding: 0.9rem 2.5rem !important; /* Scaled up ~1.5x (py-3.5/py-4 px-10) */
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6) !important;
     width: auto !important;
-    max-width: 92% !important;
+    max-width: 95% !important;
     box-sizing: border-box !important;
     align-items: center !important;
     justify-content: center !important;
@@ -4153,11 +4153,11 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     transform: translate(-50%, 0) !important;
   }
 
-  /* Inner wrapper: keep it inline flex, no repositioning */
+  /* Inner wrapper: gap-9 (2.25rem) scaled up */
   #desktop-nav {
     display: flex !important;
     align-items: center !important;
-    gap: 1.5rem !important;
+    gap: 2.25rem !important; /* gap-9 */
     visibility: inherit !important;
     opacity: 1 !important;
     pointer-events: inherit !important;
@@ -4171,7 +4171,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     transform: none !important;
     display: flex !important;
     align-items: center !important;
-    gap: 1.5rem !important;
+    gap: 2.25rem !important; /* gap-9 */
     visibility: inherit !important;
     opacity: 1 !important;
     pointer-events: inherit !important;
@@ -4183,14 +4183,37 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     visibility: inherit !important;
     opacity: 1 !important;
     pointer-events: inherit !important;
+    font-size: 19px !important; /* 50% larger than 13-14px */
+    font-weight: 600 !important;
+    letter-spacing: 0.05em !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    transition: color 0.2s ease, text-shadow 0.2s ease !important;
   }
 
+  .Header__nav_item a:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.6) !important;
+  }
+
+  /* Scaled Download Resume Button (~1.5x) */
   .ResumeBtn__top,
   .download-resume-btn {
     display: inline-flex !important;
     visibility: inherit !important;
     opacity: 1 !important;
     pointer-events: inherit !important;
+    padding: 0.65rem 1.5rem !important; /* px-6 py-2.5 */
+    height: auto !important;
+    min-height: 44px !important;
+    font-size: 17px !important; /* text-[17px] */
+    font-weight: 600 !important;
+    gap: 0.65rem !important;
+    border-radius: 9999px !important;
+  }
+
+  .ResumeBtn__icon svg {
+    width: 20px !important; /* w-5 */
+    height: 20px !important; /* h-5 */
   }
 
   /* Hide mobile elements on desktop */
@@ -4628,8 +4651,8 @@ body[data-current_section="kv"] .Projects__overlayContainer {
  <div id="loading-overlay" class="Loading__container" style="display: none !important;" data-hidden> <div class="Loading__lottieContainer"> <div id="loading-lottie" class="Loading__lottie undefined"></div> <div id="loading-logo" class="Loading__logo undefined"></div> </div> <div id="loading-text" class="Loading__text">
 Architect worlds<br>that move hearts and spark hope.
 </div> </div> <header id="main-header" class="hidden md:flex desktop-taskbar desktop-header Header__navCapsule header-navbar taskbar-hidden" style="position: fixed !important; top: 1.5rem !important; left: 50% !important; z-index: 999999 !important;">
-  <div class="desktop-taskbar-inner" id="desktop-nav" style="display: flex !important; align-items: center !important; gap: 1.5rem !important;">
-    <nav class="Header__nav" style="display: flex !important; align-items: center !important; gap: 1.5rem !important; list-style: none !important; margin: 0 !important; padding: 0 !important;">
+  <div class="desktop-taskbar-inner" id="desktop-nav" style="display: flex !important; align-items: center !important; gap: 2.25rem !important;">
+    <nav class="Header__nav" style="display: flex !important; align-items: center !important; gap: 2.25rem !important; list-style: none !important; margin: 0 !important; padding: 0 !important;">
       <div class="Header__nav_item" data-page="about">
         <a href="#about" id="nav-about-link"><span>About Me</span></a>
       </div>
@@ -4653,7 +4676,7 @@ Architect worlds<br>that move hearts and spark hope.
     <!-- DOWNLOAD RESUME Button Integrated Inside Glass Capsule -->
     <a href="/RICARDO_RESUME.pdf" download="RICARDO_LOPEZ_RESUME.pdf" target="_blank" rel="noopener noreferrer" class="ResumeBtn__top download-resume-btn" title="Download Ricardo Lopez Resume PDF">
       <span class="ResumeBtn__icon">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
           <polyline points="7 10 12 15 17 10"/>
           <line x1="12" y1="15" x2="12" y2="3"/>
@@ -6740,8 +6763,8 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
     var ticking = false;
 
     function updateTaskbar() {
-      // Reveal threshold: past initial greeting/hero spacer (window.innerHeight * 0.85)
-      var threshold = window.innerHeight * 0.85;
+      // Reveal threshold: show immediately upon reaching About Me (window.innerHeight * 0.25 or 200px)
+      var threshold = Math.min(200, window.innerHeight * 0.25);
       var scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
 
       // On desktop (min-width: 769px)
