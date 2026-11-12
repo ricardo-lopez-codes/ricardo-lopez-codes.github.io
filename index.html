@@ -4118,7 +4118,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   header#main-header {
     display: flex !important;
     position: fixed !important;
-    top: 1.5rem !important;
+    top: 24px !important;
     left: 50% !important;
     transform: translate(-50%, 0) !important;
     z-index: 999999 !important;
@@ -4347,7 +4347,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 </div>
  <div id="loading-overlay" class="Loading__container" style="display: none !important;" data-hidden> <div class="Loading__lottieContainer"> <div id="loading-lottie" class="Loading__lottie undefined"></div> <div id="loading-logo" class="Loading__logo undefined"></div> </div> <div id="loading-text" class="Loading__text">
 Architect worlds<br>that move hearts and spark hope.
-</div> </div> <header id="main-header" class="hidden md:flex desktop-taskbar desktop-header Header__navCapsule header-navbar taskbar-hidden" style="position: fixed !important; top: 1.5rem !important; left: 50% !important; z-index: 999999 !important;">
+</div> </div> <header id="main-header" class="hidden md:flex desktop-taskbar desktop-header Header__navCapsule header-navbar taskbar-hidden" style="position: fixed !important; top: 24px !important; left: 50% !important; transform: translateX(-50%) !important; z-index: 999999 !important;">
   <div class="desktop-taskbar-inner" id="desktop-nav" style="display: flex !important; align-items: center !important; gap: 1.5rem !important;">
     <nav class="Header__nav" style="display: flex !important; align-items: center !important; gap: 1.5rem !important; list-style: none !important; margin: 0 !important; padding: 0 !important;">
       <div class="Header__nav_item" data-page="about">
@@ -6221,22 +6221,39 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
     var ticking = false;
 
     function updateTaskbar() {
-      // Reveal threshold: past initial greeting/hero spacer so taskbar is visible across About Me and all sections below it
-      var threshold = Math.min(150, window.innerHeight * 0.2);
-      var scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
+      // Only apply visibility management on desktop viewports
+      if (window.innerWidth <= 768) return;
 
-      // On desktop (min-width: 769px)
-      if (window.innerWidth > 768) {
-        if (scrollY >= threshold) {
-          header.classList.remove('taskbar-hidden');
-          header.classList.add('taskbar-visible');
-        } else {
-          header.classList.remove('taskbar-visible');
-          header.classList.add('taskbar-hidden');
-        }
+      var scrollY = Math.max(
+        window.pageYOffset || 0,
+        document.documentElement.scrollTop || 0,
+        window.scrollY || 0,
+        document.body.scrollTop || 0,
+        (window.lenis && typeof window.lenis.scroll === 'number') ? window.lenis.scroll : 0
+      );
+
+      var preloader = document.getElementById('greeting-preloader');
+      var isPreloaderActive = preloader && 
+        !document.body.classList.contains('preloader-done') && 
+        window.getComputedStyle(preloader).display !== 'none' &&
+        window.getComputedStyle(preloader).visibility !== 'hidden' &&
+        parseFloat(window.getComputedStyle(preloader).opacity) > 0.05;
+
+      // Condition 1: Keep taskbar hidden ONLY at the very top initial greeting screen (scrollY <= 80 AND preloader running)
+      if (scrollY <= 80 && isPreloaderActive) {
+        header.classList.remove('taskbar-visible');
+        header.classList.add('taskbar-hidden');
+      } else {
+        // Condition 2: For all scroll positions scrollY > 80 (covering entire About Me and all sections below it),
+        // OR as soon as initial greeting ends (preloader completed / About Me enters view) -> FORCE VISIBLE
+        header.classList.remove('taskbar-hidden');
+        header.classList.add('taskbar-visible');
       }
       ticking = false;
     }
+
+    // Expose globally so greeting preloader completion can trigger it instantly
+    window.updateDesktopTaskbar = updateTaskbar;
 
     window.addEventListener('scroll', function() {
       if (!ticking) {
@@ -6252,12 +6269,31 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
       }
     }, { passive: true });
 
-    // Initial check
+    // Listen to MutationObserver on body class for preloader-done
+    var observer = new MutationObserver(function() {
+      updateTaskbar();
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+    // Hook into Lenis smooth-scroller if present
+    if (window.lenis && typeof window.lenis.on === 'function') {
+      window.lenis.on('scroll', updateTaskbar);
+    } else {
+      var lenisInterval = setInterval(function() {
+        if (window.lenis && typeof window.lenis.on === 'function') {
+          window.lenis.on('scroll', updateTaskbar);
+          clearInterval(lenisInterval);
+        }
+      }, 300);
+      setTimeout(function() { clearInterval(lenisInterval); }, 5000);
+    }
+
+    // Initial check & staggered checks as preloader animates
     updateTaskbar();
-    // Also re-check once preloader finishes or DOM fully ready
     setTimeout(updateTaskbar, 300);
     setTimeout(updateTaskbar, 1000);
     setTimeout(updateTaskbar, 2500);
+    setTimeout(updateTaskbar, 5200);
   }
 
   if (document.readyState === 'loading') {
