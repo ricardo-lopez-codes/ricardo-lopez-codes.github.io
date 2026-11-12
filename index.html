@@ -1267,7 +1267,49 @@ header#main-header {
 
 <style id="ResumeBtnStyles">
 
-/* Header positioning & z-index strictly handled by #enforced-desktop-taskbar-visibility */
+/* ==========================================================================
+   FIXED HEADER NAVIGATION BAR (DESKTOP & MOBILE VIEWPORTS)
+   ========================================================================== */
+/* Header base: let the consolidated desktop-taskbar-visibility block handle positioning */
+header#main-header {
+  z-index: 999999 !important;
+}
+
+.Header__navCapsule,
+.header-navbar,
+.desktop-taskbar,
+#desktop-nav {
+  z-index: 10000 !important;
+}
+
+@media (min-width: 769px) {
+  .desktop-taskbar,
+  .desktop-header,
+  #desktop-nav,
+  .Header__navCapsule,
+  .header-navbar {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    top: 1.5rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 9999 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Removed: conflicting full-width header positioning - handled by consolidated block */
+
+  .mobile-sticky-header,
+  .mobile-nav-toggle,
+  .mobile-nav-drawer {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
+
 .mobile-sticky-header {
   position: fixed !important;
   top: 0 !important;
@@ -4061,7 +4103,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 
 <style id="enforced-desktop-taskbar-visibility">
 /* ==========================================================================
-   CONSOLIDATED DESKTOP TASKBAR INTERSECTION-BASED VISIBILITY & 1.5X SCALED UI
+   CONSOLIDATED DESKTOP TASKBAR SCROLL-BASED VISIBILITY & CLEANUP
    ========================================================================== */
 
 /* Hide stray left-edge scroll indicator ("About Me" text on far left) */
@@ -4072,38 +4114,38 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 }
 
 @media (min-width: 769px) {
-  /* Desktop taskbar: scaled up 50% fixed glass capsule at top, root level, permanent z-[9999999] */
+  /* Desktop taskbar: sleek fixed glass capsule at top, starts hidden during intro */
   header#main-header {
     display: flex !important;
     position: fixed !important;
-    top: 24px !important;
+    top: 1.5rem !important;
     left: 50% !important;
-    transform: translateX(-50%) !important;
-    z-index: 9999999 !important; /* Topmost stacking layer: above 3D canvas, About Me, and section overlays */
-    background: rgba(18, 24, 38, 0.78) !important;
+    transform: translate(-50%, 0) !important;
+    z-index: 999999 !important;
+    background: rgba(18, 24, 38, 0.7) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 9999px !important;
-    padding: 0.45rem 2.5rem !important; /* Low-profile slim height (py-1.5 / py-2) while keeping full px-10 length */
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6) !important;
+    padding: 0.55rem 0.75rem 0.55rem 1.75rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
     width: auto !important;
-    max-width: 95% !important;
+    max-width: 92% !important;
     box-sizing: border-box !important;
     align-items: center !important;
     justify-content: center !important;
-    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
-  /* During initial greeting / intro preloader: completely hidden */
+  /* When inside initial greeting/animation spacer, hide smoothly */
   header#main-header.taskbar-hidden {
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
-    transform: translate(-50%, -1.25rem) !important;
+    transform: translate(-50%, -1.5rem) !important;
   }
 
-  /* When greeting completes or user enters About Me & all lower sections: permanently visible */
+  /* When scrolled into main content (About Me and below), reveal smoothly */
   header#main-header.taskbar-visible {
     opacity: 1 !important;
     visibility: visible !important;
@@ -4111,17 +4153,16 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     transform: translate(-50%, 0) !important;
   }
 
-  /* Inner wrapper: gap-9 (2.25rem) scaled up */
+  /* Inner wrapper: keep it inline flex, no repositioning */
   #desktop-nav {
     display: flex !important;
     align-items: center !important;
-    gap: 2.25rem !important; /* gap-9 */
+    gap: 1.5rem !important;
     visibility: inherit !important;
     opacity: 1 !important;
     pointer-events: inherit !important;
     position: static !important;
     transform: none !important;
-    z-index: auto !important;
   }
 
   /* Nav links row */
@@ -4130,67 +4171,26 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     transform: none !important;
     display: flex !important;
     align-items: center !important;
-    gap: 2.25rem !important; /* gap-9 */
+    gap: 1.5rem !important;
     visibility: inherit !important;
     opacity: 1 !important;
     pointer-events: inherit !important;
-    list-style: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
   }
 
   .Header__nav_item,
   .Header__nav_item a {
     display: inline-flex !important;
-    align-items: center !important;
-    line-height: 1 !important;
-    padding: 0 !important;
     visibility: inherit !important;
     opacity: 1 !important;
     pointer-events: inherit !important;
-    font-size: 19px !important; /* text-lg / 19px font-semibold */
-    font-weight: 600 !important;
-    letter-spacing: 0.05em !important;
-    color: rgba(255, 255, 255, 0.9) !important;
-    transition: color 0.2s ease, text-shadow 0.2s ease !important;
   }
 
-  .Header__nav_item a:hover {
-    color: #ffffff !important;
-    text-shadow: 0 0 12px rgba(255, 255, 255, 0.6) !important;
-  }
-
-  /* Scaled Download Resume Button (~1.5x) */
   .ResumeBtn__top,
   .download-resume-btn {
     display: inline-flex !important;
     visibility: inherit !important;
     opacity: 1 !important;
     pointer-events: inherit !important;
-    padding: 0.28rem 1.5rem !important; /* Slim low-profile height (py-1) while keeping full px-6 width */
-    height: auto !important;
-    min-height: 32px !important;
-    font-size: 17px !important; /* text-base / 17px font-semibold */
-    font-weight: 600 !important;
-    gap: 0.65rem !important;
-    border-radius: 9999px !important;
-  }
-
-  .ResumeBtn__icon svg {
-    width: 20px !important; /* w-5 h-5 */
-    height: 20px !important;
-  }
-
-  /* Keep all section containers and background canvas below taskbar */
-  #about,
-  .SectionContainer__container,
-  .HeroPortfolio__container,
-  .KV__container,
-  .KV__inner,
-  .Layout__main,
-  .Layout__inner,
-  .Layout__wrapper {
-    z-index: 10 !important;
   }
 
   /* Hide mobile elements on desktop */
@@ -4348,8 +4348,8 @@ body[data-current_section="kv"] .Projects__overlayContainer {
  <div id="loading-overlay" class="Loading__container" style="display: none !important;" data-hidden> <div class="Loading__lottieContainer"> <div id="loading-lottie" class="Loading__lottie undefined"></div> <div id="loading-logo" class="Loading__logo undefined"></div> </div> <div id="loading-text" class="Loading__text">
 Architect worlds<br>that move hearts and spark hope.
 </div> </div> <header id="main-header" class="hidden md:flex desktop-taskbar desktop-header Header__navCapsule header-navbar taskbar-hidden" style="position: fixed !important; top: 1.5rem !important; left: 50% !important; z-index: 999999 !important;">
-  <div class="desktop-taskbar-inner" id="desktop-nav" style="display: flex !important; align-items: center !important; gap: 2.25rem !important;">
-    <nav class="Header__nav" style="display: flex !important; align-items: center !important; gap: 2.25rem !important; list-style: none !important; margin: 0 !important; padding: 0 !important;">
+  <div class="desktop-taskbar-inner" id="desktop-nav" style="display: flex !important; align-items: center !important; gap: 1.5rem !important;">
+    <nav class="Header__nav" style="display: flex !important; align-items: center !important; gap: 1.5rem !important; list-style: none !important; margin: 0 !important; padding: 0 !important;">
       <div class="Header__nav_item" data-page="about">
         <a href="#about" id="nav-about-link"><span>About Me</span></a>
       </div>
@@ -4373,7 +4373,7 @@ Architect worlds<br>that move hearts and spark hope.
     <!-- DOWNLOAD RESUME Button Integrated Inside Glass Capsule -->
     <a href="/RICARDO_RESUME.pdf" download="RICARDO_LOPEZ_RESUME.pdf" target="_blank" rel="noopener noreferrer" class="ResumeBtn__top download-resume-btn" title="Download Ricardo Lopez Resume PDF">
       <span class="ResumeBtn__icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
           <polyline points="7 10 12 15 17 10"/>
           <line x1="12" y1="15" x2="12" y2="3"/>
@@ -6214,73 +6214,56 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
 
 <script id="desktop-taskbar-scroll-guard">
 (function() {
-  function initTaskbarVisibilityController() {
+  function initTaskbarScrollTracker() {
     var header = document.getElementById('main-header');
     if (!header) return;
 
-    var preloader = document.getElementById('greeting-preloader');
-    var isIntroActive = true;
+    var ticking = false;
 
-    function showTaskbar() {
-      header.classList.remove('taskbar-hidden');
-      header.classList.add('taskbar-visible');
-    }
+    function updateTaskbar() {
+      // Reveal threshold: past initial greeting/hero spacer (window.innerHeight * 0.85)
+      var threshold = window.innerHeight * 0.85;
+      var scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
 
-    function hideTaskbar() {
-      header.classList.remove('taskbar-visible');
-      header.classList.add('taskbar-hidden');
-    }
-
-    function checkVisibility() {
-      if (window.innerWidth <= 768) return;
-
-      // 1. Check if the greeting intro / preloader is still running
-      var preloaderRunning = preloader && 
-        !document.body.classList.contains('preloader-done') && 
-        window.getComputedStyle(preloader).display !== 'none' &&
-        window.getComputedStyle(preloader).visibility !== 'hidden' &&
-        parseFloat(window.getComputedStyle(preloader).opacity) > 0.05;
-
-      if (preloaderRunning) {
-        hideTaskbar();
-        return;
+      // On desktop (min-width: 769px)
+      if (window.innerWidth > 768) {
+        if (scrollY >= threshold) {
+          header.classList.remove('taskbar-hidden');
+          header.classList.add('taskbar-visible');
+        } else {
+          header.classList.remove('taskbar-visible');
+          header.classList.add('taskbar-hidden');
+        }
       }
-
-      // 2. Once intro curtain is lifted / done, taskbar is permanently visible across About Me & all sections
-      showTaskbar();
+      ticking = false;
     }
 
-    // Observe body class changes (when 'preloader-done' is added)
-    var observer = new MutationObserver(function() {
-      checkVisibility();
-    });
-    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateTaskbar);
+        ticking = true;
+      }
+    }, { passive: true });
 
-    // Also observe the greeting preloader element directly
-    if (preloader) {
-      var preloaderObserver = new MutationObserver(function() {
-        checkVisibility();
-      });
-      preloaderObserver.observe(preloader, { attributes: true, attributeFilter: ['style', 'class'] });
-    }
+    window.addEventListener('resize', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateTaskbar);
+        ticking = true;
+      }
+    }, { passive: true });
 
-    // Scroll & resize listeners as reliable backups
-    window.addEventListener('scroll', checkVisibility, { passive: true });
-    window.addEventListener('resize', checkVisibility, { passive: true });
-
-    // Initial evaluation & staggered checks as preloader finishes
-    checkVisibility();
-    setTimeout(checkVisibility, 200);
-    setTimeout(checkVisibility, 600);
-    setTimeout(checkVisibility, 1500);
-    setTimeout(checkVisibility, 3000);
-    setTimeout(checkVisibility, 5500); // Intro completes around ~5s
+    // Initial check
+    updateTaskbar();
+    // Also re-check once preloader finishes or DOM fully ready
+    setTimeout(updateTaskbar, 300);
+    setTimeout(updateTaskbar, 1000);
+    setTimeout(updateTaskbar, 2500);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTaskbarVisibilityController);
+    document.addEventListener('DOMContentLoaded', initTaskbarScrollTracker);
   } else {
-    initTaskbarVisibilityController();
+    initTaskbarScrollTracker();
   }
 })();
 </script>
