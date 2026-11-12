@@ -1295,7 +1295,7 @@ header#main-header {
     top: 1.5rem !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    z-index: 9999 !important;
+    z-index: 999999 !important;
     pointer-events: auto !important;
   }
 
@@ -6221,8 +6221,8 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
     var ticking = false;
 
     function updateTaskbar() {
-      // Reveal threshold: past initial greeting/hero spacer (window.innerHeight * 0.85)
-      var threshold = window.innerHeight * 0.85;
+      // Reveal threshold: past initial greeting/hero spacer so taskbar is visible across About Me and all sections below it
+      var threshold = Math.min(150, window.innerHeight * 0.2);
       var scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
 
       // On desktop (min-width: 769px)
