@@ -4206,33 +4206,27 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 
 <style id="achievement-glass-frame-styles">
 /* ==========================================================================
-   ACHIEVEMENT PHOTO CRISP GLASS FRAME (ZERO BLUR OVER PHOTOS)
-   Ensures 100% sharp achievement photos with clean outer border & glow
+   ACHIEVEMENTS CLEANUP: ZERO FULL-WIDTH OUTLINES / ZERO STRAY BORDERS
+   Strip borders from full-screen scroll containers and wrappers so
+   the 3D background grid is completely unobstructed.
    ========================================================================== */
 
-@media (min-width: 769px) {
-  .Works__scroll_item_thumb,
-  .achievement-card-img-wrapper,
-  .achievement-photo-img,
-  .achievement-image {
-    border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
-    background: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    filter: none !important;
-    -webkit-filter: none !important;
-    border-radius: 16px !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.08) !important;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-  }
-
-  .Works__scroll_item_thumb:hover,
-  .achievement-card-img-wrapper:hover {
-    border-color: rgba(34, 211, 238, 0.6) !important;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 24px rgba(34, 211, 238, 0.3) !important;
-  }
+/* Enforce NO full-width borders across desktop and mobile containers */
+#achievements,
+#achievements .Works__container,
+#achievements .Works__content,
+#achievements .Works__content_inner,
+#achievements .Works__list,
+#achievements .Works__scroll,
+#achievements .Works__scroll_item,
+#achievements .Works__scroll_item_thumb,
+.Works__scroll,
+.Works__scroll_item,
+.Works__scroll_item_thumb {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
 }
 
 /* Guard against any blur filter over the achievements section or canvas */
