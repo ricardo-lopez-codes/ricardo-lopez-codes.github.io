@@ -1267,49 +1267,7 @@ header#main-header {
 
 <style id="ResumeBtnStyles">
 
-/* ==========================================================================
-   FIXED HEADER NAVIGATION BAR (DESKTOP & MOBILE VIEWPORTS)
-   ========================================================================== */
-/* Header base: let the consolidated desktop-taskbar-visibility block handle positioning */
-header#main-header {
-  z-index: 999999 !important;
-}
-
-.Header__navCapsule,
-.header-navbar,
-.desktop-taskbar,
-#desktop-nav {
-  z-index: 10000 !important;
-}
-
-@media (min-width: 769px) {
-  .desktop-taskbar,
-  .desktop-header,
-  #desktop-nav,
-  .Header__navCapsule,
-  .header-navbar {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: fixed !important;
-    top: 1.5rem !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    z-index: 9999 !important;
-    pointer-events: auto !important;
-  }
-
-  /* Removed: conflicting full-width header positioning - handled by consolidated block */
-
-  .mobile-sticky-header,
-  .mobile-nav-toggle,
-  .mobile-nav-drawer {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-  }
-}
-
+/* Header positioning & z-index strictly handled by #enforced-desktop-taskbar-visibility */
 .mobile-sticky-header {
   position: fixed !important;
   top: 0 !important;
@@ -4114,14 +4072,14 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 }
 
 @media (min-width: 769px) {
-  /* Desktop taskbar: scaled up 50% fixed glass capsule at top */
+  /* Desktop taskbar: scaled up 50% fixed glass capsule at top, permanent z-[9999999] */
   header#main-header {
     display: flex !important;
     position: fixed !important;
     top: 1.5rem !important;
     left: 50% !important;
     transform: translate(-50%, 0) !important;
-    z-index: 999999 !important;
+    z-index: 9999999 !important; /* Stays permanently above About Me & all section overlays */
     background: rgba(18, 24, 38, 0.75) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
@@ -4134,18 +4092,18 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     box-sizing: border-box !important;
     align-items: center !important;
     justify-content: center !important;
-    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
-  /* When inside initial greeting/animation spacer, hide smoothly */
+  /* At the very top greeting / initial 3D intro spacer: Completely hidden */
   header#main-header.taskbar-hidden {
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
-    transform: translate(-50%, -1.5rem) !important;
+    transform: translate(-50%, -1.25rem) !important;
   }
 
-  /* When scrolled into main content (About Me and below), reveal smoothly */
+  /* As soon as About Me becomes active/visible and throughout all lower sections: Permanently visible */
   header#main-header.taskbar-visible {
     opacity: 1 !important;
     visibility: visible !important;
@@ -4163,6 +4121,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     pointer-events: inherit !important;
     position: static !important;
     transform: none !important;
+    z-index: auto !important;
   }
 
   /* Nav links row */
@@ -4175,6 +4134,9 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     visibility: inherit !important;
     opacity: 1 !important;
     pointer-events: inherit !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .Header__nav_item,
@@ -4214,6 +4176,18 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   .ResumeBtn__icon svg {
     width: 20px !important; /* w-5 */
     height: 20px !important; /* h-5 */
+  }
+
+  /* Prevent any section overlay or background from overlapping above the taskbar */
+  #about,
+  .SectionContainer__container,
+  .HeroPortfolio__container,
+  .KV__container,
+  .KV__inner,
+  .Layout__main,
+  .Layout__inner,
+  .Layout__wrapper {
+    z-index: 10 !important;
   }
 
   /* Hide mobile elements on desktop */
@@ -6763,13 +6737,13 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
     var ticking = false;
 
     function updateTaskbar() {
-      // Reveal threshold: show immediately upon reaching About Me (window.innerHeight * 0.25 or 200px)
-      var threshold = Math.min(200, window.innerHeight * 0.25);
       var scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
 
-      // On desktop (min-width: 769px)
+      // On desktop (min-width: 769px):
+      // scrollY < 150: initial 3D greeting spacer -> completely hidden
+      // scrollY >= 150: About Me enters & throughout all lower sections -> permanently visible
       if (window.innerWidth > 768) {
-        if (scrollY >= threshold) {
+        if (scrollY >= 150) {
           header.classList.remove('taskbar-hidden');
           header.classList.add('taskbar-visible');
         } else {
@@ -6798,8 +6772,9 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
     updateTaskbar();
     // Also re-check once preloader finishes or DOM fully ready
     setTimeout(updateTaskbar, 300);
-    setTimeout(updateTaskbar, 1000);
-    setTimeout(updateTaskbar, 2500);
+    setTimeout(updateTaskbar, 800);
+    setTimeout(updateTaskbar, 1500);
+    setTimeout(updateTaskbar, 3000);
   }
 
   if (document.readyState === 'loading') {
