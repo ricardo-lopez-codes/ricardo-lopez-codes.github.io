@@ -4061,7 +4061,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 
 <style id="enforced-desktop-taskbar-visibility">
 /* ==========================================================================
-   CONSOLIDATED DESKTOP TASKBAR SCROLL-BASED VISIBILITY & 1.5X SCALED UI
+   CONSOLIDATED DESKTOP TASKBAR INTERSECTION-BASED VISIBILITY & 1.5X SCALED UI
    ========================================================================== */
 
 /* Hide stray left-edge scroll indicator ("About Me" text on far left) */
@@ -4072,20 +4072,20 @@ body[data-current_section="kv"] .Projects__overlayContainer {
 }
 
 @media (min-width: 769px) {
-  /* Desktop taskbar: scaled up 50% fixed glass capsule at top, permanent z-[9999999] */
+  /* Desktop taskbar: scaled up 50% fixed glass capsule at top, root level, permanent z-[9999999] */
   header#main-header {
     display: flex !important;
     position: fixed !important;
-    top: 1.5rem !important;
+    top: 24px !important;
     left: 50% !important;
-    transform: translate(-50%, 0) !important;
-    z-index: 9999999 !important; /* Stays permanently above About Me & all section overlays */
-    background: rgba(18, 24, 38, 0.75) !important;
+    transform: translateX(-50%) !important;
+    z-index: 9999999 !important; /* Topmost stacking layer: above 3D canvas, About Me, and section overlays */
+    background: rgba(18, 24, 38, 0.78) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
     border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
     border-radius: 9999px !important;
-    padding: 0.9rem 2.5rem !important; /* Scaled up ~1.5x (py-3.5/py-4 px-10) */
+    padding: 1rem 2.5rem !important; /* Scaled up ~1.5x (px-10 py-4) */
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6) !important;
     width: auto !important;
     max-width: 95% !important;
@@ -4095,7 +4095,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
-  /* At the very top greeting / initial 3D intro spacer: Completely hidden */
+  /* During initial greeting / intro preloader: completely hidden */
   header#main-header.taskbar-hidden {
     opacity: 0 !important;
     visibility: hidden !important;
@@ -4103,7 +4103,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     transform: translate(-50%, -1.25rem) !important;
   }
 
-  /* As soon as About Me becomes active/visible and throughout all lower sections: Permanently visible */
+  /* When greeting completes or user enters About Me & all lower sections: permanently visible */
   header#main-header.taskbar-visible {
     opacity: 1 !important;
     visibility: visible !important;
@@ -4145,7 +4145,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     visibility: inherit !important;
     opacity: 1 !important;
     pointer-events: inherit !important;
-    font-size: 19px !important; /* 50% larger than 13-14px */
+    font-size: 19px !important; /* text-lg / 19px font-semibold */
     font-weight: 600 !important;
     letter-spacing: 0.05em !important;
     color: rgba(255, 255, 255, 0.9) !important;
@@ -4167,18 +4167,18 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     padding: 0.65rem 1.5rem !important; /* px-6 py-2.5 */
     height: auto !important;
     min-height: 44px !important;
-    font-size: 17px !important; /* text-[17px] */
+    font-size: 17px !important; /* text-base / 17px font-semibold */
     font-weight: 600 !important;
     gap: 0.65rem !important;
     border-radius: 9999px !important;
   }
 
   .ResumeBtn__icon svg {
-    width: 20px !important; /* w-5 */
-    height: 20px !important; /* h-5 */
+    width: 20px !important; /* w-5 h-5 */
+    height: 20px !important;
   }
 
-  /* Prevent any section overlay or background from overlapping above the taskbar */
+  /* Keep all section containers and background canvas below taskbar */
   #about,
   .SectionContainer__container,
   .HeroPortfolio__container,
@@ -6211,57 +6211,73 @@ window.__projectsData = {"pocket-cloud": {"num": "PROJECT // 01", "category": "I
 
 <script id="desktop-taskbar-scroll-guard">
 (function() {
-  function initTaskbarScrollTracker() {
+  function initTaskbarVisibilityController() {
     var header = document.getElementById('main-header');
     if (!header) return;
 
-    var ticking = false;
+    var preloader = document.getElementById('greeting-preloader');
+    var isIntroActive = true;
 
-    function updateTaskbar() {
-      var scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
-
-      // On desktop (min-width: 769px):
-      // scrollY < 150: initial 3D greeting spacer -> completely hidden
-      // scrollY >= 150: About Me enters & throughout all lower sections -> permanently visible
-      if (window.innerWidth > 768) {
-        if (scrollY >= 150) {
-          header.classList.remove('taskbar-hidden');
-          header.classList.add('taskbar-visible');
-        } else {
-          header.classList.remove('taskbar-visible');
-          header.classList.add('taskbar-hidden');
-        }
-      }
-      ticking = false;
+    function showTaskbar() {
+      header.classList.remove('taskbar-hidden');
+      header.classList.add('taskbar-visible');
     }
 
-    window.addEventListener('scroll', function() {
-      if (!ticking) {
-        window.requestAnimationFrame(updateTaskbar);
-        ticking = true;
-      }
-    }, { passive: true });
+    function hideTaskbar() {
+      header.classList.remove('taskbar-visible');
+      header.classList.add('taskbar-hidden');
+    }
 
-    window.addEventListener('resize', function() {
-      if (!ticking) {
-        window.requestAnimationFrame(updateTaskbar);
-        ticking = true;
-      }
-    }, { passive: true });
+    function checkVisibility() {
+      if (window.innerWidth <= 768) return;
 
-    // Initial check
-    updateTaskbar();
-    // Also re-check once preloader finishes or DOM fully ready
-    setTimeout(updateTaskbar, 300);
-    setTimeout(updateTaskbar, 800);
-    setTimeout(updateTaskbar, 1500);
-    setTimeout(updateTaskbar, 3000);
+      // 1. Check if the greeting intro / preloader is still running
+      var preloaderRunning = preloader && 
+        !document.body.classList.contains('preloader-done') && 
+        window.getComputedStyle(preloader).display !== 'none' &&
+        window.getComputedStyle(preloader).visibility !== 'hidden' &&
+        parseFloat(window.getComputedStyle(preloader).opacity) > 0.05;
+
+      if (preloaderRunning) {
+        hideTaskbar();
+        return;
+      }
+
+      // 2. Once intro curtain is lifted / done, taskbar is permanently visible across About Me & all sections
+      showTaskbar();
+    }
+
+    // Observe body class changes (when 'preloader-done' is added)
+    var observer = new MutationObserver(function() {
+      checkVisibility();
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+    // Also observe the greeting preloader element directly
+    if (preloader) {
+      var preloaderObserver = new MutationObserver(function() {
+        checkVisibility();
+      });
+      preloaderObserver.observe(preloader, { attributes: true, attributeFilter: ['style', 'class'] });
+    }
+
+    // Scroll & resize listeners as reliable backups
+    window.addEventListener('scroll', checkVisibility, { passive: true });
+    window.addEventListener('resize', checkVisibility, { passive: true });
+
+    // Initial evaluation & staggered checks as preloader finishes
+    checkVisibility();
+    setTimeout(checkVisibility, 200);
+    setTimeout(checkVisibility, 600);
+    setTimeout(checkVisibility, 1500);
+    setTimeout(checkVisibility, 3000);
+    setTimeout(checkVisibility, 5500); // Intro completes around ~5s
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTaskbarScrollTracker);
+    document.addEventListener('DOMContentLoaded', initTaskbarVisibilityController);
   } else {
-    initTaskbarScrollTracker();
+    initTaskbarVisibilityController();
   }
 })();
 </script>
