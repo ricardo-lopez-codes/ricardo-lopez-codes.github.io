@@ -4085,7 +4085,7 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     -webkit-backdrop-filter: blur(20px) !important;
     border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
     border-radius: 9999px !important;
-    padding: 1rem 2.5rem !important; /* Scaled up ~1.5x (px-10 py-4) */
+    padding: 0.45rem 2.5rem !important; /* Low-profile slim height (py-1.5 / py-2) while keeping full px-10 length */
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6) !important;
     width: auto !important;
     max-width: 95% !important;
@@ -4142,6 +4142,9 @@ body[data-current_section="kv"] .Projects__overlayContainer {
   .Header__nav_item,
   .Header__nav_item a {
     display: inline-flex !important;
+    align-items: center !important;
+    line-height: 1 !important;
+    padding: 0 !important;
     visibility: inherit !important;
     opacity: 1 !important;
     pointer-events: inherit !important;
@@ -4164,9 +4167,9 @@ body[data-current_section="kv"] .Projects__overlayContainer {
     visibility: inherit !important;
     opacity: 1 !important;
     pointer-events: inherit !important;
-    padding: 0.65rem 1.5rem !important; /* px-6 py-2.5 */
+    padding: 0.28rem 1.5rem !important; /* Slim low-profile height (py-1) while keeping full px-6 width */
     height: auto !important;
-    min-height: 44px !important;
+    min-height: 32px !important;
     font-size: 17px !important; /* text-base / 17px font-semibold */
     font-weight: 600 !important;
     gap: 0.65rem !important;
